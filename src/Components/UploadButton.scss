@@ -1,0 +1,61 @@
+input[type=file] { 
+    visibility: hidden;
+    position: absolute
+}
+  
+.uploadButton{
+    border-radius: 2%;
+    border-color: grey;
+    border-style: dashed;
+    border-width: 2px;
+    height: 300px !important;
+    width: 300px !important;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    display: flex;
+
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+        transform: scale(1);
+        animation: pulse 2s infinite;
+}
+  
+  .imageContainer{
+    border-width: 2px;
+    align-items: center;
+    text-align:center;
+    display: flex;
+  }
+
+  .blue{
+    color:blue !important;
+   }
+  
+  @keyframes pulse {
+      0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+      }
+  
+      70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+      }
+  
+      100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+  }
+
+ .fromPc{
+     height: max-content;
+     width: 50%;
+     padding-right: 10px;
+ }
+
+ .fromSocial{
+    height: max-content;
+    width: 50%;
+    padding-left: 10px;
+ }

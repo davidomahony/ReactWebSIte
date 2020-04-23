@@ -1,0 +1,134 @@
+
+.pageCard{
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+// div.scrollmenu {
+//     background-color: transparent;
+//     overflow: auto;
+//     white-space: nowrap;
+//     justify-content: center;
+//     align-items: center;
+//   }
+  
+//   div.scrollmenu div {
+//     display: inline-block;
+//     color: transparent;
+//     text-align: center;
+//     padding: 14px;
+//     text-decoration: none;
+//   }
+ 
+.vcentre {
+    display: table-cell;
+    vertical-align: middle
+  }
+
+  div.scrollmenu {
+    background-color: transparent;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu div {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  div.scrollmenu div:hover {
+    background-color: #777;
+  }
+
+  .scrollmenuPreview {
+    background-color: transparent;
+    overflow: auto;
+    white-space: nowrap;
+  }
+
+  div.scrollmenuPreview div {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .centerHorizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .previewImage{
+    border-radius: 2%;
+    border-color: grey;
+    border-style: dashed;
+    border-width: 2px;
+    height: 300px !important;
+    width: 300px !important;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    display: flex;
+}
+
+  .first {
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .second {
+    position: absolute;
+    left: 25%;
+    top:25%;
+    display: block;
+    max-width: 50%;
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
+
+  .red{
+    color: red;
+}
+
+    // .scrolling-wrapper-preview {
+  //   padding-top: 10px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   overflow-x: scroll;
+  //   overflow-y: hidden;
+  //   white-space: nowrap;
+  //   flex-direction: row !important;
+  //   -webkit-overflow-scrolling: touch;
+  //   &::-webkit-scrollbar {
+  //     display: none;
+  //   }
+  
+  //   .card {
+  //     display: inline-block;
+  //     padding: 20px;
+  //   }
+  // }
