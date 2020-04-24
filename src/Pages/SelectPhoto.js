@@ -8,6 +8,7 @@ import StyleTwo from "./../Photos/cleanIcon.svg";
 import StyleThree from "./../Photos/everIcon.svg";
 
 import UploadButton from './../Components/UploadButton'
+import Header from './../Components/Header'
 
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -53,14 +54,29 @@ photoAdded = (photosrc, croppedsrc, name) => {
   this.setState({uploadedPhotos: currentPhotos})
 }
 
+closeCropper = () => {
+  this.setState({showCropperModal: false})
+}
+
+removePhoto = (photo) => {
+  let newPhotos = this.state.uploadedPhotos.filter(p => p.name !== photo.name)
+  this.setState({uploadedPhotos: newPhotos})
+}
+
 GetAvailablePreviews = (photos = []) =>{
   let previews = photos.map(photo =>
-      <div className="previewImage card">
-        <img src={this.state.activeStyle.img} className="first"/>
-        <img src={photo.croppedSrc} className="second" ></img>
+      <div className="previewImage card" onClick={() => this.showCropperForPhoto(photo)}>
+          <img src={this.state.activeStyle.img} className="first"/>
+          <img src={photo.croppedSrc} className="second" ></img>
       </div>
   )
   return previews;
+}
+
+showCropperForPhoto = (photo) =>{
+  console.log('Getn set up')
+  this.setState({showCropperModal : true,
+  imageForCrop: photo})
 }
 
 GetAvailableStyles(){
@@ -89,20 +105,7 @@ checkOutExit(){
   render() {
     return (
       <div className="pageCard">
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>
-            <Button href="home">
-              <i className="fa fa-arrow-circle-left"></i>
-            </Button>
-          </Navbar.Brand>
-          <Nav className="container-fluid">
-            <Nav.Item id="menuPopOver" className="ml-auto">
-              <Button>
-              <i class="fa fa-bars" aria-hidden="true"></i>
-              </Button>
-            </Nav.Item>
-          </Nav>
-        </Navbar>
+        <Header/>
           <Card.Header>
             <div className="centerHorizontal">
               <h2>
@@ -115,20 +118,49 @@ checkOutExit(){
           </div>
           <div className="scrollmenuPreview">
             <div className="vcentre">
-              <UploadButton showModal={false} imageForCrop={this.state.uploadedPhotos[0]} photoAdded={this.photoAdded}/>
+              <UploadButton closeCropper={this.closeCropper} 
+                removePhoto={this.removePhoto}
+                showModal={this.state.showCropperModal} 
+                imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
             </div>           
             {this.GetAvailablePreviews(this.state.uploadedPhotos)}
           </div>
           <SlidingPane
-                closeIcon={this.checkOutExit()}
                 isOpen={ this.state.showCheckout }
-                title='CheckOut'
+                title='Checkout'
                 from='right'
                 width='400px'
-                onRequestClose={ () => this.setState({ showCheckout: false }) }>
-                <div>Check Me Out Bitch</div>
+                onRequestClose={() => this.setState({ showCheckout: false }) }>
+                <div>
+                <hr/>
+                  <Container>
+                    <Row>
+                      <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                      <h4>   Address </h4>
+                    </Row>
+                    <Row>
+                      <h4>   form to get address</h4>
+                    </Row>
+                    <hr/>
+                    <Row>
+                      <h5> Summary </h5>
+                    </Row>
+                    <Row>
+                      <h7>
+                        Number of Images : {this.state.uploadedPhotos.length}
+                      </h7>
+                    </Row>
+                    <Row>
+                    <h7>
+                       Style Selected: {this.state.activeStyle.name}
+                      </h7>
+                    </Row>
+                    <hr/>
+                  </Container>
+                 Check this out bitch
+                </div>
             </SlidingPane>
-          <div className="footer">
+            <div className="footer">
             <Card.Footer>
               <Button onClick={this.ShowCheckout} className="footerButton">
               Checkout

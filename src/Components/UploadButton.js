@@ -10,7 +10,7 @@ class UploadButton extends React.Component {
     constructor(props) {
         super(props);  
         this.state = {
-            src: null,
+            src: this.props.imageForCrop,
             cropResult: null,
             showModal: this.props.showModal,
             mouseOverUpload: false,
@@ -74,14 +74,23 @@ class UploadButton extends React.Component {
       </label>
     </div>
     }
-    
+  
+    closeCropper = () =>{
+      this.props.closeCropper()
+      this.setState({showModal: false})
+    }
+
+    removePhoto = () =>{
+      this.props.removePhoto(this.props.imageForCrop)
+      this.closeCropper()
+    }
 
   render() {
     return (
       <div>
           {this.UploadButton()}
-          <Modal show={this.state.showModal} o>
-              <Modal.Header closeButton>
+          <Modal show={this.props.showModal || this.state.showModal} o>
+              <Modal.Header>
                 <Modal.Title>Crop Image</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -100,8 +109,11 @@ class UploadButton extends React.Component {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={() => this.setState({showModal: false})}>
-                  Close
+                <Button variant="danger" onClick={() => this.removePhoto()}>
+                  Delete
+                </Button>
+                <Button variant="primary" onClick={this.closeCropper}>
+                  Confirm
                 </Button>
               </Modal.Footer>
             </Modal>
