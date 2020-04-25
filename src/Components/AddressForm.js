@@ -7,8 +7,7 @@ class AddressForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          showModal: false,
-          modalToShow: null
+          showModal: false
         }
     }
 
@@ -24,26 +23,38 @@ class AddressForm extends React.Component {
   render() {
     return (
       <div>
-        <Form>
-            <Form.Group controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+        <Modal show={this.props.showModal || this.state.showModal} o>
+          <Modal.Header>
+            <Modal.Title>Add Address Information</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <div style={{ width: '100%' }}>
+            <Form>
+              <Form.Group controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" 
                 defaultValue="David@Hotamil.com"
                 id="emailinput"
                 placeholder="Enter email" />
-            </Form.Group>
+              </Form.Group>
 
-            <Form.Group controlId="validationCustom01">
+              <Form.Group controlId="validationCustom01">
                 <Form.Label> Name </Form.Label>
                 <Form.Control type="text"
                 placeholder="Name"
                 id="emailinput"
                 defaultValue="default" />
-            </Form.Group>
-            <Button variant="primary" onClick={(e) => this.handleSubmitAddress(e)}>
-                Submit
-            </Button>
-        </Form>
+              </Form.Group>
+              <Button variant="danger" onClick={this.props.closeModal}>
+                  Cancel
+              </Button>
+              <Button variant="primary" onClick={(e) => this.handleSubmitAddress(e)}>
+                  Submit
+              </Button>
+              </Form>
+            </div>
+          </Modal.Body>
+        </Modal>
       </div>
     )
   }

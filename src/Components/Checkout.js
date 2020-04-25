@@ -14,8 +14,7 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          showModal: false,
-          modalToShow: null
+          showAddressModal: false
         }
     }
 
@@ -48,13 +47,11 @@ handleSubmitPayment = (token) =>{
                 <div>
                 <hr/>
                   <Container>
-                    <Row>
-                      <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                      <h4>   Address </h4>
+                    <Row onClick={()=> this.setState({showAddressModal: true})}>
+                        <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                        <h4>  Add Address </h4>
                     </Row>
-                    <Row>
-                        <AddressForm/>
-                    </Row>
+                    <AddressForm showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
                     <hr/>
                     <Row>
                       <h5> Summary </h5>
