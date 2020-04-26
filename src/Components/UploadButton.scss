@@ -1,6 +1,21 @@
 input[type=file] { 
     visibility: hidden;
-    position: absolute
+    position: absolute;
+    opacity: 0.0;
+
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+ 
+    /* IE 5-7 */
+    filter: alpha(opacity=0);
+  
+    /* Netscape or and older firefox browsers */
+    -moz-opacity: 0.0;
+ 
+    /* older Safari browsers */
+    -khtml-opacity: 0.0;
+ 
+    position: absolute;
 }
   
 .uploadButton{
@@ -13,8 +28,6 @@ input[type=file] {
     justify-content: center;
     align-items: center;
     text-align:center;
-    display: flex;
-
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
         transform: scale(1);
         animation: pulse 2s infinite;
@@ -48,14 +61,58 @@ input[type=file] {
       }
   }
 
+
+  .uploadButtonMouseOver{
+    border-radius: 2%;
+    border-color: grey;
+    border-style: dashed;
+    border-width: 2px;
+    height: 300px !important;
+    width: 300px !important;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    display:flex;
+}
+
+.outer {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100%;
+    width: 100%;
+}
+
  .fromPc{
-     height: max-content;
-     width: 50%;
-     padding-right: 10px;
+    height: 50%;
+    width: 100%;
+    padding-right: 10px;
+    display:flex;
+    border-radius: 5%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    margin-bottom: 5px;
+    position: relative;
+    text-align: center;
  }
 
  .fromSocial{
-    height: max-content;
-    width: 50%;
+    height: 50%;
+    width: 100%;
     padding-left: 10px;
+    margin-top: 5px;
+    border-radius: 5%;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    margin-bottom: 5px;
+ }
+
+ .socialIcon{
+     margin-left: 5px;
+     margin-right: 5px;
+ }
+
+ .black{
+     color: black;
  }
