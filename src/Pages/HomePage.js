@@ -56,7 +56,7 @@ class HomePage extends React.Component {
           <div className="headerText2 bg-light">Love Real Wood. Love Sustainability</div>  
           <div className="promoVideo">
                
-               <img src={promoVideo} width = "600px" height = "300px" ></img>
+               <img className = "promoVideo"src={promoVideo}></img>
          
              </div>
              <div className="reviewStars bg-light">
