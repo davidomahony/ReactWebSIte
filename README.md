@@ -11,10 +11,10 @@ Dave Todo (Front End)
     Select Style
         - centre stuff
         - Upload Button
-            - Whole look of Button needs to be cleaned up
-            - Would like clear division between 2 options
             - Rotate 90Degrees
             - On Hover color
+            - Add text below options
+            - Make entire div clickable for input
         - Crop Image view needs to be cleaned
         - Crop image view increase space between cofirm image and delete
 
@@ -28,6 +28,10 @@ Dave Todo (Front End)
     General
         - On buttons mouse over should display a different cursor
         - Would like some tool tips
+        - Need a loading screen
+        - Need a 404 Page
+        - Integrate Fboook & Co
+        - Need a color scheme
 
 Bugs Noticed
 - Small images and preview
