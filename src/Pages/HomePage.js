@@ -9,29 +9,34 @@ import ReviewImage from './../Photos/ReviewImages.jpg'
 
 import Footer from  './../Components/Footer'
 
+import Slider from "react-slick";
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
         reviewSlides: ['Slide One', 'Slide Two', 'Slide Three', 'Slide Four'],
-        numberofSlide : Math.floor(window.innerWidth/400)
+        numberofSlides : Math.floor(window.innerWidth/400) < 1 ? 1 : Math.floor(window.innerWidth/400)
     }
   }
 
     GetReviewSlides(){
       let displayReviewSlides = this.state.reviewSlides.map(slide => 
-        <Carousel.Item>
-          <div>
-          <img src={ReviewImage}></img>
-          </div>
-          <Carousel.Caption>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
-          </Carousel.Caption>
-        </Carousel.Item>
-        )
+        <div className="reviewSlide">
+          <Card>
+            <Card.Header>
+              Yuppa
+            </Card.Header>
+            <img src={ReviewImage}></img>
+            <Card.Footer>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+            </Card.Footer>
+          </Card>
+        </div>)
       return displayReviewSlides
   }
+
 
   render() {
     return (
@@ -47,9 +52,9 @@ class HomePage extends React.Component {
             width='100%'
             height='100%'
             url='https://www.youtube.com/watch?v=o_RXZyojl8k&list=RDo_RXZyojl8k&start_radio=1'/>
-          <Carousel>
+            <Slider dots={true} slidesToShow={this.state.numberofSlides} >
             {this.GetReviewSlides()}
-          </Carousel>
+            </Slider>
           <Footer WhatAction="GoToSelectPhoto" IsButtonEnabled={true}/>
       </div>
     )

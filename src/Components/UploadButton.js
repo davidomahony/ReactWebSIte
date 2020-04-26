@@ -54,17 +54,19 @@ class UploadButton extends React.Component {
 
     UploadButton(){
     return this.state.mouseOverUpload ? 
-    <div className="uploadButton"  onMouseLeave={() => this.setState({mouseOverUpload : false})}>
-      <div className="fromPc">
-        <label className="width" htmlFor="uploader">
-        <i class="fa fa-upload blue fa-3x"></i>
-        </label>
+    <div className="uploadButtonMouseOver"  onMouseLeave={() => this.setState({mouseOverUpload : false})}>
+      <div className="outer">
+        <div className="fromPc">
+          <label htmlFor="uploader">
+            <i class="fa fa-upload blue fa-3x"></i>
+          </label>
           <input id="uploader" type="file" onChange={this.onChange}></input>
-    </div>
-    <div className="fromSocial">
-    <button>
-        <i class="fa fa-facebook-square blue fa-3x" aria-hidden="true"></i>
-        </button>
+        </div>
+        <div className="fromSocial">
+        <i class="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
+        <i class="fa fa-instagram fa-3x socialIcon black" aria-hidden="true"></i>
+        <i class="fa fa-google fa-3x socialIcon blue" aria-hidden="true"></i>
+        </div>
       </div>
     </div> : 
     <div className="uploadButton" 
@@ -74,6 +76,29 @@ class UploadButton extends React.Component {
       </label>
     </div>
     }
+
+    // UploadButton(){
+    //   return this.state.mouseOverUpload ? 
+    //   <div className="uploadButton"  onMouseLeave={() => this.setState({mouseOverUpload : false})}>
+    //     <div className="fromPc">
+    //       <label className="width" htmlFor="uploader">
+    //       <i class="fa fa-upload blue fa-3x"></i>
+    //       </label>
+    //         <input id="uploader" type="file" onChange={this.onChange}></input>
+    //   </div>
+    //   <div className="fromSocial">
+    //   <button>
+    //       <i class="fa fa-facebook-square blue fa-3x" aria-hidden="true"></i>
+    //       </button>
+    //     </div>
+    //   </div> : 
+    //   <div className="uploadButton" 
+    //   onMouseOver={() => this.setState({mouseOverUpload: true})}>
+    //     <label color= "blue">
+    //       <i class="fa fa-upload blue fa-4x"></i>
+    //     </label>
+    //   </div>
+    //   }
   
     closeCropper = () =>{
       this.props.closeCropper()
