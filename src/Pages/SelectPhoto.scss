@@ -24,12 +24,15 @@
 .vcentre {
     display: table-cell;
     vertical-align: middle
+
   }
 
   div.scrollmenu {
     background-color: transparent;
     overflow: auto;
     white-space: nowrap;
+    text-align: center;
+    max-height: 100px;
   }
   
   div.scrollmenu div {
@@ -40,6 +43,8 @@
     text-decoration: none;
     justify-content: center;
     align-items: center;
+
+    
   }
   
   div.scrollmenu div:hover {
@@ -52,7 +57,7 @@
     white-space: nowrap;
   }
 
-  .scrollmenuPreview div {
+  div.scrollmenuPreview div {
     display: inline-block;
     color: white;
     text-align: center;
@@ -60,6 +65,7 @@
     text-decoration: none;
     justify-content: center;
     align-items: center;
+    margin-left: 20%;
   }
   
 
@@ -67,6 +73,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+max-height: 50px;
   }
 
   .previewImage{
