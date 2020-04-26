@@ -62,12 +62,15 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="primary" variant="dark">
           <Navbar.Brand>
+          
             <Button href="home">
               <i className="fa fa-arrow-circle-left"></i>
             </Button>
+         
           </Navbar.Brand>
+          <div>Select Style</div>
           <Nav className="container-fluid">
             <Nav.Item id="menuPopOver" className="ml-auto">
             <DropdownButton alignRight  id="dropdown-menu-align-right" title={<i class="fa fa-bars" aria-hidden="true"></i>}>

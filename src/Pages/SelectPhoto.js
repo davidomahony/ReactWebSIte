@@ -89,13 +89,7 @@ GetAvailableStyles(){
     return (
       <div className="pageCard">
         <Header/>
-          <Card.Header>
-            <div className="centerHorizontal">
-              <h2>
-              Select Style 
-              </h2>
-            </div>
-          </Card.Header>
+        
           <div className="scrollmenu">
            {this.GetAvailableStyles()}
           </div>
