@@ -1,8 +1,10 @@
 import React from 'react'
 import {Card, Navbar, Modal, Form, Container, Row, NavDropdown, Nav, DropdownButton, Dropdown, Button} from 'react-bootstrap'
+import { v4 as uuidv4 } from 'uuid';
 
 import StripeCheckout from 'react-stripe-checkout';
-
+import axios from 'axios'
+import {ConvertUrlToFile} from './../Utility'
 
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -14,26 +16,85 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          showAddressModal: false
+          showAddressModal: false,
+          uuid: null,
+          images: []
         }
     }
 
-handleSubmitPayment = (token) =>{
+    async onToken (token){ // On a successful tokenization request,
+      console.log('Attempting To Charge Card')
+      console.log(token)
+      console.log('Processing')
+      const paymentData = {
+        token,
+        email: 'Daverock914@gmail.com',
+        uuid: this.state.uuid,
+        names: {...this.state.images},
+        charge: {
+          amount: this.props.uploadedPhotos.length*1000,
+          currency: 'eur',
+        },
+        style: this.props.activeStyle
+      };
+      console.log('Sending Post')
+      const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(paymentData),
+      });
+      console.log('Response Recieved')
+      let returned = response.json()
+      console.log(returned)
+    }
+
+  handleSubmitAddress = (event) => {
+      const form = event.currentTarget.parentNode;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+  handleSubmitpayment = (token) =>{
     console.log('Attempting To Charge Card')
     console.log(token)
     console.log('Processing')
-    //this.processInformation(token)
+    this.onToken(token)
     console.log('Done Processing')
     //this.stripeTokenHandler(token)
-    }
+  }
 
-    handleSubmitAddress = (event) => {
-        const form = event.currentTarget.parentNode;
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      };
+  handleTestCheckout = () =>{
+    this.setState({uuid: uuidv4()})
+    console.log('Testcheckout')
+    let images = [];
+    for (let i = 0 ; i < this.props.uploadedPhotos.length; i++){
+      // Upload Cropped Files To Checkout Bucket
+      let imageName = `${this.state.uuid}_${this.props.uploadedPhotos[i].dateAndTime}_${this.props.uploadedPhotos[i].name}`;
+      let file = ConvertUrlToFile(this.props.uploadedPhotos[i].croppedSrc, this.props.uploadedPhotos[i].imageType, imageName)
+      try {
+        axios.post('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + "Images/" + `${this.state.uuid}/` + file.name).then(response =>{
+         try
+         {
+          axios.put(response.data.signed_url, file)
+          images.push(imageName);
+         }
+         catch{
+           console.log("err")
+         }
+        
+        }).then(response => {
+          console.log(response)
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    this.setState({images: images})
+  }
 
   render() {
     return (
@@ -69,9 +130,14 @@ handleSubmitPayment = (token) =>{
                     <hr/>
                     <Row>
                     <StripeCheckout
-                        token={this.handleSubmitPayment}
+                        token={this.handleSubmitpayment}
                         stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M"
                       />
+                    </Row>
+                    <Row>
+                      <Button onClick={this.handleTestCheckout}>
+                        Test Checkout
+                      </Button>
                     </Row>
                   </Container>
                 </div>
