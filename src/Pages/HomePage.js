@@ -1,6 +1,7 @@
 import React from 'react'
 import {Card, Navbar, Pagination, PageItem, Carousel, Button} from 'react-bootstrap'
 
+import axios from 'axios';
 import ReactPlayer from 'react-player'
 
 import './HomePage.scss'
@@ -10,7 +11,6 @@ import logoMain from './../Photos/logoMain.svg'
 import promoVideo from './../Photos/wallImage.jpg'
 
 import Footer from  './../Components/Footer'
-
 import Slider from "react-slick";
 
 class HomePage extends React.Component {
@@ -39,10 +39,73 @@ class HomePage extends React.Component {
       return displayReviewSlides
   }
 
+  // GetUrl = (e) => {
+  //     e.preventDefault();
+  //     let files;
+  //     if (e.dataTransfer) {
+  //       files = e.dataTransfer.files;
+  //     } else if (e.target) {
+  //       files = e.target.files;
+  //     }
+  //     try {
+  //       axios.post('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + files[0].name).then(response =>{
+  //       let fd = new FormData();
+  //       //fd.append()
+  //        fd.append("file", files[0]); 
+  //        try
+  //        {
+  //         axios.put(response.data.signed_url, fd)
+  //        }
+  //        catch{
+  //          console.log("err")
+  //        }
+        
+  //       }).then(response => {
+  //         console.log(response)
+  //       })
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+
+    // let fd = new FormData();
+    // fd.append("file", files[0]);
+    // console.log("getn da url")
+    // const Http = new XMLHttpRequest();
+    // const url='https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + files[0].name;
+    // Http.open("POST", url);
+    // Http.send();
+    // const HttpA = new XMLHttpRequest();
+    // Http.onreadystatechange = (e) => 
+    // {
+    //   let signedUrl = JSON.parse(Http.responseText)
+    //   console.log(signedUrl)
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.open('PUT', signedUrl.signed_url);
+    //   xhr.onreadystatechange = (e) => {
+    //     console.log(e);
+    //     if(xhr.readyState === 4){
+          
+    //       if(xhr.status === 200){
+
+    //       }
+    //       console.log(xhr.status)
+    //     }
+    //   };
+    //   xhr.send(files[0]);
+
+    // }
+//};
 
   render() {
     return (
       <div classname="pageCard">
+        <Button onClick={() => this.GetUrl()}>
+          Test url
+        </Button>
+        <label htmlFor="uploader">
+            <i className="fa fa-upload blue fa-3x"></i>
+          </label>
+        <input id="uploader" type="file" onInput={this.GetUrl}></input>
             <Card.Header>
               <div className="centerHorizontal">
           
