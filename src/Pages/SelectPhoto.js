@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Navbar, Nav, Carousel, Form, Button, Popover, NavDropdown, Container, Row, Alert} from 'react-bootstrap'
+import {Card} from 'react-bootstrap'
 import { v4 as uuidv4 } from 'uuid';
 import './SelectPhoto.scss'
 
