@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, Navbar, Nav, Carousel, Form, Button, Popover, NavDropdown, Container, Row, Alert} from 'react-bootstrap'
-
+import { v4 as uuidv4 } from 'uuid';
 import './SelectPhoto.scss'
 
 import StyleOne from "./../Photos/boldIcon.svg";
@@ -102,19 +102,22 @@ GetAvailableStyles(){
            {this.GetAvailableStyles()}
           </div>
           <div className="scrollmenuPreview">
-            <div className="vcentre">
-              <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
-                removePhoto={this.removePhoto}
-                showModal={this.state.showCropperModal} 
-                imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
-            </div>           
-            {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+            <div className="previewContainer">
+              {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+              <div className="vcentre">
+                <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
+                  removePhoto={this.removePhoto}
+                  showModal={this.state.showCropperModal} 
+                  imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
+              </div> 
+            </div>          
           </div>
           <Checkout showCheckout={this.state.showCheckout} 
             closeCheckout={() => this.setState({showCheckout : false})}
             activeStyle={this.state.activeStyle}
+            uuid={this.state.uuid} 
             uploadedPhotos={this.state.uploadedPhotos} />
-          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true})} IsButtonEnabled={true}/>
+          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
       </div>
     )
   }
