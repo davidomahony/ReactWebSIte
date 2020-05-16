@@ -1,8 +1,9 @@
 import React from 'react'
 import Cropper from 'react-cropper';
 import axios from 'axios';
-import {Card, Navbar, Modal, Button} from 'react-bootstrap'
-
+import {Modal, Button} from 'react-bootstrap'
+import { trackPromise } from 'react-promise-tracker';
+import {LoadingIndicator} from './../Utility'
 import './UploadButton.scss'
 import 'cropperjs/dist/cropper.css';
 
@@ -32,25 +33,23 @@ class UploadButton extends React.Component {
           files = e.target.files;
         }
         // Need to ad unique ID
-        try {
-          axios.post('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + files[0].name).then(response =>{
-           try
-           {
-            axios.put(response.data.signed_url, files[0])
-           }
-           catch{
-             console.log("err")
-           }
-          
-          }).then(response => {
-            console.log(response)
-          })
-        } catch (error) {
-          console.error(error)
-        }
+          try {
+            axios.post('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + files[0].name).then(response =>{
+             try
+             {
+              axios.put(response.data.signed_url, files[0])
+             }
+             catch{
+               console.log("err")
+             }
+            
+            }).then(response => {
+              console.log(response)
+            })
+          } catch (error) {
+            console.error(error)
+          }
       
-    
-
         this.setState({
           fileSrc: files[0],
           dateAndTime: Date.now(),
@@ -137,6 +136,7 @@ class UploadButton extends React.Component {
                     cropend={() => this.cropImage()}
                     ref={cropper => { this.cropper = cropper; }}
                 />
+               <LoadingIndicator/>
                 </div>
               </Modal.Body>
               <Modal.Footer>

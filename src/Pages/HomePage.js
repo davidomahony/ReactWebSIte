@@ -1,8 +1,5 @@
 import React from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
-
-import axios from 'axios';
-import ReactPlayer from 'react-player'
+import {Card} from 'react-bootstrap'
 
 import './HomePage.scss'
 

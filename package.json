@@ -18,6 +18,7 @@
     "react-list": "^0.8.13",
     "react-loading-overlay": "^1.0.1",
     "react-player": "^1.15.3",
+    "react-promise-tracker": "^2.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-scrollbar-js": "^1.0.1",
