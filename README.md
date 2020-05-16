@@ -35,10 +35,15 @@ Dave Todo (Front End)
 
 Bugs Noticed
 - Small images and preview
+- Bug with input file onchange event not firing when image addded in some browsers
 
 Testing To do
 - Mobile 
 - Browser
+
+Other issues
+- Upload file Validation
+- Cookies
 
 JD ToDO
 

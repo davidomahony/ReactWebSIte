@@ -1,6 +1,6 @@
 import React from 'react'
-import {Card, Navbar, Nav, Carousel, Form, Button, Popover, NavDropdown, Container, Row, Alert} from 'react-bootstrap'
-
+import {Card} from 'react-bootstrap'
+import { v4 as uuidv4 } from 'uuid';
 import './SelectPhoto.scss'
 
 import StyleOne from "./../Photos/boldIcon.svg";
@@ -42,12 +42,14 @@ class SelectPhoto extends React.Component {
     }
 }
 
-photoAdded = (photosrc, croppedsrc, name) => {
+photoAdded = (photosrc, croppedsrc, name, dateAndTime, imageType) => {
   let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.name !== name)
   currentPhotos.push({
     photoSrc: photosrc,
     croppedSrc: croppedsrc,
-    name: name
+    name: name,
+    imageType: imageType,
+    dateAndTime: dateAndTime
   })
   console.log('And we are back in the room')
   this.setState({uploadedPhotos: currentPhotos})
@@ -76,7 +78,7 @@ showCropperForPhoto = (photo) =>{
 
 GetAvailableStyles(){
   return this.state.availableStyles.map(style =>
-    <div>
+    <div key={style.name}>
       <button className="card" onClick={() => this.setState({activeStyle: style})}>
           {style.name}
           <img src={style.img}></img>
@@ -100,19 +102,22 @@ GetAvailableStyles(){
            {this.GetAvailableStyles()}
           </div>
           <div className="scrollmenuPreview">
-            <div className="vcentre">
-              <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
-                removePhoto={this.removePhoto}
-                showModal={this.state.showCropperModal} 
-                imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
-            </div>           
-            {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+            <div className="previewContainer">
+              {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+              <div className="vcentre">
+                <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
+                  removePhoto={this.removePhoto}
+                  showModal={this.state.showCropperModal} 
+                  imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
+              </div> 
+            </div>          
           </div>
           <Checkout showCheckout={this.state.showCheckout} 
             closeCheckout={() => this.setState({showCheckout : false})}
             activeStyle={this.state.activeStyle}
+            uuid={this.state.uuid} 
             uploadedPhotos={this.state.uploadedPhotos} />
-          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true})} IsButtonEnabled={true}/>
+          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
       </div>
     )
   }

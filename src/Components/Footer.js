@@ -14,24 +14,26 @@ class Footer extends React.Component {
         if (this.props.WhatAction === "GoToCheckOut"){
             return  <Button disabled={this.props.IsButtonDisabled} onClick={this.props.Action} className="footerButton">
             Checkout
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </Button>
         }
         else if (this.props.WhatAction === "GoToSelectPhoto"){
             return <Button disabled={this.props.IsButtonDisabled} href="SelectPhotos" className="footerButton">
             Select Photos 
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </Button>
         }
     }
 
   render() {
     return (
+      <div className="footerHolder">
         <div className="footer">
             <Card.Footer>
             {this.GetCorrectButton()}
             </Card.Footer>
         </div>
+      </div>
     )
   }
 }
