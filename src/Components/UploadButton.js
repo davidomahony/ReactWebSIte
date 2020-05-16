@@ -87,7 +87,7 @@ class UploadButton extends React.Component {
       <div className="outer">
         <div className="fromPc">
           <label htmlFor="uploader">
-            <i className="fa fa-upload blue fa-3x"></i>
+            <i className="fa fa-plus blue fa-3x"></i>
           </label>
           <input id="uploader" type="file" onInput={this.onChange}></input>
         </div>
@@ -101,7 +101,7 @@ class UploadButton extends React.Component {
     <div className="uploadButton" 
     onMouseOver={() => this.setState({mouseOverUpload: true})}>
       <label color= "blue">
-        <i className="fa fa-upload blue fa-4x"></i>
+        <i className="fa fa-plus blue fa-4x"></i>
       </label>
     </div>
     }

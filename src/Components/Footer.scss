@@ -1,8 +1,16 @@
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
+.footerHolder {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  position: fixed;
+  text-align: center;
+  max-width: 100%;
   }
+
+.footer {
+  text-align: center;
+  width: 1000px;
+  }
+
+.footerButton{
+  width: 100%;
+}
