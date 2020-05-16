@@ -29,7 +29,64 @@ class AddressForm extends React.Component {
           </Modal.Header>
           <Modal.Body>
           <div style={{ width: '100%' }}>
-            <Form>
+          <Form>
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Address</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Address 2</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>City</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Country</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Postcode</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+
+              <Form.Group className="specificForm" controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control type="email" 
+                defaultValue="David@Hotamil.com"
+                id="emailinput"
+                placeholder="Enter email" />
+              </Form.Group>
+              
               <Form.Group controlId="formBasicEmail" onSubmit={this.handleSubmitAddress}>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" 
@@ -38,13 +95,7 @@ class AddressForm extends React.Component {
                 placeholder="Enter email" />
               </Form.Group>
 
-              <Form.Group controlId="validationCustom01">
-                <Form.Label> Name </Form.Label>
-                <Form.Control type="text"
-                placeholder="Name"
-                id="emailinput"
-                defaultValue="default" />
-              </Form.Group>
+              
               <Button variant="danger" onClick={this.props.closeModal}>
                   Cancel
               </Button>
