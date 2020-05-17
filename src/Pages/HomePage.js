@@ -52,12 +52,14 @@ class HomePage extends React.Component {
               </div>
                  
           </Card.Header>
+          <div className="headerArea bg-light">
           <div className="headerText">SticPics are beautiful real wood products that attach easily to walls.</div> 
-          <div className="headerText2 bg-light">Love Real Wood. Love Sustainability</div>  
+          <div className="headerText2">Love Real Wood. Love Sustainability</div>  
           <div className="promoVideo">
                
                <img className = "promoVideo"src={promoVideo}></img>
          
+             </div>
              </div>
              <div className="headerText3 bg-light">
 One Perfect Size - Removable, reusable and leave no marks</div>  
