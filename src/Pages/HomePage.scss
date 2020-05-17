@@ -4,6 +4,11 @@
   box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
 }
 
+.mainLogo{
+  max-width: 300px;
+  max-height: 100px;
+}
+
 .reviewSlide{
     width: 250px !important;
     height: 350px !important;
@@ -44,26 +49,64 @@
   clear: both;
 }
 
-  .promoVideo{
-    text-align: center;
-    max-width: 100%;
-    height: auto;
-  }
+.promoVideo{
+  display: block;
+  margin-left: auto;
+   margin-right: auto;
+border-radius: 20px;
+text-align: center;
+max-width: 350px;
 
-  .mainLogo{
-    max-height: 70px
-  }
+}
 
-  .headerText{
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
-  }
 
-  .reviewStars{
-    text-align: center;
-  }
+
+
+.headerText{
+  padding-top: 15px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+
+}
+.headerText2{
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  font-size: large;
+font-weight: 600;
+  text-align: center;
+  color:#007bff;;
+
+}
+
+.headerText3{
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-size: medium;
+
+  text-align: center;
+  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
+}
+.reviewStars{
+  text-align: center;
+  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
+}
+
+
+.priceText{
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-size: x-large;
+
+  text-align: center;
+  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
+}

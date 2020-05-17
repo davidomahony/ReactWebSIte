@@ -1,5 +1,5 @@
 .footerHolder {
-  background: none repeat scroll 0 0 transparent;
+  background: white;
   bottom: 0;
   position: fixed;
   text-align: center;
@@ -8,9 +8,11 @@
 
 .footer {
   text-align: center;
-  width: 1000px;
+  width: auto;
   }
 
 .footerButton{
-  width: 100%;
+  max-width: 700px;
+  min-width: 300px;
+  
 }

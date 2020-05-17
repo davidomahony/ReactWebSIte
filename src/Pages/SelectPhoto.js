@@ -78,10 +78,10 @@ showCropperForPhoto = (photo) =>{
 
 GetAvailableStyles(){
   return this.state.availableStyles.map(style =>
-    <div key={style.name}>
-      <button className="card" onClick={() => this.setState({activeStyle: style})}>
+    <div className="imageContainer1" key={style.name}>
+      <button className="ImageContainer2" onClick={() => this.setState({activeStyle: style})}>
           {style.name}
-          <img src={style.img}></img>
+          <img classname="imageContainer3" src={style.img}></img>
       </button>
     </div>
     )
