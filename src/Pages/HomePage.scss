@@ -39,13 +39,7 @@ pageCard{
   
   }
   .headerArea{
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
+   
   }
 
   .promoVideo{
@@ -59,30 +53,27 @@ pageCard{
  }
 
 
-  .mainLogo{
 
-    max-height: 100px;
-    max-width: 250px;
-  }
 
   .headerText{
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    font-size: large;
+    padding-top: 15px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    font-size: larger;
     font-weight: bold;
     text-align: center;
 
   }
   .headerText2{
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    font-size: medium;
-
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    font-size: large;
+font-weight: 600;
     text-align: center;
+    color:#007bff;;
   
   }
 
@@ -100,6 +91,7 @@ pageCard{
     text-align: center;
     box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
   }
+  
 
   .priceText{
     padding-top: 10px;
