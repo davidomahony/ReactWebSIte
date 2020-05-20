@@ -22,15 +22,19 @@ class SelectPhoto extends React.Component {
         img: StyleOne
       },
       availableStyles:[{
-        name: 'StyleOne',
+        name: 'Clean',
         img: StyleOne
       },
       {
-        name: 'StyleTwo',
+        name: 'Ever',
         img: StyleTwo
       },
       {
-        name: 'StyleThree',
+        name: 'Classic',
+        img: StyleTwo
+      },
+      {
+        name: 'Bold',
         img: StyleThree
       }]
       ,

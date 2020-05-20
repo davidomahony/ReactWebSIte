@@ -1,7 +1,8 @@
 .pageCard{
-  max-width: 1000px;
+width: auto;
   margin: auto;
   height: 100%;
+  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
 }
 
 .vcentre {
@@ -91,14 +92,7 @@ div.scrollmenu div:hover {
   margin-right: auto;
 }
 
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  text-align: center;
-}
+
 
 .red{
   color: red;
@@ -106,7 +100,7 @@ div.scrollmenu div:hover {
 
 
 .imageContainer1{
-  max-width: 80px;
+  max-width: 100px;
  
 }
 .imageContainer2{
@@ -117,11 +111,11 @@ div.scrollmenu div:hover {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
+
   border-radius: .25rem;
- 
+  max-width: 100px;
 }
 .imageContainer3{
-
+max-width: 100px;
  
 }
