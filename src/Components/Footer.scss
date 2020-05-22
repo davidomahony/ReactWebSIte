@@ -1,8 +1,28 @@
+.footerHolder {
+  background: white;
+  bottom: 0;
+  position: fixed;
+  text-align: center;
+  max-width: 100%;
+  }
+
 .footer {
+  
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     color: white;
-    text-align: center;
+ 
+  background-color: white;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 50, 0.2) 0px -2px 5px;
+  font-size: larger;
   }
+
+.footerButton{
+  text-align: center;
+  max-width: 600px;
+  min-width: 200px;
+  
+}

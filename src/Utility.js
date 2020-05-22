@@ -1,4 +1,6 @@
-
+import { usePromiseTracker } from "react-promise-tracker";
+import React from 'react';
+import RiseLoader from "react-spinners/RiseLoader";
 
 export function  ConvertUrlToFile(dataURI, type, name) {
     var byteString = atob(dataURI.split(',')[1]);
@@ -11,4 +13,17 @@ export function  ConvertUrlToFile(dataURI, type, name) {
     blob.lastModifiedDate = new Date();
     blob.name = name;
     return  blob;
+}
+
+export const LoadingIndicator = props => {
+    const { promiseInProgress } = usePromiseTracker();
+    return (
+        promiseInProgress && 
+        <RiseLoader
+        css=""
+        size={15}
+        color={"#123abc"}
+        loading={true}
+    />
+    );  
 }

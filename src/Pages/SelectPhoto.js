@@ -1,6 +1,6 @@
 import React from 'react'
-import {Card, Navbar, Nav, Carousel, Form, Button, Popover, NavDropdown, Container, Row, Alert} from 'react-bootstrap'
-
+import {Card} from 'react-bootstrap'
+import { v4 as uuidv4 } from 'uuid';
 import './SelectPhoto.scss'
 
 import StyleOne from "./../Photos/boldIcon.svg";
@@ -22,15 +22,19 @@ class SelectPhoto extends React.Component {
         img: StyleOne
       },
       availableStyles:[{
-        name: 'StyleOne',
+        name: 'Clean',
         img: StyleOne
       },
       {
-        name: 'StyleTwo',
+        name: 'Ever',
         img: StyleTwo
       },
       {
-        name: 'StyleThree',
+        name: 'Classic',
+        img: StyleTwo
+      },
+      {
+        name: 'Bold',
         img: StyleThree
       }]
       ,
@@ -78,10 +82,10 @@ showCropperForPhoto = (photo) =>{
 
 GetAvailableStyles(){
   return this.state.availableStyles.map(style =>
-    <div key={style.name}>
-      <button className="card" onClick={() => this.setState({activeStyle: style})}>
+    <div className="imageContainer1" key={style.name}>
+      <button className="ImageContainer2" onClick={() => this.setState({activeStyle: style})}>
           {style.name}
-          <img src={style.img}></img>
+          <img classname="imageContainer3" src={style.img}></img>
       </button>
     </div>
     )
@@ -102,19 +106,22 @@ GetAvailableStyles(){
            {this.GetAvailableStyles()}
           </div>
           <div className="scrollmenuPreview">
-            <div className="vcentre">
-              <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
-                removePhoto={this.removePhoto}
-                showModal={this.state.showCropperModal} 
-                imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
-            </div>           
-            {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+            <div className="previewContainer">
+              {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+              <div className="vcentre">
+                <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
+                  removePhoto={this.removePhoto}
+                  showModal={this.state.showCropperModal} 
+                  imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
+              </div> 
+            </div>          
           </div>
           <Checkout showCheckout={this.state.showCheckout} 
             closeCheckout={() => this.setState({showCheckout : false})}
             activeStyle={this.state.activeStyle}
+            uuid={this.state.uuid} 
             uploadedPhotos={this.state.uploadedPhotos} />
-          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true})} IsButtonEnabled={true}/>
+          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
       </div>
     )
   }
