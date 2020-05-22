@@ -2,6 +2,8 @@ import { usePromiseTracker } from "react-promise-tracker";
 import React from 'react';
 import RiseLoader from "react-spinners/RiseLoader";
 
+import './Common.scss'
+
 export function  ConvertUrlToFile(dataURI, type, name) {
     var byteString = atob(dataURI.split(',')[1]);
     var ab = new ArrayBuffer(byteString.length);
@@ -26,4 +28,17 @@ export const LoadingIndicator = props => {
         loading={true}
     />
     );  
+}
+
+export const LoadingScreen = props =>{
+    return(
+        <div class="grid-container" >
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+            </div>
+        </div>
+    )
 }

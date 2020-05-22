@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card} from 'react-bootstrap'
+import {Card, Modal} from 'react-bootstrap'
 
 import './HomePage.scss'
 
@@ -7,6 +7,7 @@ import ReviewImage from './../Photos/ReviewImages.jpg'
 import logoMain from './../Photos/logoMain.svg'
 import promoVideo from './../Photos/wallImage.jpg'
 
+import {LoadingScreen} from './../Utility'
 import Footer from  './../Components/Footer'
 import Slider from "react-slick";
 
@@ -16,6 +17,7 @@ class HomePage extends React.Component {
 
     this.state = {
         reviewSlides: ['Slide One', 'Slide Two', 'Slide Three', 'Slide Four'],
+        promoImageLoaded: false,
         numberofSlides : Math.floor(window.innerWidth/250) < 1 ? 1 : window.innerWidth > 1000 ? 3 : Math.floor(window.innerWidth/250)
     }
   }
@@ -46,7 +48,7 @@ class HomePage extends React.Component {
         </Card.Header>
           <div className="headerText"> Sustainable Wood Frames</div> 
           <div className="promoVideo">
-            <img className = "promoVideo"src={promoVideo}></img>
+            <img className = "promoVideo"src={promoVideo} onLoad={() => this.setState({promoImageLoaded: true})}></img>
           </div>
           <br/>
           <div className="reviewStars bg-light">
@@ -73,6 +75,14 @@ class HomePage extends React.Component {
             <div class="column"> Contact Us </div>
           </div> 
           <Footer WhatAction="GoToSelectPhoto" IsButtonEnabled={true}/>
+          <Modal className="loadingModal"
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              animation={true}
+              show={!this.state.promoImageLoaded}>
+            <LoadingScreen/>
+          </Modal>
       </div>
     )
   }

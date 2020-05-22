@@ -3,14 +3,37 @@ import HomePage from './HomePage'
 import SelectPhotoPage from './SelectPhoto'
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
 
-export default function App() {
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading:true
+        }
+    }
+
+    componentDidMount() {
+        setTimeout(() => this.setState({loading: false}), 1000)
+      }
+
+  render() {      
     return (
-        <main>
-            <Switch>
-                <Route path="/" exact component={HomePage} />
-                <Route path="/Home" exact component={HomePage} />
-                <Route path="/SelectPhotos" exact component={HomePage} />
-            </Switch>
-        </main>
+        <div>
+            {/* {this.state.loading ? 
+            <div>
+                Loading
+            </div>
+            : */}
+            <Router>
+                <Switch>
+                    <Route path="/" exact component={SelectPhotoPage} />
+                    <Route path="/Home" exact component={HomePage} />
+                    <Route path="/SelectPhotos" exact component={SelectPhotoPage} />
+                </Switch>
+            </Router>
+  }
+        </div>
     )
+  }
 }
+
+export default App
