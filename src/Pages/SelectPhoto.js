@@ -42,13 +42,11 @@ class SelectPhoto extends React.Component {
     }
 }
 
-photoAdded = (photosrc, croppedsrc, name, dateAndTime, imageType) => {
-  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.name !== name)
+photoAdded = (url, name, dateAndTime) => {
+  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.dateAndTime !== dateAndTime)
   currentPhotos.push({
-    photoSrc: photosrc,
-    croppedSrc: croppedsrc,
+    url: url,
     name: name,
-    imageType: imageType,
     dateAndTime: dateAndTime
   })
   console.log('And we are back in the room')
@@ -56,7 +54,7 @@ photoAdded = (photosrc, croppedsrc, name, dateAndTime, imageType) => {
 }
 
 removePhoto = (photo) => {
-  let newPhotos = this.state.uploadedPhotos.filter(p => p.name !== photo.name)
+  let newPhotos = this.state.uploadedPhotos.filter(p => p.dateAndTime !== photo.dateAndTime)
   this.setState({uploadedPhotos: newPhotos})
 }
 
@@ -64,7 +62,7 @@ GetAvailablePreviews = (photos = []) =>{
   let previews = photos.map(photo =>
       <div className="previewImage card" onClick={() => this.showCropperForPhoto(photo)}>
           <img src={this.state.activeStyle.img} className="first"/>
-          <img src={photo.croppedSrc} className="second" ></img>
+          <img src={photo.url} className="second" ></img>
       </div>
   )
   return previews;

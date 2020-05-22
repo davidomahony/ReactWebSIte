@@ -35,8 +35,16 @@ class Checkout extends React.Component {
           amount: this.props.uploadedPhotos.length*1000,
           currency: 'eur',
         },
-        style: this.props.activeStyle
+        uploadedPhotos: this.props.uploadedPhotos.map(photo => photo.url),
+        style: this.props.activeStyle,
+        address:{
+          lineOne: "lineOne",
+          lineTwo: "lineTwo",
+          city: 'Cork',
+          country: "ireland"
+        }
       };
+      console.log(paymentData);
       console.log('Attempting Communication with Stripe')
       const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
         method: 'POST',
@@ -87,37 +95,6 @@ class Checkout extends React.Component {
     console.log('Done Processing')
     //this.stripeTokenHandler(token)
   }
-
-  handleTestCheckout = () =>{
-    console.log('Testcheckout')
-    this.setState({showSpinner : true})
-    let images = [];
-    for (let i = 0 ; i < this.props.uploadedPhotos.length; i++){
-      // Upload Cropped Files To Checkout Bucket
-      let imageName = `${this.props.uuid}_${this.props.uploadedPhotos[i].dateAndTime}_${this.props.uploadedPhotos[i].name}`;
-      console.log(imageName)
-      let file = ConvertUrlToFile(this.props.uploadedPhotos[i].croppedSrc, this.props.uploadedPhotos[i].imageType, imageName)
-      try {
-        axios.post('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/presigned-post-data?name=' + "Images/" + `${this.props.uuid}/` + file.name).then(response =>{
-         try
-         {
-           trackPromise(axios.put(response.data.signed_url, file))
-           images.push(imageName);
-         }
-         catch{
-           console.log("err")
-         }
-        
-        }).then(response => {
-          console.log(response)
-        })
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    this.setState({images: images, showSpinner: false})
-  }
-
 
   displayResultFromPayment(){
     return(
