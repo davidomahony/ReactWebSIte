@@ -10,16 +10,11 @@ import { Switch, Route, BrowserRouter  } from 'react-router-dom'
 
 import HomePage from './Pages/HomePage'
 import SelectPhotoPage from './Pages/SelectPhoto'
+import App from './Pages/App';
 
 ReactDOM.render(
   <div>
-    <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={SelectPhotoPage} />
-      <Route path="/Home" exact component={HomePage} />
-      <Route path="/SelectPhotos" exact component={SelectPhotoPage} />
-    </Switch>
-  </BrowserRouter>
+    <App/>
   </div>,
   document.getElementById('root')
 );
