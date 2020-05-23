@@ -1,5 +1,6 @@
 import React from 'react'
-import {Card, Modal} from 'react-bootstrap'
+import {Card, Modal, Button} from 'react-bootstrap'
+import Cookies from 'universal-cookie';
 
 import './HomePage.scss'
 
@@ -18,7 +19,17 @@ class HomePage extends React.Component {
     this.state = {
         reviewSlides: ['Slide One', 'Slide Two', 'Slide Three', 'Slide Four'],
         promoImageLoaded: false,
-        numberofSlides : Math.floor(window.innerWidth/250) < 1 ? 1 : window.innerWidth > 1000 ? 3 : Math.floor(window.innerWidth/250)
+        numberofSlides : Math.floor(window.innerWidth/250) < 1 ? 1 : window.innerWidth > 1000 ? 3 : Math.floor(window.innerWidth/250),
+        hasAcceptedCookieModal: false
+    }
+  }
+
+  componentDidMount(){
+    if (!this.state.hasAcceptedCookieModal){
+      let cookie = cookies.get('hasAcceptedCookies')
+      if (cookie === undefined || cookie) {
+        this.setState({hasAcceptedCookieModal: cookie})
+      }
     }
   }
 
@@ -83,9 +94,28 @@ class HomePage extends React.Component {
               show={!this.state.promoImageLoaded}>
             <LoadingScreen/>
           </Modal>
+          <Modal show={!this.state.hasAcceptedCookieModal}>
+            <Modal.Header>
+              Cookies
+            </Modal.Header>
+            <Modal.Body>
+              Boring legal stuff
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={() => 
+              {
+                this.setState({hasAcceptedCookieModal: true})
+                cookies.set("hasAcceptedCookies", true)
+              }}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
       </div>
     )
   }
 }
 
 export default HomePage
+
+const cookies = new Cookies();

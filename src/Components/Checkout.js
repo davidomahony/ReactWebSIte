@@ -2,13 +2,11 @@ import React from 'react'
 import {Modal, Container, Row, Button} from 'react-bootstrap'
 
 import StripeCheckout from 'react-stripe-checkout';
-import axios from 'axios'
-import {ConvertUrlToFile} from './../Utility'
-import { trackPromise } from 'react-promise-tracker';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './Checkout.scss'
 import AddressForm from './AddressForm'
+import './Checkout.scss'
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -20,7 +18,17 @@ class Checkout extends React.Component {
           showSpinner: false,
           showPaymentModal: false,
           resultFromPayment: "",
-          paymentSuccess: false
+          paymentSuccess: false,
+          address: {
+            email: '',
+            fullName: '',
+            address: '',
+            address2: '',
+            city: '',
+            postCode: '',
+            country: ''
+          },
+          addressUpdated: false
         }
     }
 
@@ -28,7 +36,7 @@ class Checkout extends React.Component {
       console.log('Processing Details')
       const paymentData = {
         token,
-        email: 'Daverock914@gmail.com',
+        email: this.state.address.email,
         uuid: this.props.uuid,
         names: {...this.state.images},
         charge: {
@@ -37,14 +45,8 @@ class Checkout extends React.Component {
         },
         uploadedPhotos: this.props.uploadedPhotos.map(photo => photo.url),
         style: this.props.activeStyle,
-        address:{
-          lineOne: "lineOne",
-          lineTwo: "lineTwo",
-          city: 'Cork',
-          country: "ireland"
-        }
+        address: this.state.address
       };
-      console.log(paymentData);
       console.log('Attempting Communication with Stripe')
       const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
         method: 'POST',
@@ -79,39 +81,41 @@ class Checkout extends React.Component {
       console.log('Response Recieved')
     }
 
-  handleSubmitAddress = (event) => {
-      const form = event.currentTarget.parentNode;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
-
   handleSubmitpayment = (token) =>{
     console.log('Attempting To Charge Card')
-    console.log(token)
-    console.log('Processing')
     this.onToken(token)
     console.log('Done Processing')
-    //this.stripeTokenHandler(token)
   }
 
   displayResultFromPayment(){
     return(
       <Modal show={this.state.showPaymentModal} o>
-      <Modal.Header>
-      <Modal.Title>{this.state.paymentSuccess ? "Payment Successful" : "Payment Failed"}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {this.state.paymentSuccess ? "Success info" : "Failure Info"}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => this.setState({showPaymentModal: false})}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+        <Modal.Header>
+         <Modal.Title>{this.state.paymentSuccess ? "Payment Successful" : "Payment Failed"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.state.paymentSuccess ? "Success info" : "Failure Info"}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => this.setState({showPaymentModal: false})}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     )
+  }
+
+  AddressSubmitted = (value) =>{
+    let tempAddress = this.state.address;
+    tempAddress.address = value.address;
+    tempAddress.address2 = value.address2;
+    tempAddress.city = value.city;
+    tempAddress.email = value.email;
+    tempAddress.fullName = value.fullName;
+    tempAddress.postCode = value.postCode;
+    this.setState({address: tempAddress, addressUpdated: true})
+    console.log('Address Updated')
+    console.log(this.state.address)
   }
 
   render() {
@@ -128,33 +132,74 @@ class Checkout extends React.Component {
                   <Container>
                     <Row onClick={()=> this.setState({showAddressModal: true})}>
                         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                        <h4>  Add Address </h4>
+                        <h4>  {this.state.addressUpdated ? this.state.address.fullName : 'Add Address'} </h4>
                     </Row>
-                    <AddressForm showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
+                    <AddressForm AddressSubmitted={this.AddressSubmitted} showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
                     <hr/>
                     <Row>
                       <h5> Summary </h5>
                     </Row>
                     <Row>
-                      <h7>
-                        Number of Images : {this.props.uploadedPhotos.length}
-                      </h7>
+                      <div className="infoRow">
+                        <div className="left">
+                        <h7>
+                          Photos Added: 
+                        </h7>
+                        </div>
+                        <div className="right">
+                          {this.props.uploadedPhotos.length}
+                        </div>
+                      </div>
                     </Row>
                     <Row>
-                    <h7>
-                       Style Selected: {this.props.activeStyle.name}
-                      </h7>
+                    <div className="infoRow">
+                        <div className="left">
+                          <h7>
+                            Style Selected:
+                          </h7>
+                        </div>
+                        <div className="right">
+                          {this.props.activeStyle.name}
+                        </div>
+                      </div>
+                    </Row>
+                    <Row>
+                    <div className="infoRow">
+                        <div className="left">
+                          <h7>
+                            Delivery:
+                          </h7>
+                        </div>
+                        <div className="right">
+                           $10
+                        </div>
+                      </div>
+                    </Row>
+                    <Row>
+                    <div className="infoRow">
+                        <div className="left">
+                          <h7>
+                            Total:
+                          </h7>
+                        </div>
+                        <div className="right">
+                           ${(this.props.uploadedPhotos.length * 10) + 10}
+                        </div>
+                      </div>
                     </Row>
                     <hr/>
                     <Row>
-                    <StripeCheckout
-                        token={this.handleSubmitpayment}
-                        stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M"
-                      />
+                      <StripeCheckout
+                          token={this.handleSubmitpayment}
+                          stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M">
+                          <Button disabled={!this.state.addressUpdated}>
+                            Confirm / Pay
+                          </Button>
+                      </StripeCheckout>
                     </Row>
                     <Row>
-                      <Button onClick={this.handleTestCheckout}>
-                      </Button>
+                      {this.props.uploadedPhotos.length === 0 ? 
+                      <h8> Please add photos before check out</h8> : this.state.addressUpdated ? '' : <h8> Please add address before check out</h8>}
                     </Row>
                   </Container>
                 </div>

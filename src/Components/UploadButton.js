@@ -39,7 +39,7 @@ class UploadButton extends React.Component {
                 <div className="fromPC" onClick={onPick}>
                   <i className="fa fa-plus blue fa-3x"></i>
                   <h4 className="uploadFromPcText">
-                    Upload From PC
+                    Upload Photos
                   </h4>
                 </div>
               )}
@@ -122,13 +122,10 @@ class UploadButton extends React.Component {
     <div>
           {this.UploadButton()}
           <Modal show={this.props.showModal || this.state.showModal}>
-              <Modal.Header>
-                <Modal.Title> Remove Image </Modal.Title>
-              </Modal.Header>
               <Modal.Body>
-                <h4>
+                <h6>
                   Would you like to remove this image?
-                </h4>
+                </h6>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="danger" onClick={() => this.removePhoto()}>
