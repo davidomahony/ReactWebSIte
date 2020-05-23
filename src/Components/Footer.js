@@ -29,9 +29,7 @@ class Footer extends React.Component {
     return (
       <div className="footerHolder">
         <div className="footer">
-            <Card.Footer>
             {this.GetCorrectButton()}
-            </Card.Footer>
         </div>
       </div>
     )

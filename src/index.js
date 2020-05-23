@@ -11,10 +11,13 @@ import { Switch, Route, BrowserRouter  } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import SelectPhotoPage from './Pages/SelectPhoto'
 import App from './Pages/App';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
   <div>
-    <App/>
+      <CookiesProvider>
+        <App/>
+      </CookiesProvider>
   </div>,
   document.getElementById('root')
 );
