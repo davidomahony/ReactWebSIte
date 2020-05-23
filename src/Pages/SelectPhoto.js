@@ -1,5 +1,6 @@
 import React from 'react'
-import {Card, Navbar, Nav, Carousel, Form, Button, Popover, NavDropdown, Container, Row, Alert} from 'react-bootstrap'
+import { v4 as uuidv4 } from 'uuid';
+import Cookies from 'universal-cookie';
 
 import './SelectPhoto.scss'
 
@@ -38,31 +39,68 @@ class SelectPhoto extends React.Component {
       imageForCrop: null,
       showAlertForPreview: false,
       showMenuPopOver: false,
-      showCheckout: false
+      showCheckout: false,
+      haveCheckForCookies: false
     }
 }
 
-photoAdded = (photosrc, croppedsrc, name) => {
-  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.name !== name)
+componentDidMount(){
+  if (!this.state.haveCheckForCookies){
+    let containsImages = cookies.get('containsImages')
+    let images = this.state.uploadedPhotos;
+    if (containsImages !== undefined || containsImages > 0)
+    {
+      var count;
+      for (count = 0 ; count < (containsImages + 1); count++){
+        let foundImage = cookies.get(`Image_${count}`)
+        if (foundImage !== undefined)
+        {
+          images.push({
+            url: foundImage,
+            name: foundImage,
+            dateAndTime: Date.now()
+          })
+        }
+      }
+    }
+    this.setState({haveCheckForCookies:true, uploadedPhotos: images})
+  }
+}
+
+photoAdded = (url, name, dateAndTime) => {
+  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.dateAndTime !== dateAndTime)
+  let cookieName = `Image_${currentPhotos.length}`;
   currentPhotos.push({
-    photoSrc: photosrc,
-    croppedSrc: croppedsrc,
-    name: name
+    url: url,
+    name: name,
+    dateAndTime: dateAndTime,
+    cookieName: cookieName
   })
   console.log('And we are back in the room')
   this.setState({uploadedPhotos: currentPhotos})
+  if (cookies.get(`containsImages`) === undefined){
+    cookies.set(`containsImages`, 1);
+  }
+  else{
+    let count = cookies.get(`containsImages`)
+    cookies.set(`containsImages`, count++);
+  }
+  cookies.set(cookieName, url);
 }
 
 removePhoto = (photo) => {
-  let newPhotos = this.state.uploadedPhotos.filter(p => p.name !== photo.name)
+  let newPhotos = this.state.uploadedPhotos.filter(p => p.url !== photo.url)
   this.setState({uploadedPhotos: newPhotos})
+  cookies.remove(photo.cookieName)
+  var count = cookies.get(`containsImages`);
+  cookies.set(`containsImages`, count - 1);
 }
 
 GetAvailablePreviews = (photos = []) =>{
   let previews = photos.map(photo =>
       <div className="previewImage card" onClick={() => this.showCropperForPhoto(photo)}>
           <img src={this.state.activeStyle.img} className="first"/>
-          <img src={photo.croppedSrc} className="second" ></img>
+          <img src={photo.url} className="second" ></img>
       </div>
   )
   return previews;
@@ -76,7 +114,7 @@ showCropperForPhoto = (photo) =>{
 
 GetAvailableStyles(){
   return this.state.availableStyles.map(style =>
-    <div>
+    <div key={style.name}>
       <button className="card" onClick={() => this.setState({activeStyle: style})}>
           {style.name}
           <img src={style.img}></img>
@@ -89,33 +127,31 @@ GetAvailableStyles(){
     return (
       <div className="pageCard">
         <Header/>
-          <Card.Header>
-            <div className="centerHorizontal">
-              <h2>
-              Select Style 
-              </h2>
-            </div>
-          </Card.Header>
           <div className="scrollmenu">
            {this.GetAvailableStyles()}
           </div>
           <div className="scrollmenuPreview">
-            <div className="vcentre">
-              <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
-                removePhoto={this.removePhoto}
-                showModal={this.state.showCropperModal} 
-                imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
-            </div>           
-            {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+            <div className="previewContainer">
+              {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+              <div className="vcentre">
+                <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
+                  removePhoto={this.removePhoto}
+                  showModal={this.state.showCropperModal} 
+                  imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
+              </div> 
+            </div>          
           </div>
           <Checkout showCheckout={this.state.showCheckout} 
             closeCheckout={() => this.setState({showCheckout : false})}
             activeStyle={this.state.activeStyle}
+            uuid={this.state.uuid} 
             uploadedPhotos={this.state.uploadedPhotos} />
-          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true})} IsButtonEnabled={true}/>
+          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
       </div>
     )
   }
 }
 
 export default SelectPhoto
+
+const cookies = new Cookies();

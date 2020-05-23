@@ -1,144 +1,138 @@
 import React from 'react'
 import Cropper from 'react-cropper';
+import axios from 'axios';
+import {Modal, Button} from 'react-bootstrap'
+import { trackPromise } from 'react-promise-tracker';
 
-import {Card, Navbar, Modal, Button} from 'react-bootstrap'
-
+import {LoadingIndicator} from './../Utility'
 import './UploadButton.scss'
 import 'cropperjs/dist/cropper.css';
+
+import FacebookLogin from 'react-facebook-login';
+
+import ReactFilestack from 'filestack-react';
+
 
 class UploadButton extends React.Component {
     constructor(props) {
         super(props);  
         this.state = {
+            name: null,
+            imageType: null,
+            dateAndTime: null,
             src: this.props.imageForCrop,
             cropResult: null,
             showModal: this.props.showModal,
             mouseOverUpload: false,
-            name: null
+            showSocialModal: false
         }
-    }
-
-    onChange = (e) => {
-      this.state.name = '';
-        e.preventDefault();
-        let files;
-        if (e.dataTransfer) {
-          files = e.dataTransfer.files;
-        } else if (e.target) {
-          files = e.target.files;
-        }
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.setState({ src: reader.result });
-        };
-        reader.readAsDataURL(files[0]);
-        this.state.name = Date.now();
-        this.setState({showModal: true})
-      }
-    
-      updateCrop = (cropedimage) => {
-        console.log('update')
-        this.setState({cropResult: cropedimage})
-      }
-
-      cropImage() {
-        if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
-          return;
-        }
-        this.setState({
-          cropResult: this.cropper.getCroppedCanvas().toDataURL(),
-        });
-
-        this.props.photoAdded(this.state.src, this.state.cropResult, this.state.name === '' ? Date.now() : this.state.name)
-      }
+    } 
 
     UploadButton(){
-    return this.state.mouseOverUpload ? 
-    <div className="uploadButtonMouseOver"  onMouseLeave={() => this.setState({mouseOverUpload : false})}>
-      <div className="outer">
-        <div className="fromPc">
-          <label htmlFor="uploader">
-            <i class="fa fa-upload blue fa-3x"></i>
-          </label>
-          <input id="uploader" type="file" onChange={this.onChange}></input>
-        </div>
-        <div className="fromSocial">
-        <i class="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
-        <i class="fa fa-instagram fa-3x socialIcon black" aria-hidden="true"></i>
-        <i class="fa fa-google fa-3x socialIcon blue" aria-hidden="true"></i>
+      return <div className="uploadButtonMouseOver">
+        <div className="outer">
+        <ReactFilestack
+              apikey={"AOiy6SqVESS2GJf9eKXsDz"}
+              onSuccess={this.fileUploaded}
+              actionOptions={this.pickerOptions}
+              customRender={({ onPick }) => (
+                <div className="fromPC" onClick={onPick}>
+                  <i className="fa fa-plus blue fa-3x"></i>
+                  <h4 className="uploadFromPcText">
+                    Upload Photos
+                  </h4>
+                </div>
+              )}
+            />
+            <ReactFilestack
+              apikey={"AOiy6SqVESS2GJf9eKXsDz"}
+              onSuccess={this.fileUploaded}
+              actionOptions={this.pickerOptionsSocial}
+              customRender={({ onPick }) => (
+                <div className="fromPC" onClick={onPick}>
+                  <i className="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
+                  <i className="fa fa-instagram fa-3x socialIcon purple" aria-hidden="true"></i>
+                  <i className="fa fa-google fa-3x socialIcon black" aria-hidden="true"></i>
+                </div>
+              )}
+            />
         </div>
       </div>
-    </div> : 
-    <div className="uploadButton" 
-    onMouseOver={() => this.setState({mouseOverUpload: true})}>
-      <label color= "blue">
-        <i class="fa fa-upload blue fa-4x"></i>
-      </label>
-    </div>
-    }
-
-    // UploadButton(){
-    //   return this.state.mouseOverUpload ? 
-    //   <div className="uploadButton"  onMouseLeave={() => this.setState({mouseOverUpload : false})}>
-    //     <div className="fromPc">
-    //       <label className="width" htmlFor="uploader">
-    //       <i class="fa fa-upload blue fa-3x"></i>
-    //       </label>
-    //         <input id="uploader" type="file" onChange={this.onChange}></input>
-    //   </div>
-    //   <div className="fromSocial">
-    //   <button>
-    //       <i class="fa fa-facebook-square blue fa-3x" aria-hidden="true"></i>
-    //       </button>
-    //     </div>
-    //   </div> : 
-    //   <div className="uploadButton" 
-    //   onMouseOver={() => this.setState({mouseOverUpload: true})}>
-    //     <label color= "blue">
-    //       <i class="fa fa-upload blue fa-4x"></i>
-    //     </label>
-    //   </div>
-    //   }
-  
-    closeCropper = () =>{
-      this.props.closeCropper()
-      this.setState({showModal: false})
-    }
+      }
 
     removePhoto = () =>{
       this.props.removePhoto(this.props.imageForCrop)
       this.closeCropper()
     }
 
+    fileUploaded = (response) => {
+      console.log(response);
+      var uploaded = response.filesUploaded[0]
+      console.log(response.filesUploaded[0]);
+      this.setState({
+        fileSrc: response.filesUploaded[0],
+        dateAndTime: Date.now(),
+        name: response.filesUploaded[0].name,
+        imageType: response.filesUploaded[0].type})
+        console.log('show modal');
+        this.setState({src: response.filesUploaded[0].url, cropResult: response.filesUploaded[0].url})
+        this.props.photoAdded(response.filesUploaded[0].url ,this.state.name, this.state.dateAndTime)
+    }
+
+    fileTrasformed = (responseUrl) => {
+      console.log(responseUrl);
+      this.setState({
+        fileSrc: responseUrl,
+        dateAndTime: Date.now(),
+        name: responseUrl})
+        console.log('show modal');
+        this.setState({src: responseUrl, cropResult: responseUrl})
+        this.props.photoAdded(responseUrl ,this.state.name, this.state.dateAndTime)
+    }
+
+    pickerOptionsSocial = {
+      accept: 'image/*',
+      transformations: {
+        crop: {
+          aspectRatio: 1/1,
+          force: true
+        }
+      },
+      fromSources: ['instagram', 'facebook', 'googledrive']
+    };
+
+    pickerOptions = {
+      accept: 'image/*',
+      transformations: {
+        crop: {
+          aspectRatio: 1/1,
+          force: true
+        }
+      },
+      fromSources: ['local_file_system']
+    };
+
+  closeCropper = () =>{
+    this.props.closeCropper()
+    this.setState({showModal: false})
+  }
+
   render() {
-    return (
-      <div>
+    return ( 
+    <div>
           {this.UploadButton()}
-          <Modal show={this.props.showModal || this.state.showModal} o>
-              <Modal.Header>
-                <Modal.Title>Crop Image</Modal.Title>
-              </Modal.Header>
+          <Modal show={this.props.showModal || this.state.showModal}>
               <Modal.Body>
-              <div style={{ width: '100%' }}>
-                <Cropper
-                    style={{ height: 200, width: '100%' }}
-                    crop
-                    aspectRatio={1}
-                    preview=".img-preview"
-                    guides={false}
-                    src={this.state.src}
-                    ready={() => this.cropImage()}
-                    cropend={() => this.cropImage()}
-                    ref={cropper => { this.cropper = cropper; }}
-                />
-                </div>
+                <h6>
+                  Would you like to remove this image?
+                </h6>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="danger" onClick={() => this.removePhoto()}>
-                  Delete
+                  Yes
                 </Button>
                 <Button variant="primary" onClick={this.closeCropper}>
-                  Confirm
+                  Cancel
                 </Button>
               </Modal.Footer>
             </Modal>
@@ -148,3 +142,17 @@ class UploadButton extends React.Component {
 }
 
 export default UploadButton
+
+{/* <div style={{ width: '100%' }}>
+<ReactFilestack
+  apikey={"AOiy6SqVESS2GJf9eKXsDz"}
+  action='transform'
+  actionOptions= {{
+    resize: {
+      width: 250
+    },
+    flip: true
+  }}
+  source='https://cdn.filestackcontent.com/S15FKcAYQOq6CVeERHn1'
+  onSuccess={this.fileTrasformed}/>
+</div> */}

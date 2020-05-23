@@ -2,39 +2,28 @@
 Dave Todo (Front End)
 
     Homepage
-        - Everything 
+        - Add JD's stuff
+        - Terms of use
+        - Privacy
+        - contact us
         
     Footer
-        - Clean Up Button
         - Refactor Navigation for Props
 
     Select Style
         - centre stuff
-        - Upload Button
-            - Rotate 90Degrees
-            - On Hover color
-            - Add text below options
-            - Make entire div clickable for input
-        - Crop Image view needs to be cleaned
-        - Crop image view increase space between cofirm image and delete
-
-    Checkout
-        - Need to sync up address form
-        - Add stripe friendly UI
-
-    Address form
-        - Validation
+        - modify image view
 
     General
         - On buttons mouse over should display a different cursor
         - Would like some tool tips
         - Need a loading screen
         - Need a 404 Page
-        - Integrate Fboook & Co
-        - Need a color scheme
+        - Pop up page to notify about cookies
+        - Check image quality
 
-Bugs Noticed
-- Small images and preview
+
+
 
 Testing To do
 - Mobile 
