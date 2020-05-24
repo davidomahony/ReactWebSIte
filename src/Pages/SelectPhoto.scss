@@ -1,5 +1,5 @@
 .pageCard{
-  max-width: 1000px;
+  max-width: 1500px;
   margin: auto;
   height: 100%;
 }
@@ -10,7 +10,6 @@
 }
 
 .previewContainer{
-  display: 'flex'!important;
   align-items: center!important;
   justify-content: center!important;
   text-align: center!important;
@@ -20,34 +19,35 @@ div.scrollmenu {
   background-color: transparent;
   overflow: auto;
   white-space: nowrap;
+  text-align: center;
+  max-height: 250px;
 }
 
 div.scrollmenu div {
   display: inline-block;
-  color: white;
   text-align: center;
-  padding: 14px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
   text-decoration: none;
   justify-content: center;
   align-items: center;
 }
 
-div.scrollmenu div:hover {
-  background: rgb(248,248,250);
-  background: linear-gradient(180deg, rgba(248,248,250,1) 0%, rgba(42,172,226,1) 49%, rgba(8,205,250,1) 79%, rgba(0,212,255,1) 100%);
-}
 
 .scrollmenuPreview {
   background-color: transparent;
   overflow: auto;
   white-space: nowrap;
+  color:  lightgrey;
+  background-color: lightgrey;
+  text-align: center;
 }
 
 .scrollmenuPreview div {
   display: inline-block;
-  color: white;
   text-align: center;
-  padding: 14px;
   text-decoration: none;
   justify-content: center;
   align-items: center;
@@ -61,16 +61,15 @@ div.scrollmenu div:hover {
 }
 
 .previewImage{
-  border-radius: 2%;
-  border-color: grey;
-  border-style: dashed;
-  border-width: 2px;
-  height: 250px !important;
-  width: 250px !important;
+  height: 280px !important;
+  width: 280px !important;
   justify-content: center;
   align-items: center;
   text-align:center;
   display: flex;
+  background-color: transparent;
+  color: transparent;
+  border-color: transparent;
 }
 
 .first {
@@ -102,4 +101,33 @@ div.scrollmenu div:hover {
 
 .red{
   color: red;
+}
+
+div.styleHolder div:hover {
+  background: lightskyblue;
+}
+
+.styleHolder{
+  display: flex;
+  overflow-y: auto;
+  height: 170px;
+  justify-content: center;
+}
+
+.imageStyle{
+  max-width: 85px;
+  max-height: 85px;
+}
+
+.imageStyleDiv{
+  background-color: transparent;
+  overflow: auto;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.lightblue{
+  color: lightskyblue !important;
+  background-color: lightskyblue !important;
+  background: lightskyblue !important;
 }

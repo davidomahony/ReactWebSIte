@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import './HomePage.scss'
 
 import ReviewImage from './../Photos/ReviewImages.jpg'
-import logoMain from './../Photos/logoMain.svg'
+import logoMain from './../Photos/SticPicsLogo.gif'
 import promoVideo from './../Photos/wallImage.jpg'
 
 import {LoadingScreen} from './../Utility'
@@ -24,14 +24,14 @@ class HomePage extends React.Component {
     }
   }
 
-  componentDidMount(){
-    if (!this.state.hasAcceptedCookieModal){
-      let cookie = cookies.get('hasAcceptedCookies')
-      if (cookie === undefined || cookie) {
-        this.setState({hasAcceptedCookieModal: cookie})
-      }
-    }
-  }
+  // componentDidMount(){
+  //   if (!this.state.hasAcceptedCookieModal){
+  //     let cookie = cookies.get('hasAcceptedCookies')
+  //     if (cookie === undefined || cookie) {
+  //       this.setState({hasAcceptedCookieModal: cookie})
+  //     }
+  //   }
+  // }
 
     GetReviewSlides(){
       let displayReviewSlides = this.state.reviewSlides.map(slide => 
@@ -54,25 +54,35 @@ class HomePage extends React.Component {
       <div className="pageCard">
         <Card.Header>
           <div className="centerHorizontal">
-            <img className="mainLogo"src={logoMain}></img>
+            <img className="mainLogo" onLoad={() => this.setState({promoImageLoaded: true})} src={logoMain}></img>
           </div>    
         </Card.Header>
-          <div className="headerText"> Sustainable Wood Frames</div> 
-          <div className="promoVideo">
-            <img className = "promoVideo"src={promoVideo} onLoad={() => this.setState({promoImageLoaded: true})}></img>
+        <div className="headerArea bg-light">
+          <div className="headerText">SticPics are beautiful real wood products that attach easily to walls.</div> 
+            <div className="promoVideo">
+              <img className = "promoVideo"src={promoVideo}></img>
+            </div>
           </div>
-          <br/>
-          <div className="reviewStars bg-light">
-            <svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-            </svg>
+        <div className="headerText3 bg-light">
+          <div className="headerText2">Love Real Wood. Love Sustainability</div> 
+            One Perfect Size - Removable, reusable and leave no marks</div>  
+          <div className="reviewStars bg-light"><svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg><svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg><svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg><svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg><svg class="bi bi-star-fill text-primary" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+          <p>Shipping is always free!</p>
+          {/* <img className="shippingIcon" src={shippingIcon}></img> */}
           </div> 
-          <br/>
-          <div className="reviewStars bg-light">
-            <h5>
-            3 for €39.99 - Only €10 per extra tile!
-            </h5>
-          </div>
+          <div className="priceText bg-light">
+          3 for €39.99 - Only €10 per extra tile!</div>
+
           <div className="reviewSlider">
           <Slider dots={true} centerPadding={30} centerMode={true} slidesToShow={this.state.numberofSlides} >
               {this.GetReviewSlides()}
@@ -94,23 +104,6 @@ class HomePage extends React.Component {
               show={!this.state.promoImageLoaded}>
             <LoadingScreen/>
           </Modal>
-          <Modal show={!this.state.hasAcceptedCookieModal}>
-            <Modal.Header>
-              Cookies
-            </Modal.Header>
-            <Modal.Body>
-              Boring legal stuff
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={() => 
-              {
-                this.setState({hasAcceptedCookieModal: true})
-                cookies.set("hasAcceptedCookies", true)
-              }}>
-                OK
-              </Button>
-            </Modal.Footer>
-          </Modal>
       </div>
     )
   }
@@ -119,3 +112,21 @@ class HomePage extends React.Component {
 export default HomePage
 
 const cookies = new Cookies();
+
+{/* <Modal show={!this.state.hasAcceptedCookieModal}>
+<Modal.Header>
+  Cookies
+</Modal.Header>
+<Modal.Body>
+  Boring legal stuff
+</Modal.Body>
+<Modal.Footer>
+  <Button onClick={() => 
+  {
+    this.setState({hasAcceptedCookieModal: true})
+    cookies.set("hasAcceptedCookies", true)
+  }}>
+    OK
+  </Button>
+</Modal.Footer>
+</Modal> */}

@@ -1,17 +1,12 @@
 import React from 'react'
 import Cropper from 'react-cropper';
-import axios from 'axios';
 import {Modal, Button} from 'react-bootstrap'
-import { trackPromise } from 'react-promise-tracker';
 
-import {LoadingIndicator} from './../Utility'
+import {LoadingIndicator, cropUrlToSquare} from './../Utility'
 import './UploadButton.scss'
 import 'cropperjs/dist/cropper.css';
 
-import FacebookLogin from 'react-facebook-login';
-
 import ReactFilestack from 'filestack-react';
-
 
 class UploadButton extends React.Component {
     constructor(props) {
@@ -26,7 +21,8 @@ class UploadButton extends React.Component {
             mouseOverUpload: false,
             showSocialModal: false
         }
-    } 
+    }
+
 
     UploadButton(){
       return <div className="uploadButtonMouseOver">
@@ -69,14 +65,33 @@ class UploadButton extends React.Component {
       console.log(response);
       var uploaded = response.filesUploaded[0]
       console.log(response.filesUploaded[0]);
-      this.setState({
-        fileSrc: response.filesUploaded[0],
-        dateAndTime: Date.now(),
-        name: response.filesUploaded[0].name,
-        imageType: response.filesUploaded[0].type})
-        console.log('show modal');
-        this.setState({src: response.filesUploaded[0].url, cropResult: response.filesUploaded[0].url})
-        this.props.photoAdded(response.filesUploaded[0].url ,this.state.name, this.state.dateAndTime)
+
+      var img = new Image();
+
+      img.onload = () => {
+        var height = img.height;
+        var width = img.width;
+        let result = '';
+        if(height !== width){
+          
+          result = cropUrlToSquare(height, width, response.filesUploaded[0].url, "AOiy6SqVESS2GJf9eKXsDz")
+          console.log(result)
+        }
+        else{
+          result = response.filesUploaded[0].url
+        }
+
+        this.setState({
+          fileSrc: response.filesUploaded[0],
+          dateAndTime: Date.now(),
+          name: response.filesUploaded[0].name,
+          imageType: response.filesUploaded[0].type})
+          this.setState({src: result, cropResult: result})
+          this.props.photoAdded(result ,this.state.name, this.state.dateAndTime)
+        // code here to use the dimensions
+      }
+
+      img.src = response.filesUploaded[0].url
     }
 
     fileTrasformed = (responseUrl) => {
@@ -92,10 +107,10 @@ class UploadButton extends React.Component {
 
     pickerOptionsSocial = {
       accept: 'image/*',
+      maxFiles: 10,
       transformations: {
         crop: {
-          aspectRatio: 1/1,
-          force: true
+          aspectRatio: 1/1
         }
       },
       fromSources: ['instagram', 'facebook', 'googledrive']
@@ -103,10 +118,10 @@ class UploadButton extends React.Component {
 
     pickerOptions = {
       accept: 'image/*',
+      maxFiles: 10,
       transformations: {
         crop: {
-          aspectRatio: 1/1,
-          force: true
+          aspectRatio: 1/1
         }
       },
       fromSources: ['local_file_system']
@@ -120,22 +135,22 @@ class UploadButton extends React.Component {
   render() {
     return ( 
     <div>
-          {this.UploadButton()}
-          <Modal show={this.props.showModal || this.state.showModal}>
-              <Modal.Body>
-                <h6>
-                  Would you like to remove this image?
-                </h6>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="danger" onClick={() => this.removePhoto()}>
-                  Yes
-                </Button>
-                <Button variant="primary" onClick={this.closeCropper}>
-                  Cancel
-                </Button>
-              </Modal.Footer>
-            </Modal>
+        {this.UploadButton()}
+        <Modal show={this.props.showModal || this.state.showModal}>
+            <Modal.Body>
+              <h6>
+                Would you like to remove this image?
+              </h6>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={() => this.removePhoto()}>
+                Yes
+              </Button>
+              <Button variant="primary" onClick={this.closeCropper}>
+                Cancel
+              </Button>
+            </Modal.Footer>
+          </Modal>
       </div>
     )
   }
