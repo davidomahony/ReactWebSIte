@@ -4,7 +4,7 @@ import {Card} from 'react-bootstrap'
 import './HomePage.scss'
 
 import ReviewImage from './../Photos/ReviewImages.jpg'
-import logoMain from './../Photos/SticPicsLogo.gif'
+import logoMain from './../Photos/SticPics-Logo.gif'  
 import promoVideo from './../Photos/wallImage.jpg'
 import shippingIcon from './../Photos/shippingalwaysfreeicon.svg'
 
@@ -72,7 +72,7 @@ One Perfect Size - Removable, reusable and leave no marks</div>
 {/* <img className="shippingIcon" src={shippingIcon}></img> */}
 </div> 
 <div className="priceText bg-light">
-3 for €39.99 - Only €10 per extra tile!</div>
+3 for €39.99 - Only €10 per SticPic thereafter!</div>
 
           <div className="reviewSlider">
           <Slider dots={true} centerPadding={30} centerMode={true} slidesToShow={this.state.numberofSlides} >
