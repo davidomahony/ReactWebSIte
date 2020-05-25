@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Container, Row, Button} from 'react-bootstrap'
+import {Modal, Container, Row, Button, Toast} from 'react-bootstrap'
 
 import StripeCheckout from 'react-stripe-checkout';
 import SlidingPane from 'react-sliding-pane';
@@ -28,7 +28,11 @@ class Checkout extends React.Component {
             postCode: '',
             country: ''
           },
-          addressUpdated: false
+          addressUpdated: false,
+          showCheckoutHelp : this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated,
+          helpInfo: this.props.uploadedPhotos.length === 0 ? "Please add some photos before you can check out!" : 
+          !this.state.addressUpdated ? "Please update address information before you check out" : "",
+          showToast: false
         }
     }
 
@@ -189,18 +193,26 @@ class Checkout extends React.Component {
                     </Row>
                     <hr/>
                     <Row>
+                      {this.state.showCheckoutHelp ? 
+                      <Button onClick={() => this.setState({showToast: true})}>
+                        Confirm / Pay
+                      </Button> :
                       <StripeCheckout
                           token={this.handleSubmitpayment}
                           stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M">
                           <Button disabled={!this.state.addressUpdated}>
                             Confirm / Pay
                           </Button>
-                      </StripeCheckout>
+                      </StripeCheckout>}
                     </Row>
-                    <Row>
-                      {this.props.uploadedPhotos.length === 0 ? 
-                      <h8> Please add photos before check out</h8> : this.state.addressUpdated ? '' : <h8> Please add address before check out</h8>}
-                    </Row>
+                    <Toast autohide={true} delay={1500} 
+                        onClose={() => this.setState({showToast: false})} 
+                        show={this.state.showToast}>
+                      <Toast.Header closeButton={true}>
+                        Checkout Info
+                      </Toast.Header>
+                      {this.state.helpInfo}
+                    </Toast>
                   </Container>
                 </div>
             </SlidingPane>

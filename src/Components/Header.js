@@ -19,7 +19,7 @@ class Header extends React.Component {
 
   displayActionFromDropDown(){
     return(
-      <Modal show={this.state.showModal} o>
+      <Modal show={this.state.showModal}>
       <Modal.Header>
       <Modal.Title>{this.state.modalToShow}</Modal.Title>
       </Modal.Header>
@@ -62,15 +62,15 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="light">
           <Navbar.Brand>
-            <Button href="home">
-              <i className="fa fa-arrow-circle-left"></i>
+            <Button variant="light" href="home">
+              <i className="fa fa-angle-left fa-2x blue"></i>
             </Button>
           </Navbar.Brand>
           <Nav className="container-fluid">
             <Nav.Item id="menuPopOver" className="ml-auto">
-            <DropdownButton alignRight  id="dropdown-menu-align-right" title={<i className="fa fa-bars" aria-hidden="true"></i>}>
+            <DropdownButton alignRight  variant="light"   id="dropdown-menu-align-right" title={<i className="fa fa-bars blue fa-1x" aria-hidden="true"></i>}>
               <Dropdown.Item onClick={() => this.processDropDownClick('FAQ')}> Frequent Questions</Dropdown.Item>
               <Dropdown.Item onClick={() => this.processDropDownClick('ContactUs')}> Contact us </Dropdown.Item>
               <Dropdown.Item onClick={() => this.processDropDownClick('General')}> General Info </Dropdown.Item>

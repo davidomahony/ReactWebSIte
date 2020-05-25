@@ -108,16 +108,17 @@ GetAvailablePreviews = (photos = []) =>{
 
 showCropperForPhoto = (photo) =>{
   console.log('Getn set up')
+  console.log(photo);
   this.setState({showCropperModal : true,
   imageForCrop: photo})
 }
 
 GetAvailableStyles(){
   return this.state.availableStyles.map(style =>
-    <div key={style.name}>
+    <div className={"imageStyleDiv" + this.state.activeStyle === style.name ? " lightblue" : ""} key={style.name}>
       <button className="card" onClick={() => this.setState({activeStyle: style})}>
+          <img className="imageStyle" src={style.img}></img>
           {style.name}
-          <img src={style.img}></img>
       </button>
     </div>
     )
@@ -127,14 +128,16 @@ GetAvailableStyles(){
     return (
       <div className="pageCard">
         <Header/>
-          <div className="scrollmenu">
-           {this.GetAvailableStyles()}
+        <div className="scrollmenu">
+            <div className="styleHolder">
+              {this.GetAvailableStyles()}
+            </div>
           </div>
           <div className="scrollmenuPreview">
             <div className="previewContainer">
               {this.GetAvailablePreviews(this.state.uploadedPhotos)}
               <div className="vcentre">
-                <UploadButton closeCropper={() => this.setState({showCropperModal: false})} 
+                <UploadButton closeCropper={() => this.setState({showCropperModal: false})}
                   removePhoto={this.removePhoto}
                   showModal={this.state.showCropperModal} 
                   imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>

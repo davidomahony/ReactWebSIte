@@ -17,6 +17,14 @@ export function  ConvertUrlToFile(dataURI, type, name) {
     return  blob;
 }
 
+export function cropUrlToSquare(height, width, url, api){
+    let smallestSide = (height > width ? width : height) / 2
+    let urlHandle = url.split('/')
+    console.log(urlHandle.length);
+    let dimensions = `crop=dim:[${(width / 2) - smallestSide}, ${(height / 2)  - smallestSide},${smallestSide*2},${smallestSide*2}]`
+    return `https://process.filestackapi.com/${api}/${dimensions}/${urlHandle[urlHandle.length - 1]}`;
+}
+
 export const LoadingIndicator = props => {
     const { promiseInProgress } = usePromiseTracker();
     return (
