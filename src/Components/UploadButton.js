@@ -28,7 +28,7 @@ class UploadButton extends React.Component {
       return <div className="uploadButtonMouseOver">
         <div className="outer">
         <ReactFilestack
-              apikey={"AOiy6SqVESS2GJf9eKXsDz"}
+              apikey={"AwDUla4uRT3GfDinUA6t9z"}
               onSuccess={this.fileUploaded}
               actionOptions={this.pickerOptions}
               customRender={({ onPick }) => (
@@ -41,7 +41,7 @@ class UploadButton extends React.Component {
               )}
             />
             <ReactFilestack
-              apikey={"AOiy6SqVESS2GJf9eKXsDz"}
+              apikey={"AwDUla4uRT3GfDinUA6t9z"}
               onSuccess={this.fileUploaded}
               actionOptions={this.pickerOptionsSocial}
               customRender={({ onPick }) => (
