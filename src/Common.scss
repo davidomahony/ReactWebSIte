@@ -1,11 +1,13 @@
 #app:not(:empty) + .sk-cube-grid {
     display: none;
+    background-color: pink;
   }
   
   .sk-cube-grid {
     width: 80px;
     height: 80px;
     margin: 100px auto;
+    background-color: pink;
   }
   
   .sk-cube-grid .sk-cube {

@@ -37,9 +37,25 @@ class Header extends React.Component {
 
   FaqContent(){
     return(
-      <div style={{ width: '100%' }}>
-       FAQ Content
-      </div>
+      <div classname="faqheader" style={{ width: '100%' }}>
+    
+       <div classname="headerText2">How much do SticPics Cost?</div>
+       <div classname="faqAnswer">SticPics cost €39.99 for 3 framed pieces. Each SticPic thereafter is €10</div>
+       <div classname="faqQuestion">How big is each SticPic?</div>
+       <div classname="faqAnswer">Each SticPic has an external measurement of 8 x 8in or 20cm x 20cm</div>
+       <div classname="faqQuestion">How long does shipping take?</div>
+       <div classname="faqAnswer">Shipping usually takes about a week but you will receive tracking information once the package leaves our factory.</div>
+       <div classname="faqQuestion">How are SticPics sustainable?</div>
+       <div classname="faqAnswer">We wanted to create a paper based sustainable product. Each SticPic is made completely from paper based raw materials sourced from sustainable forrests.</div>
+       <div classname="faqQuestion">How do SticPics work?</div>
+       <div classname="faqAnswer">There is a adhesive strip on the back! Peel off the protective paper and stick to your wall!</div>
+       <div classname="faqQuestion">Can the tiles be moved?</div>
+       <div classname="faqAnswer">SticPics can be moved no problem as it is a repositionable sticky tape.  </div>
+       <div classname="faqQuestion">Will the tiles damage my walls?</div>
+       <div classname="faqAnswer">Nope the stick tape is designed to be removable. </div>
+       <div classname="faqQuestion">Can I use photos from Facebook/Instagram?</div>
+       <div classname="faqAnswer">Yes of course you can - our software will allow you to sign in and select photos from these platforms</div>
+       </div>
     )
   }
 

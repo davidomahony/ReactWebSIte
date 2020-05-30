@@ -20,7 +20,7 @@ div.scrollmenu {
   overflow: auto;
   white-space: nowrap;
   text-align: center;
-  max-height: 250px;
+  max-height: 135px;
 }
 
 div.scrollmenu div {
@@ -51,6 +51,9 @@ div.scrollmenu div {
   text-decoration: none;
   justify-content: center;
   align-items: center;
+  animation-name: example;
+  animation-duration: 3s;
+  animation-delay: -2s;
 }
 
 
@@ -130,4 +133,12 @@ div.styleHolder div:hover {
   color: lightskyblue !important;
   background-color: lightskyblue !important;
   background: lightskyblue !important;
+}
+
+@keyframes example{
+  0%   { right:200px; top:0px;}
+  25%  { right:150px; top:0px;}
+  50%  { right:100px; top:0px;}
+  75%  { right:50px; top:0px;}
+  100% { right:0px; top:0px;}
 }
