@@ -1,0 +1,32 @@
+import React from 'react';
+
+import StyleOne from "./Photos/boldIcon.svg";
+import StyleTwo from "./Photos/cleanIcon.svg";
+import StyleThree from "./Photos/everIcon.svg";
+
+export const ApiKey = "AwDUla4uRT3GfDinUA6t9z"
+
+export const PickerOptions = {
+        accept: 'image/*',
+        maxFiles: 10,
+        transformations: {
+          crop: {
+            aspectRatio: 1/1
+          }
+        },
+        fromSources: ['instagram', 'facebook', 'googledrive']
+      }
+
+export const AvailableOptions = 
+  [{
+    name: 'StyleOne',
+    img: StyleOne
+  },
+  {
+    name: 'StyleTwo',
+    img: StyleTwo
+  },
+  {
+    name: 'StyleThree',
+    img: StyleThree
+  }]

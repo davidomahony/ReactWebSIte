@@ -85,11 +85,3 @@ class Header extends React.Component {
 }
 
 export default Header
-
-{
-  // this option uses a ddrop down, has unneccessary icon and moves off to the right
-  /* <DropdownButton  id="dropdown-basic-button" title={<i class="fa fa-bars" aria-hidden="true"></i>}>
-<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-<Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-<Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-</DropdownButton> */}

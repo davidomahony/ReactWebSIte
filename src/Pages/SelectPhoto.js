@@ -4,6 +4,8 @@ import Cookies from 'universal-cookie';
 
 import './SelectPhoto.scss'
 
+import {ApiKey, AvailableOptions} from './../Constants'
+
 import StyleOne from "./../Photos/boldIcon.svg";
 import StyleTwo from "./../Photos/cleanIcon.svg";
 import StyleThree from "./../Photos/everIcon.svg";
@@ -12,29 +14,15 @@ import UploadButton from './../Components/UploadButton'
 import Header from './../Components/Header'
 import Footer from  './../Components/Footer'
 import Checkout from '../Components/Checkout';
+import { Modal } from 'react-bootstrap';
 
 class SelectPhoto extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uploadedPhotos: [],
-      activeStyle: {
-        name: 'StyleOne',
-        img: StyleOne
-      },
-      availableStyles:[{
-        name: 'StyleOne',
-        img: StyleOne
-      },
-      {
-        name: 'StyleTwo',
-        img: StyleTwo
-      },
-      {
-        name: 'StyleThree',
-        img: StyleThree
-      }]
-      ,
+      availableStyles: AvailableOptions,
+      activeStyle: AvailableOptions[0],
       showCropperModal: false,
       imageForCrop: null,
       showAlertForPreview: false,
@@ -67,29 +55,54 @@ componentDidMount(){
   }
 }
 
-photoAdded = (url, name, dateAndTime) => {
-  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.dateAndTime !== dateAndTime)
+photoAdded = (uploadInfo) => {
+  let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.imgid !== uploadInfo.imgid)
   let cookieName = `Image_${currentPhotos.length}`;
   currentPhotos.push({
-    url: url,
-    name: name,
-    dateAndTime: dateAndTime,
-    cookieName: cookieName
+    name: uploadInfo.name,
+    type: uploadInfo.imageType,
+    dateAndTime: uploadInfo.dateAndTime,
+    dataUrl: uploadInfo.dataUrl,
+    fileStackUrl:uploadInfo.fileStackUrl,
+    hasRecievedFileStackUrl: uploadInfo.hasRecievedFileStackUrl,
+    isStandardCrop: uploadInfo.isStandardCrop,
+    cropDetails: uploadInfo.cropDetails,
+    imgid: uploadInfo.imgid,
+    cookieName: cookieName,
+    file: uploadInfo.file
   })
-  console.log('And we are back in the room')
+  console.log(currentPhotos);
+  // Whole cookies sitch needs to be cleaned up
   this.setState({uploadedPhotos: currentPhotos})
-  if (cookies.get(`containsImages`) === undefined){
-    cookies.set(`containsImages`, 1);
-  }
-  else{
-    let count = cookies.get(`containsImages`)
-    cookies.set(`containsImages`, count++);
-  }
-  cookies.set(cookieName, url);
+  // if (cookies.get(`containsImages`) === undefined){
+  //   cookies.set(`containsImages`, 1);
+  // }
+  // else{
+  //   let count = cookies.get(`containsImages`)
+  //   cookies.set(`containsImages`, count++);
+  // }
+  // cookies.set(cookieName, uploadInfo.imgid);
+}
+
+updateCrop = async (details, url) => {
+  const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === this.state.imageForCrop.imgid)
+  var newValues = [...this.state.uploadedPhotos]
+  newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: url, cropDetails: details, isStandardCrop:false}
+  await this.setState({showCropperModal : false})
+  console.log(newValues)
+  this.setState({uploadedPhotos: newValues})
+}
+
+updateInfo = (dataUrl, id) => {
+  const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === id)
+  var newValues = [...this.state.uploadedPhotos]
+  newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: dataUrl}
+  console.log(newValues)
+  this.setState({uploadedPhotos: newValues})
 }
 
 removePhoto = (photo) => {
-  let newPhotos = this.state.uploadedPhotos.filter(p => p.url !== photo.url)
+  let newPhotos = this.state.uploadedPhotos.filter(p => p.imgid !== photo.imgid)
   this.setState({uploadedPhotos: newPhotos})
   cookies.remove(photo.cookieName)
   var count = cookies.get(`containsImages`);
@@ -98,17 +111,15 @@ removePhoto = (photo) => {
 
 GetAvailablePreviews = (photos = []) =>{
   let previews = photos.map(photo =>
-      <div className="previewImage card" onClick={() => this.showCropperForPhoto(photo)}>
+       <div className="previewImage card" onClick={() => this.showCropperForPhoto(photo)}>
           <img src={this.state.activeStyle.img} className="first"/>
-          <img src={photo.url} className="second" ></img>
+          <img src={photo.dataUrl} className="second" ></img>
       </div>
   )
   return previews;
 }
 
-showCropperForPhoto = (photo) =>{
-  console.log('Getn set up')
-  console.log(photo);
+showCropperForPhoto = async (photo) =>{
   this.setState({showCropperModal : true,
   imageForCrop: photo})
 }
@@ -122,6 +133,14 @@ GetAvailableStyles(){
       </button>
     </div>
     )
+}
+
+hasRecievedUrl = (id, file) =>{
+  // need to check if failed
+  const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === id)
+  var newValues = [...this.state.uploadedPhotos]
+  newValues[elementsIndex] = {...newValues[elementsIndex], hasRecievedFileStackUrl : true, fileStackUrl: file.url}
+  this.setState({uploadedPhotos: newValues})
 }
 
   render() {
@@ -138,8 +157,10 @@ GetAvailableStyles(){
               {this.GetAvailablePreviews(this.state.uploadedPhotos)}
               <div className="vcentre">
                 <UploadButton closeCropper={() => this.setState({showCropperModal: false})}
+                  updateFromCrop={this.updateCrop}
+                  updateInfo={this.updateInfo}
                   removePhoto={this.removePhoto}
-                  showModal={this.state.showCropperModal} 
+                  showModal={this.state.showCropperModal} hasRecievedUrl={this.hasRecievedUrl}
                   imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
               </div> 
             </div>          

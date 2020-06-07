@@ -40,9 +40,10 @@ div.scrollmenu div {
   background-color: transparent;
   overflow: auto;
   white-space: nowrap;
-  color:  lightgrey;
-  background-color: lightgrey;
+  color:  lightsteelblue;
+  background-color: lightsteelblue;
   text-align: center;
+  //background-image: url('./../Photos/redwood-forrest.jpg');
 }
 
 .scrollmenuPreview div {
@@ -130,4 +131,24 @@ div.styleHolder div:hover {
   color: lightskyblue !important;
   background-color: lightskyblue !important;
   background: lightskyblue !important;
+}
+
+.alert{
+  text-align: center;
+  background: lightsteelblue;
+  padding: 20px;
+  color: lightsteelblue;
+}
+
+.alert button{
+  padding: 10px;
+  color: white;
+  background: none;
+  margin: 10px;
+  border: solid;
+  width: 150;
+}
+
+.alert h1{
+  color: white;
 }

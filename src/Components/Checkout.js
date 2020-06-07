@@ -6,6 +6,8 @@ import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './Checkout.scss'
 import AddressForm from './AddressForm'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Checkout.scss'
 
 class Checkout extends React.Component {
@@ -14,7 +16,6 @@ class Checkout extends React.Component {
         this.state = {
           showAddressModal: false,
           uuid: '',
-          images: [],
           showSpinner: false,
           showPaymentModal: false,
           resultFromPayment: "",
@@ -29,15 +30,13 @@ class Checkout extends React.Component {
             country: ''
           },
           addressUpdated: false,
-          showCheckoutHelp : this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated,
-          helpInfo: this.props.uploadedPhotos.length === 0 ? "Please add some photos before you can check out!" : 
-          !this.state.addressUpdated ? "Please update address information before you check out" : "",
           showToast: false
         }
     }
 
     async onToken (token){ // On a successful tokenization request,
       console.log('Processing Details')
+      
       const paymentData = {
         token,
         email: this.state.address.email,
@@ -47,11 +46,11 @@ class Checkout extends React.Component {
           amount: this.props.uploadedPhotos.length*1000,
           currency: 'eur',
         },
-        uploadedPhotos: this.props.uploadedPhotos.map(photo => photo.url),
+        uploadedPhotos: this.props.uploadedPhotos.map(photo => photo.fileStackUrl),
+        cropDetails: this.props.uploadedPhotos.map(photo => photo.isStandardCrop ? "Standard" : JSON.stringify(photo.cropDetails)),
         style: this.props.activeStyle,
         address: this.state.address
       };
-      console.log('Attempting Communication with Stripe')
       const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
         method: 'POST',
         headers: {
@@ -120,6 +119,12 @@ class Checkout extends React.Component {
     this.setState({address: tempAddress, addressUpdated: true})
     console.log('Address Updated')
     console.log(this.state.address)
+    console.log(this.props.uploadedPhotos)
+  }
+
+  checkoutHelpInfo(){
+    return (this.props.uploadedPhotos.length === 0 ? "Please add some photos before you can check out!" : 
+    !this.state.addressUpdated ? "Please update address information before you check out" : "")
   }
 
   render() {
@@ -193,28 +198,33 @@ class Checkout extends React.Component {
                     </Row>
                     <hr/>
                     <Row>
-                      {this.state.showCheckoutHelp ? 
-                      <Button onClick={() => this.setState({showToast: true})}>
+                      {this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated ? 
+                      <Button onClick={() => toast.info(this.checkoutHelpInfo())}>
                         Confirm / Pay
                       </Button> :
                       <StripeCheckout
                           token={this.handleSubmitpayment}
                           stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M">
-                          <Button disabled={!this.state.addressUpdated}>
+                          <Button>
                             Confirm / Pay
                           </Button>
                       </StripeCheckout>}
                     </Row>
-                    <Toast autohide={true} delay={1500} 
-                        onClose={() => this.setState({showToast: false})} 
-                        show={this.state.showToast}>
-                      <Toast.Header closeButton={true}>
-                        Checkout Info
-                      </Toast.Header>
-                      {this.state.helpInfo}
-                    </Toast>
                   </Container>
                 </div>
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnVisibilityChange
+                  draggable
+                  pauseOnHover
+                  />
+                  {/* Same as */}
+                  <ToastContainer />
             </SlidingPane>
             {
               this.displayResultFromPayment()

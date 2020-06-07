@@ -18,11 +18,6 @@ class App extends React.Component {
   render() {      
     return (
         <div>
-            {/* {this.state.loading ? 
-            <div>
-                Loading
-            </div>
-            : */}
             <Router>
                 <Switch>
                     <Route path="/" exact component={SelectPhotoPage} />
@@ -30,7 +25,6 @@ class App extends React.Component {
                     <Route path="/SelectPhotos" exact component={SelectPhotoPage} />
                 </Switch>
             </Router>
-  }
         </div>
     )
   }
