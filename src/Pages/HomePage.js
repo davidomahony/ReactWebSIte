@@ -8,7 +8,6 @@ import ReviewImage from './../Photos/ReviewImages.jpg'
 import logoMain from './../Photos/SticPicsLogo.gif'
 import promoVideo from './../Photos/wallImage.jpg'
 
-import {LoadingScreen} from './../Utility'
 import Footer from  './../Components/Footer'
 import Slider from "react-slick";
 
@@ -23,15 +22,6 @@ class HomePage extends React.Component {
         hasAcceptedCookieModal: false
     }
   }
-
-  // componentDidMount(){
-  //   if (!this.state.hasAcceptedCookieModal){
-  //     let cookie = cookies.get('hasAcceptedCookies')
-  //     if (cookie === undefined || cookie) {
-  //       this.setState({hasAcceptedCookieModal: cookie})
-  //     }
-  //   }
-  // }
 
     GetReviewSlides(){
       let displayReviewSlides = this.state.reviewSlides.map(slide => 
@@ -96,14 +86,6 @@ class HomePage extends React.Component {
             <div class="column"> Contact Us </div>
           </div> 
           <Footer WhatAction="GoToSelectPhoto" IsButtonEnabled={true}/>
-          <Modal className="loadingModal"
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              animation={true}
-              show={!this.state.promoImageLoaded}>
-            <LoadingScreen/>
-          </Modal>
       </div>
     )
   }
@@ -112,21 +94,3 @@ class HomePage extends React.Component {
 export default HomePage
 
 const cookies = new Cookies();
-
-{/* <Modal show={!this.state.hasAcceptedCookieModal}>
-<Modal.Header>
-  Cookies
-</Modal.Header>
-<Modal.Body>
-  Boring legal stuff
-</Modal.Body>
-<Modal.Footer>
-  <Button onClick={() => 
-  {
-    this.setState({hasAcceptedCookieModal: true})
-    cookies.set("hasAcceptedCookies", true)
-  }}>
-    OK
-  </Button>
-</Modal.Footer>
-</Modal> */}

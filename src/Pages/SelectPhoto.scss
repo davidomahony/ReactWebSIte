@@ -17,7 +17,8 @@
 
 div.scrollmenu {
   background-color: transparent;
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
   white-space: nowrap;
   text-align: center;
   max-height: 135px;
@@ -40,9 +41,10 @@ div.scrollmenu div {
   background-color: transparent;
   overflow: auto;
   white-space: nowrap;
-  color:  lightgrey;
-  background-color: lightgrey;
+  color:  lightsteelblue;
+  background-color: lightsteelblue;
   text-align: center;
+  //background-image: url('./../Photos/redwood-forrest.jpg');
 }
 
 .scrollmenuPreview div {

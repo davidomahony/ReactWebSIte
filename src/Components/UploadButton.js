@@ -1,12 +1,19 @@
 import React from 'react'
-import Cropper from 'react-cropper';
-import {Modal, Button} from 'react-bootstrap'
+import { v4 as uuidv4 } from 'uuid';
 
-import {LoadingIndicator, cropUrlToSquare} from './../Utility'
+import {GenerateImgInformation, AutoCropImageFromSocial, GetCropFromSocial, cropFileStackImage, CropLocalImage } from './../CropUtility'
+import {PickerOptions} from './../Constants'
 import './UploadButton.scss'
-import 'cropperjs/dist/cropper.css';
 
-import ReactFilestack from 'filestack-react';
+import logoMain from './../Photos/SticPicsLogo.gif'
+import ModifyUpload from './ModifyUpload'
+
+import ReactFilestack, {Client} from 'filestack-react';
+
+import * as filestack from 'filestack-js';
+
+const apikey = "AwDUla4uRT3GfDinUA6t9z";
+const client = filestack.init(apikey);
 
 class UploadButton extends React.Component {
     constructor(props) {
@@ -15,14 +22,19 @@ class UploadButton extends React.Component {
             name: null,
             imageType: null,
             dateAndTime: null,
-            src: this.props.imageForCrop,
+            unCropped: '',
+            dataUrl: '',
+            fileStackUrl: '',
+            hasRecievedFileStackUrl: false,
+            isStandardCrop: true,
+            nonStandardCropDetails: {x: 0, y: 0, length: 0, width: 0},
             cropResult: null,
-            showModal: this.props.showModal,
             mouseOverUpload: false,
-            showSocialModal: false
+            showSocialModal: false,
+            imgid: "",
+            file: null
         }
     }
-
 
     UploadButton(){
       return <div className="uploadButtonMouseOver">
@@ -58,116 +70,105 @@ class UploadButton extends React.Component {
 
     removePhoto = () =>{
       this.props.removePhoto(this.props.imageForCrop)
-      this.closeCropper()
+      this.closeCropper();
     }
 
-    fileUploaded = (response) => {
+    uploadFromInput = async (event) =>{      
+      if (event.target.files.length !== 0){
+        let file = event.target.files[0];
+        let uuid = uuidv4();
+        GenerateImgInformation(file).then(res => 
+          {
+            this.setState({dataUrl: res.crop, unCropped: res.main, cropResult: res.crop})
+            this.props.updateInfo(res.crop, this.state.imgid)
+          })
+        await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
+        this.props.photoAdded(this.state)
+        client.upload(file).then(res => this.props.hasRecievedUrl(this.state.imgid, res)).catch(res => console.log(res))
+        console.log("Img complete")
+    }
+  }
+
+  setNewPhoto = async (name, dataUrl, dateAndTime, cropResult, imageType, isStandardCrop, imgid, file, hasRecievedFileStackUrl, fileStackUrl) => {
+    await this.setState({
+      name: name,
+      dataUrl: dataUrl,
+      dateAndTime: dateAndTime,
+      cropResult: cropResult,
+      imageType: imageType,
+      isStandardCrop: isStandardCrop,
+      imgid: imgid,
+      file: file,
+      unCropped: hasRecievedFileStackUrl ? fileStackUrl : dataUrl,
+      hasRecievedFileStackUrl: hasRecievedFileStackUrl,
+      fileStackUrl: fileStackUrl})
+  }
+    
+    fileUploaded = async (response) => {
       console.log(response);
       var uploaded = response.filesUploaded[0]
-      console.log(response.filesUploaded[0]);
-
-      var img = new Image();
-
-      img.onload = () => {
-        var height = img.height;
-        var width = img.width;
-        let result = '';
-        if(height !== width){
-          
-          result = cropUrlToSquare(height, width, response.filesUploaded[0].url, "AOiy6SqVESS2GJf9eKXsDz")
-          console.log(result)
-        }
-        else{
-          result = response.filesUploaded[0].url
-        }
-
-        this.setState({
-          fileSrc: response.filesUploaded[0],
-          dateAndTime: Date.now(),
-          name: response.filesUploaded[0].name,
-          imageType: response.filesUploaded[0].type})
-          this.setState({src: result, cropResult: result})
-          this.props.photoAdded(result ,this.state.name, this.state.dateAndTime)
-        // code here to use the dimensions
+      if (uploaded !== undefined){
+        let res = await GetCropFromSocial(uploaded);
+        await this.setNewPhoto(uploaded.filename, uploaded.url, Date.now(), res, uploaded.mimetpe, true, uuidv4(), '', true, uploaded.url)
+        this.props.photoAdded(this.state)
       }
-
-      img.src = response.filesUploaded[0].url
-    }
-
-    fileTrasformed = (responseUrl) => {
-      console.log(responseUrl);
-      this.setState({
-        fileSrc: responseUrl,
-        dateAndTime: Date.now(),
-        name: responseUrl})
-        console.log('show modal');
-        this.setState({src: responseUrl, cropResult: responseUrl})
-        this.props.photoAdded(responseUrl ,this.state.name, this.state.dateAndTime)
-    }
-
-    pickerOptionsSocial = {
-      accept: 'image/*',
-      maxFiles: 10,
-      transformations: {
-        crop: {
-          aspectRatio: 1/1
-        }
-      },
-      fromSources: ['instagram', 'facebook', 'googledrive']
-    };
-
-    pickerOptions = {
-      accept: 'image/*',
-      maxFiles: 10,
-      transformations: {
-        crop: {
-          aspectRatio: 1/1
-        }
-      },
-      fromSources: ['local_file_system']
-    };
+    } 
+    
+  removePhoto = () =>{
+    this.props.removePhoto(this.props.imageForCrop)
+    this.closeCropper()
+  }
 
   closeCropper = () =>{
     this.props.closeCropper()
     this.setState({showModal: false})
   }
 
+  cropImage = async (cropdetails) => {
+    var croppedUrl = this.props.imageForCrop.hasRecievedFileStackUrl ? 
+      await cropFileStackImage(cropdetails.x, cropdetails.y, cropdetails.width, this.props.imageForCrop.fileStackUrl) : 
+      await CropLocalImage(this.props.imageForCrop.file, cropdetails)
+    this.props.updateFromCrop(cropdetails, croppedUrl.crop)
+  }
+
+  UploadButton(){
+    return <div className="uploadButtonMouseOver">
+      <div className="outer">
+        <div htmlFor="fileUpload" onClick={()=> this.refs.fileUploader.click()} className="fromPC">
+          <i className="fa fa-plus blue fa-3x"></i>
+          <h4 className="uploadFromPcText">
+            Upload Photos
+          </h4>
+          <input type="file" id="fileUpload" ref="fileUploader" onChange={this.uploadFromInput}/>
+        </div>
+          <ReactFilestack
+            apikey={apikey}
+            onSuccess={async (e) => this.fileUploaded(e)}
+            actionOptions={PickerOptions}
+            customRender={({ onPick }) => (
+              <div className="fromPC" onClick={onPick}>
+                <i className="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
+                <i className="fa fa-instagram fa-3x socialIcon purple" aria-hidden="true"></i>
+                <i className="fa fa-google fa-3x socialIcon black" aria-hidden="true"></i>
+              </div>
+            )}
+          />
+      </div>
+    </div>
+    }
+
   render() {
     return ( 
     <div>
         {this.UploadButton()}
-        <Modal show={this.props.showModal || this.state.showModal}>
-            <Modal.Body>
-              <h6>
-                Would you like to remove this image?
-              </h6>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="danger" onClick={() => this.removePhoto()}>
-                Yes
-              </Button>
-              <Button variant="primary" onClick={this.closeCropper}>
-                Cancel
-              </Button>
-            </Modal.Footer>
-          </Modal>
+        <ModifyUpload unCropped={this.state.unCropped} 
+          cropImage={(details) => this.cropImage(details)}
+          removePhoto={() => this.removePhoto()}
+          closeCropper={() => this.closeCropper()} 
+          showModifyUpload={this.props.showModal || this.state.showModal}/>
       </div>
     )
   }
 }
 
 export default UploadButton
-
-{/* <div style={{ width: '100%' }}>
-<ReactFilestack
-  apikey={"AOiy6SqVESS2GJf9eKXsDz"}
-  action='transform'
-  actionOptions= {{
-    resize: {
-      width: 250
-    },
-    flip: true
-  }}
-  source='https://cdn.filestackcontent.com/S15FKcAYQOq6CVeERHn1'
-  onSuccess={this.fileTrasformed}/>
-</div> */}
