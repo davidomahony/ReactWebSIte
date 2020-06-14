@@ -42,12 +42,6 @@ class ModifyUpload extends React.Component {
                 crop={this.cropUpdated} />
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            Would You Like To Remove This Photo?
-            <Button variant="danger" onClick={() => this.props.removePhoto()}>
-              Delete
-            </Button>
-          </Modal.Footer>
         </Modal>
     )
   }

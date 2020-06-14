@@ -51,6 +51,7 @@ class Checkout extends React.Component {
         style: this.props.activeStyle,
         address: this.state.address
       };
+      console.log(paymentData);
       const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
         method: 'POST',
         headers: {
