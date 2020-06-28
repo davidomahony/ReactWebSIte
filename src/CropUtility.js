@@ -26,7 +26,10 @@ export function cropFileStackImage(x, y, width, url){
       let urlHandle = url.split('/')
       console.log(urlHandle.length);
       let dimensions = `crop=dim:[${Math.ceil(x < 0 ? 0 : x)}, ${Math.ceil(y < 0 ? 0 : y)},${Math.ceil(width)},${Math.ceil(width)}]`
-      resolve(`https://process.filestackapi.com/${ApiKey}/${dimensions}/${urlHandle[urlHandle.length - 1]}`);
+      var result = `https://process.filestackapi.com/${ApiKey}/${dimensions}/${urlHandle[urlHandle.length - 1]}`;
+      resolve({
+        main: url,
+        crop: result})
     }
     catch (Err){
       reject(`Error --> ${Err}`)

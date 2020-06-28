@@ -5,7 +5,11 @@ import StripeCheckout from 'react-stripe-checkout';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './Checkout.scss'
+
 import AddressForm from './AddressForm'
+import PaymentCompleteModal from './PaymentCompleteModal'
+import OrderInformation from './OrderInformation'
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Checkout.scss'
@@ -34,7 +38,7 @@ class Checkout extends React.Component {
         }
     }
 
-    async onToken (token){ // On a successful tokenization request,
+    async onToken (token){ 
       console.log('Processing Details')
       
       const paymentData = {
@@ -51,6 +55,7 @@ class Checkout extends React.Component {
         style: this.props.activeStyle,
         address: this.state.address
       };
+      console.log(paymentData);
       const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
         method: 'POST',
         headers: {
@@ -90,24 +95,6 @@ class Checkout extends React.Component {
     console.log('Done Processing')
   }
 
-  displayResultFromPayment(){
-    return(
-      <Modal show={this.state.showPaymentModal} o>
-        <Modal.Header>
-         <Modal.Title>{this.state.paymentSuccess ? "Payment Successful" : "Payment Failed"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {this.state.paymentSuccess ? "Success info" : "Failure Info"}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => this.setState({showPaymentModal: false})}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    )
-  }
-
   AddressSubmitted = (value) =>{
     let tempAddress = this.state.address;
     tempAddress.address = value.address;
@@ -118,8 +105,6 @@ class Checkout extends React.Component {
     tempAddress.postCode = value.postCode;
     this.setState({address: tempAddress, addressUpdated: true})
     console.log('Address Updated')
-    console.log(this.state.address)
-    console.log(this.props.uploadedPhotos)
   }
 
   checkoutHelpInfo(){
@@ -145,57 +130,7 @@ class Checkout extends React.Component {
                     </Row>
                     <AddressForm AddressSubmitted={this.AddressSubmitted} showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
                     <hr/>
-                    <Row>
-                      <h5> Summary </h5>
-                    </Row>
-                    <Row>
-                      <div className="infoRow">
-                        <div className="left">
-                        <h7>
-                          Photos Added: 
-                        </h7>
-                        </div>
-                        <div className="right">
-                          {this.props.uploadedPhotos.length}
-                        </div>
-                      </div>
-                    </Row>
-                    <Row>
-                    <div className="infoRow">
-                        <div className="left">
-                          <h7>
-                            Style Selected:
-                          </h7>
-                        </div>
-                        <div className="right">
-                          {this.props.activeStyle.name}
-                        </div>
-                      </div>
-                    </Row>
-                    <Row>
-                    <div className="infoRow">
-                        <div className="left">
-                          <h7>
-                            Delivery:
-                          </h7>
-                        </div>
-                        <div className="right">
-                           $10
-                        </div>
-                      </div>
-                    </Row>
-                    <Row>
-                    <div className="infoRow">
-                        <div className="left">
-                          <h7>
-                            Total:
-                          </h7>
-                        </div>
-                        <div className="right">
-                           ${(this.props.uploadedPhotos.length * 10) + 10}
-                        </div>
-                      </div>
-                    </Row>
+                    <OrderInformation activeStyle={this.props.activeStyle} uploadedPhotos={this.props.uploadedPhotos}/>
                     <hr/>
                     <Row>
                       {this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated ? 
@@ -226,9 +161,10 @@ class Checkout extends React.Component {
                   {/* Same as */}
                   <ToastContainer />
             </SlidingPane>
-            {
-              this.displayResultFromPayment()
-            }
+            <PaymentCompleteModal show={this.state.showPaymentModal} 
+              success={this.state.paymentSuccess} 
+              hidePaymentCompleteModal={() => this.state({showPaymentModal: false})} 
+              uploadedPhotos={this.props.uploadedPhotos}/>
       </div>
     )
   }
