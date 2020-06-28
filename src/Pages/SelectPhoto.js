@@ -67,6 +67,7 @@ photoAdded = (uploadInfo) => {
     unCropped: uploadInfo.unCropped,
     imgid: uploadInfo.imgid,
     cookieName: cookieName,
+    uploadPercent: 0,
     file: uploadInfo.file
   })
   console.log(currentPhotos);
@@ -79,7 +80,7 @@ updateCrop = async (details, url) => {
   const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === this.state.imageForCrop.imgid)
   var newValues = [...this.state.uploadedPhotos]
   newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: url, cropDetails: details, isStandardCrop:false}
-  await this.setState({showCropperModal : false})
+  this.setState({showCropperModal : false})
   console.log(newValues)
   this.setState({uploadedPhotos: newValues})
 }
@@ -90,6 +91,23 @@ updateInfo = (dataUrl, id, unCropped) => {
   newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: dataUrl, unCropped: unCropped}
   console.log(newValues)
   this.setState({uploadedPhotos: newValues})
+}
+
+hasRecievedUrl = (id, file) =>{
+  // need to check if failed
+  const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === id)
+  var newValues = [...this.state.uploadedPhotos]
+  newValues[elementsIndex] = {...newValues[elementsIndex], hasRecievedFileStackUrl : true, fileStackUrl: file.url, uploadPercent: 100}
+  this.setState({uploadedPhotos: newValues})
+}
+
+updateUploadPercentage = (id, percentage) => {
+    // need to check if failed
+    const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === id)
+    var newValues = [...this.state.uploadedPhotos]
+    newValues[elementsIndex] = {...newValues[elementsIndex], uploadPercent: percentage}
+    console.log(id, percentage);
+    this.setState({uploadedPhotos: newValues})
 }
 /////////////////////////////////////////////////////////
 
@@ -129,14 +147,6 @@ GetAvailableStyles(){
     )
 }
 
-hasRecievedUrl = (id, file) =>{
-  // need to check if failed
-  const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === id)
-  var newValues = [...this.state.uploadedPhotos]
-  newValues[elementsIndex] = {...newValues[elementsIndex], hasRecievedFileStackUrl : true, fileStackUrl: file.url}
-  this.setState({uploadedPhotos: newValues})
-}
-
 MyAwesomeMenu = () => (
   <Menu id='menu_id'>
     <Item onClick={this.removePhoto}>
@@ -168,6 +178,7 @@ MyAwesomeMenu = () => (
                 <UploadButton closeCropper={() => this.setState({showCropperModal: false})}
                   updateFromCrop={this.updateCrop}
                   updateInfo={this.updateInfo}
+                  UpdatePrecentage={this.updateUploadPercentage}
                   showModal={this.state.showCropperModal} hasRecievedUrl={this.hasRecievedUrl}
                   imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
               </div> 

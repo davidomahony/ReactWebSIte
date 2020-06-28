@@ -38,19 +38,17 @@ class UploadButton extends React.Component {
 
     uploadFromInput = async (event) =>{      
       if (event.target.files.length !== 0){
-        event.target.files.forEach(async file => 
-        {
-          let uuid = uuidv4();
-          GenerateImgInformation(file).then(res => 
-            {
-              this.setState({dataUrl: res.crop, unCropped: res.main, cropResult: res.crop})
-              this.props.updateInfo(res.crop, this.state.imgid, res.main)
-            })
-          await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
-          this.props.photoAdded(this.state)
-          client.upload(file).then(res => this.props.hasRecievedUrl(this.state.imgid, res)).catch(res => console.log(res))
-          console.log("Img complete")
-        });
+        var file = event.target.files[0]
+        let uuid = uuidv4();
+        GenerateImgInformation(file).then(res => 
+          {
+            this.setState({dataUrl: res.crop, unCropped: res.main, cropResult: res.crop})
+            this.props.updateInfo(res.crop, this.state.imgid, res.main)
+          })
+        await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
+        this.props.photoAdded(this.state)
+        client.upload(file, { onProgress : (event) => this.props.UpdatePrecentage(uuid, event.totalPercent)}).then(res => this.props.hasRecievedUrl(this.state.imgid, res)).catch(res => console.log(res))
+        console.log("Img complete")
     }
   }
 
@@ -73,7 +71,7 @@ class UploadButton extends React.Component {
       console.log(response);
       var uploaded = response.filesUploaded.length != 0;
       if (uploaded !== undefined){
-        response.filesUploaded.forEach(async(file) =>
+        response.filesUploaded.ForEach(async(file) =>
         {
           let res = await GetCropFromSocial(file);
           await this.setNewPhoto(file.filename, file.url, Date.now(), res, file.mimetpe, true, uuidv4(), '', true, file.url)
@@ -111,6 +109,7 @@ class UploadButton extends React.Component {
         </div>
           <ReactFilestack
             apikey={apikey}
+            on
             onSuccess={async (e) => this.fileUploaded(e)}
             actionOptions={PickerOptions}
             customRender={({ onPick }) => (
