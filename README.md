@@ -2,10 +2,12 @@
 Dave Todo (Front End)
 
     Homepage
-        - Add JD's stuff
         - Terms of use
         - Privacy
         - contact us
+        - That slider
+        - Add cookies back
+        - Really needs to be cleaned up
         
     Footer
         - Refactor Navigation for Props
@@ -21,6 +23,12 @@ Dave Todo (Front End)
         - Need a 404 Page
         - Pop up page to notify about cookies
         - Check image quality
+
+    High Priority:
+        - Issue with checking out and ensuring photos have been uploaded
+        - Image quality
+        - Need to add a method for sending image url to new object
+        
 
 
 

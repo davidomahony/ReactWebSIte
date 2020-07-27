@@ -34,15 +34,15 @@ class Checkout extends React.Component {
             country: ''
           },
           addressUpdated: false,
-          showToast: false
+          showToast: false,
+          updateInformation: ''
         }
     }
 
     async onToken (token){ 
       console.log('Processing Details')
-      
-      const paymentData = {
-        token,
+
+      var info = {
         email: this.state.address.email,
         uuid: this.props.uuid,
         names: {...this.state.images},
@@ -55,8 +55,12 @@ class Checkout extends React.Component {
         style: this.props.activeStyle,
         address: this.state.address
       };
+
+      this.setState({updateInformation: info})
+      
+      const paymentData = { token, ...info };
       console.log(paymentData);
-      const response = await fetch('https://ogiwiln1l8.execute-api.eu-west-1.amazonaws.com/develop/processOrderCompletion', {
+      const response = await fetch('https://u5xi7cvkj9.execute-api.eu-west-1.amazonaws.com/dev/processOrderCompletion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -65,21 +69,10 @@ class Checkout extends React.Component {
         .then(result => 
         {
           try {
-            if (result.message === 'Charge processed succesfully!')
-            {
-              // success
-              this.setState({showPaymentModal: true,
-                paymentSuccess: true
-               })
-            }
-            else
-            {
-              this.setState({showPaymentModal: true,
-                paymentSuccess: false,
-                resultFromPayment: result.error })
-              console.log(result)
-            }
-          } catch (error) {
+            console.log(result)
+            this.setState({showPaymentModal: true, paymentSuccess: result.message === 'Charge processed succesfully!'})
+          } 
+          catch (error) {
             console.log(result)
             this.setState({showPaymentModal: true,
               paymentSuccess: false,
@@ -161,9 +154,9 @@ class Checkout extends React.Component {
                   {/* Same as */}
                   <ToastContainer />
             </SlidingPane>
-            <PaymentCompleteModal show={this.state.showPaymentModal} 
+            <PaymentCompleteModal information={this.state.updateInformation} show={this.state.showPaymentModal} 
               success={this.state.paymentSuccess} 
-              hidePaymentCompleteModal={() => this.state({showPaymentModal: false})} 
+              hidePaymentCompleteModal={() => this.setState({showPaymentModal: false})} 
               uploadedPhotos={this.props.uploadedPhotos}/>
       </div>
     )

@@ -9,6 +9,24 @@ class PaymentCompleteModal extends React.Component {
         }
     }
 
+    sendMissingInformation = async() => {
+      if (this.props.uploadedPhotos.every(item => item.hasRecievedFileStackUrl))
+      {
+        var info = this.props.information;
+        // maybe assemble a url which includes a crop 
+        const response = await fetch('https://u5xi7cvkj9.execute-api.eu-west-1.amazonaws.com/dev/updateCheckoutInfo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(info)})
+
+          let jsonFormat = await response.json();
+        
+        return true;
+      }
+    }
+
   render() {
     return (
         <Modal show={this.props.show}>
@@ -19,7 +37,7 @@ class PaymentCompleteModal extends React.Component {
           Please wait While the Images Are Uploaded
           {this.props.uploadedPhotos.map(p => {
               return (<div>
-                  <ProgressBar animated now={p.uploadPercent} label={`${p.name} - % ${p.uploadPercent}`}/> 
+                  <ProgressBar animated now={p.uploadPercent} label={p.hasRecievedFileStackUrl ? "Complete" : `${p.name} - % ${p.uploadPercent}`}/> 
                   <br/>
                 </div>)
           })}
