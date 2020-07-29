@@ -114,8 +114,7 @@ class Checkout extends React.Component {
     tempAddress.fullName = value.fullName;
     tempAddress.postCode = value.postCode;
     tempAddress.country = value.country;
-    this.setState({address: tempAddress, addressUpdated: true})
-    console.log('Address Updated')
+    this.setState({address: tempAddress, addressUpdated: value.address !== "" || value.address !== null || value.address !== undefined})
   }
 
   checkoutHelpInfo(){
@@ -147,7 +146,10 @@ class Checkout extends React.Component {
                       {this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated ? 
                       <Button onClick={() => toast.info(this.checkoutHelpInfo())}>
                         Confirm / Pay
-                      </Button> :
+                      </Button> : this.props.uploadedPhotos.length < 3 ? 
+                      <Button onClick={() => toast.warn("Minimum order is 3 tiles")}>
+                      Confirm / Pay
+                      </Button>:
                       <StripeCheckout
                           token={this.handleSubmitpayment}
                           stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M">
@@ -156,6 +158,10 @@ class Checkout extends React.Component {
                           </Button>
                       </StripeCheckout>}
                     </Row>
+                    <hr/>
+                    <div>
+                      **Minimum order of 3 tiles for €39.99. Each additional tile is €10 there after
+                    </div>
                   </Container>
                 </div>
                 <ToastContainer

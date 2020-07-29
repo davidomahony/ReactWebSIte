@@ -20,13 +20,13 @@ class AddressForm extends React.Component {
     }
 
   componentDidMount(){
-    let email = cookie.load("email");
-    let fullName = cookie.load("fullName");
-    let address = cookie.load("address");
-    let address2 = cookie.load("address2");
-    let city = cookie.load("city");
-    let postCode = cookie.load("postcode");
-    let country = cookie.load("country");
+    let email = this.IsNullOrUndefined(cookie.load("email"));
+    let fullName = this.IsNullOrUndefined(cookie.load("fullName"));
+    let address = this.IsNullOrUndefined(cookie.load("address"));
+    let address2 = this.IsNullOrUndefined(cookie.load("address2"));
+    let city = this.IsNullOrUndefined(cookie.load("city"));
+    let postCode = this.IsNullOrUndefined(cookie.load("postcode"));
+    let country = this.IsNullOrUndefined(cookie.load("country"));
 
     this.setState({
       email: email,
@@ -40,9 +40,9 @@ class AddressForm extends React.Component {
   }
 
   IsNullOrUndefined(string){
-    // if (string.includes("undefined") || string === null || string === undefined){
-    //   return "";
-    // }
+    if (string === null || string === undefined){
+      return "";
+    }
     return string
   }
 
