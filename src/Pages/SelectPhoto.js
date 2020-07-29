@@ -2,6 +2,7 @@ import React from 'react'
 // Libraries
 import { v4 as uuidv4 } from 'uuid';
 import { Menu, Item,IconFont, animation,MenuProvider} from 'react-contexify';
+import cookie from 'react-cookies'
 
 import UploadButton from './../Components/UploadButton'
 import Header from './../Components/Header'
@@ -11,7 +12,7 @@ import Checkout from '../Components/Checkout';
 import './SelectPhoto.scss'
 import 'react-contexify/dist/ReactContexify.min.css';
 
-import {AvailableOptions, Cookies} from './../Constants'
+import {AvailableOptions} from './../Constants'
 
 class SelectPhoto extends React.Component {
   constructor(props) {
@@ -29,32 +30,22 @@ class SelectPhoto extends React.Component {
     }
 }
 
-// componentDidMount(){
-//   if (!this.state.haveCheckForCookies){
-//     let containsImages = cookies.get('containsImages')
-//     let images = this.state.uploadedPhotos;
-//     if (containsImages !== undefined || containsImages > 0)
-//     {
-//       var count;
-//       for (count = 0 ; count < (containsImages + 1); count++){
-//         let foundImage = cookies.get(`Image_${count}`)
-//         if (foundImage !== undefined)
-//         {
-//           images.push({
-//             url: foundImage,
-//             name: foundImage,
-//             dateAndTime: Date.now()
-//           })
-//         }
-//       }
-//     }
-//     this.setState({haveCheckForCookies:true, uploadedPhotos: images})
-//   }
-// }
+componentDidMount(){
+  if (!this.state.haveCheckForCookies){
+    var cookiesFound = cookie.loadAll()
+    Object.keys(cookiesFound).forEach(key => 
+    {
+      if(key.includes("image_")){
+        var url = cookiesFound[key]
+        this.photoAdded({name: key, type:"png", dateAndTime:Date.now(), dataUrl: url, fileStackUrl: url, hasRecievedFileStackUrl: true, 
+        isStandardCrop: true, cropDetails: "", imgid:key.split('_')[1], uploadPercent: 100})
+      }
+    })
+  }
+}
 
 photoAdded = (uploadInfo) => {
   let currentPhotos = this.state.uploadedPhotos.filter(photo => photo.imgid !== uploadInfo.imgid)
-  let cookieName = `Image_${currentPhotos.length}`;
   currentPhotos.push({
     name: uploadInfo.name,
     type: uploadInfo.imageType,
@@ -66,11 +57,9 @@ photoAdded = (uploadInfo) => {
     cropDetails: uploadInfo.cropDetails,
     unCropped: uploadInfo.unCropped,
     imgid: uploadInfo.imgid,
-    cookieName: cookieName,
     uploadPercent: 0,
     file: uploadInfo.file
   })
-  console.log(currentPhotos);
   // Whole cookies sitch needs to be cleaned up
   this.setState({uploadedPhotos: currentPhotos})
 }
@@ -81,7 +70,9 @@ updateCrop = async (details, url) => {
   var newValues = [...this.state.uploadedPhotos]
   newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: url, cropDetails: details, isStandardCrop:false}
   this.setState({showCropperModal : false})
-  console.log(newValues)
+  cookie.save(`image_${this.state.imageForCrop.imgid}`, url, {
+      maxAge: 3600 * 24 * 7, // One week
+    })
   this.setState({uploadedPhotos: newValues})
 }
 
@@ -114,14 +105,7 @@ updateUploadPercentage = (id, percentage) => {
 removePhoto = () => {
   let newPhotos = this.state.uploadedPhotos.filter(p => p.imgid !== this.state.imageForCrop.imgid)
   this.setState({uploadedPhotos: newPhotos})
-  //cookies.remove(this.state.imageForCrop.cookieName)
-  // var count = cookies.get(`containsImages`);
-  // cookies.set(`containsImages`, count - 1);
-}
-
-setUpCropModal = () =>{
-  console.log(this.state.imageForCrop)
-  this.setState({showCropperModal: true});
+  cookie.remove(`image_${this.state.imageForCrop.imgid}`, { path: '/' })
 }
 
 GetAvailablePreviews = (photos = []) =>{
@@ -141,7 +125,7 @@ GetAvailableStyles(){
     <div className={"imageStyleDiv" + this.state.activeStyle === style.name ? " lightblue" : ""} key={style.name}>
       <button className="card" onClick={() => this.setState({activeStyle: style})}>
           <img className="imageStyle" src={style.img}></img>
-          {style.name}
+          <div className="imageText">{style.name}</div>
       </button>
     </div>
     )
@@ -152,7 +136,7 @@ MyAwesomeMenu = () => (
     <Item onClick={this.removePhoto}>
       <IconFont className="fa fa-trash red"/>Delete
     </Item>
-    <Item onClick={this.setUpCropModal}>
+    <Item onClick={() => this.setState({showCropperModal: true})}>
       <IconFont className="fa fa-crop blue"/>Crop
     </Item>
     <Item>
@@ -172,6 +156,7 @@ MyAwesomeMenu = () => (
           </div>
           <div className="scrollmenuPreview">
             <div className="previewContainer">
+              <h5 className="gray" >Pick Some Photos! </h5>
               {this.GetAvailablePreviews(this.state.uploadedPhotos)}
               {this.MyAwesomeMenu()}
               <div className="vcentre">

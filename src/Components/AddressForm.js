@@ -2,21 +2,71 @@ import React from 'react'
 import {Modal} from 'react-bootstrap'
 import {Form, Input, Submit} from 'react-smart-form';
 import {required, email} from 'react-smart-form/validators';
+import cookie from 'react-cookies'
 import './AddressForm.scss'
 
 class AddressForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          showModal: false
+          showModal: false,
+          email: "",
+          address: "",
+          address2: "",
+          city: "",
+          postCode: "",
+          country: ""
         }
     }
+
+  componentDidMount(){
+    let email = cookie.load("email");
+    let fullName = cookie.load("fullName");
+    let address = cookie.load("address");
+    let address2 = cookie.load("address2");
+    let city = cookie.load("city");
+    let postCode = cookie.load("postcode");
+    let country = cookie.load("country");
+
+    this.setState({
+      email: email,
+      fullName: fullName,
+      address: address,
+      address2: address2,
+      city: city,
+      postCode: postCode,
+      country: country
+    });
+  }
+
+  IsNullOrUndefined(string){
+    // if (string.includes("undefined") || string === null || string === undefined){
+    //   return "";
+    // }
+    return string
+  }
 
   onSubmit = (values) => {
     console.log(values);
     // Maybe some validation
     this.props.AddressSubmitted(values);
     this.props.closeModal();
+    cookie.save("email", values.email, { path: '/' })
+    cookie.save("fullName", values.fullName, { path: '/' })
+    cookie.save("address", values.address, { path: '/' })
+    cookie.save("address2", values.address2, { path: '/' })
+    cookie.save("city", values.city, { path: '/' })
+    cookie.save("postcode", values.postCode, { path: '/' })
+    cookie.save("country", values.country, { path: '/' })
+    this.setState({
+      email: values.email,
+      fullName: values.fullName,
+      address: values.address,
+      address2: values.address2,
+      city: values.city,
+      postCode: values.postCode,
+      country: values.country
+    });
   }   
 
   render() {
@@ -33,13 +83,13 @@ class AddressForm extends React.Component {
             <div className="mainContainer">
               <div className="formContainer">
                 <Form onSubmit={this.onSubmit}>
-                    <Input name="email" label="Email" validators={[required('Email is required'), email('This is not a valid email.')]}/>
-                    <Input name="fullName" label="Full Name" validators={[required('Full name is required')]} />
-                    <Input name="address" label="Address" validators={[required('Address is required')]} />
-                    <Input name="address2" label="Address 2"  />
-                    <Input name="city"  label="City" validators={[required('City/County is required')]} />
-                    <Input name="postCode" label="Post Code" validators={[required('Post code is required')]} />
-                    <Input name="country" label="Country" validators={[required('Country is required')]} />
+                    <Input defaultValue={this.state.email} name="email" label="Email" validators={[required('Email is required'), email('This is not a valid email.')]}/>
+                    <Input defaultValue={this.state.fullName} name="fullName" label="Full Name" validators={[required('Full name is required')]} />
+                    <Input defaultValue={this.state.address} name="address" label="Address" validators={[required('Address is required')]} />
+                    <Input defaultValue={this.state.address2} name="address2" label="Address 2"  />
+                    <Input defaultValue={this.state.city} name="city"  label="City" validators={[required('City/County is required')]} />
+                    <Input defaultValue={this.state.postCode} name="postCode" label="Post Code" validators={[required('Post code is required')]} />
+                    <Input defaultValue={this.state.country} name="country" label="Country" validators={[required('Country is required')]} />
                     <Submit>
                         Submit
                     </Submit>

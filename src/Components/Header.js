@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, Navbar, Modal, NavDropdown, Nav, DropdownButton, Dropdown, Button} from 'react-bootstrap'
 
 import './Header.scss'
+import logoMain from './../Photos/SticPicsLogo.gif'
 
 class Header extends React.Component {
     constructor(props) {
@@ -63,12 +64,14 @@ class Header extends React.Component {
     return (
       <div>
         <Navbar bg="light">
-          <Navbar.Brand>
             <Button variant="light" href="home">
               <i className="fa fa-angle-left fa-2x blue"></i>
             </Button>
-          </Navbar.Brand>
+          
           <Nav className="container-fluid">
+            <div className="imageContainer">
+              <img className="mainLogo" src={logoMain}></img>
+            </div>
             <Nav.Item id="menuPopOver" className="ml-auto">
             <DropdownButton alignRight  variant="light"   id="dropdown-menu-align-right" title={<i className="fa fa-bars blue fa-1x" aria-hidden="true"></i>}>
               <Dropdown.Item onClick={() => this.processDropDownClick('FAQ')}> Frequent Questions</Dropdown.Item>

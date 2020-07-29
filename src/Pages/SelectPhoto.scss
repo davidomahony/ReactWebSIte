@@ -2,7 +2,7 @@
   max-width: 1500px;
   margin: auto;
   height: 100%;
-  padding-bottom: 100px;
+  padding: 0;
 }
 
 .vcentre {
@@ -17,20 +17,23 @@
 }
 
 div.scrollmenu {
-  background-color: transparent;
+  background-color: #f8f9fa!important;
   overflow: auto;
   white-space: nowrap;
   text-align: center;
-  max-height: 250px;
+  padding-bottom: 2px;
+  max-height: 100px;
+  overflow-y: hidden;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
 }
 
 div.scrollmenu div {
   display: inline-block;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 0px;
   padding-right: 10px;
   padding-left: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 2px;
   text-decoration: none;
   justify-content: center;
   align-items: center;
@@ -44,7 +47,9 @@ div.scrollmenu div {
   color:  lightsteelblue;
   background-color: lightsteelblue;
   text-align: center;
-  //background-image: url('./../Photos/redwood-forrest.jpg');
+  background-image: url('./../Photos/gallery Wall-B&W.jpeg');
+  padding-top: 40px;
+  padding-bottom: 60px;
 }
 
 .scrollmenuPreview div {
@@ -54,7 +59,6 @@ div.scrollmenu div {
   justify-content: center;
   align-items: center;
 }
-
 
 .centerHorizontal{
   display: flex;
@@ -87,7 +91,6 @@ div.scrollmenu div {
   top:25%;
   display: block;
   max-width: 50%;
-  max-width: 50%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -112,13 +115,13 @@ div.styleHolder div:hover {
 .styleHolder{
   display: flex;
   overflow-y: auto;
-  height: 170px;
+  height: 110px;
   justify-content: center;
 }
 
 .imageStyle{
-  max-width: 85px;
-  max-height: 85px;
+  max-width: 70px;
+  max-height: 70px;
 }
 
 .imageStyleDiv{
@@ -126,6 +129,13 @@ div.styleHolder div:hover {
   overflow: auto;
   white-space: nowrap;
   text-align: center;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.imagetext{
+  margin-top: 2px;
+  font-weight: 700;
 }
 
 .lightblue{
@@ -133,27 +143,6 @@ div.styleHolder div:hover {
   background-color: lightskyblue !important;
   background: lightskyblue !important;
 }
-
-.alert{
-  text-align: center;
-  background: lightsteelblue;
-  padding: 20px;
-  color: lightsteelblue;
-}
-
-.alert button{
-  padding: 10px;
-  color: white;
-  background: none;
-  margin: 10px;
-  border: solid;
-  width: 150;
-}
-
-.alert h1{
-  color: white;
-}
-
 
 .blue{
   color: blue !important;

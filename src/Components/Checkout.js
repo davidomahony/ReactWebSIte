@@ -13,6 +13,7 @@ import OrderInformation from './OrderInformation'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Checkout.scss'
+import cookie from 'react-cookies'
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -37,6 +38,22 @@ class Checkout extends React.Component {
           showToast: false,
           updateInformation: ''
         }
+    }
+
+    componentDidMount(){
+      let tempAddress = this.state.address;
+      tempAddress.address = this.CheckValueIsNotNullOrUndefined(cookie.load("address"))
+      tempAddress.address2 = this.CheckValueIsNotNullOrUndefined(cookie.load("address2"))
+      tempAddress.city = this.CheckValueIsNotNullOrUndefined(cookie.load("city"));
+      tempAddress.email = this.CheckValueIsNotNullOrUndefined(cookie.load("email"));
+      tempAddress.fullName = this.CheckValueIsNotNullOrUndefined(cookie.load("fullName"));
+      tempAddress.postCode = this.CheckValueIsNotNullOrUndefined(cookie.load("postcode"));
+      tempAddress.country = this.CheckValueIsNotNullOrUndefined(cookie.load("country"));
+      this.setState({address: tempAddress, addressUpdated: true})
+    }
+
+    CheckValueIsNotNullOrUndefined(inputString){
+      return inputString === undefined || inputString === null ? "" : inputString
     }
 
     async onToken (token){ 
@@ -96,6 +113,7 @@ class Checkout extends React.Component {
     tempAddress.email = value.email;
     tempAddress.fullName = value.fullName;
     tempAddress.postCode = value.postCode;
+    tempAddress.country = value.country;
     this.setState({address: tempAddress, addressUpdated: true})
     console.log('Address Updated')
   }
@@ -119,7 +137,7 @@ class Checkout extends React.Component {
                   <Container>
                     <Row onClick={()=> this.setState({showAddressModal: true})}>
                         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                        <h4>  {this.state.addressUpdated ? this.state.address.fullName : 'Add Address'} </h4>
+                        <h4>  {this.state.addressUpdated ? `${this.state.address.fullName}, ${this.state.address.city}` : 'Add Address'} </h4>
                     </Row>
                     <AddressForm AddressSubmitted={this.AddressSubmitted} showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
                     <hr/>

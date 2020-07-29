@@ -21,14 +21,14 @@ export const PickerOptions = {
 
 export const AvailableOptions = 
   [{
-    name: 'StyleOne',
+    name: 'Edge',
     img: StyleOne
   },
   {
-    name: 'StyleTwo',
+    name: 'Even',
     img: StyleTwo
   },
   {
-    name: 'StyleThree',
+    name: 'Classic',
     img: StyleThree
   }]
