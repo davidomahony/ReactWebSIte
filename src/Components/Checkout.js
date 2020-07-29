@@ -136,7 +136,8 @@ class Checkout extends React.Component {
                   <Container>
                     <Row onClick={()=> this.setState({showAddressModal: true})}>
                         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                        <h4>  {this.state.addressUpdated ? `${this.state.address.fullName}, ${this.state.address.city}` : 'Add Address'} </h4>
+                        <h4>  {this.state.address.fullName !== undefined && this.state.address.fullName !== "" && this.state.address.fullName !== null?
+                         `${this.state.address.fullName}, ${this.state.address.city}` : 'Add Address'} </h4>
                     </Row>
                     <AddressForm AddressSubmitted={this.AddressSubmitted} showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>
                     <hr/>
