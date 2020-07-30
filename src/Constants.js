@@ -1,8 +1,9 @@
 import React from 'react';
 
-import StyleOne from "./Photos/boldIcon.svg";
-import StyleTwo from "./Photos/cleanIcon.svg";
-import StyleThree from "./Photos/everIcon.svg";
+import bold from "./Photos/boldIcon.svg";
+import clean from "./Photos/cleanIcon.svg";
+import ever from "./Photos/everIcon.svg";
+import classic from "./Photos/classicIcon.svg";
 
 export const ApiKey = "AwDUla4uRT3GfDinUA6t9z"
 
@@ -21,14 +22,18 @@ export const PickerOptions = {
 
 export const AvailableOptions = 
   [{
-    name: 'Edge',
-    img: StyleOne
-  },
-  {
-    name: 'Even',
-    img: StyleTwo
+    name: 'Bold',
+    img: bold
   },
   {
     name: 'Classic',
-    img: StyleThree
+    img: classic
+  },
+  {
+    name: 'Clean',
+    img: clean
+  },
+  {
+    name: 'Even',
+    img: ever
   }]

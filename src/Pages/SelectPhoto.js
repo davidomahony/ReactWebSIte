@@ -113,7 +113,8 @@ GetAvailablePreviews = (photos = []) =>{
       <MenuProvider key={`Preview_${photo.imgid}`} id="menu_id" animation={animation.flip} event="onClick">
         <div key={`Preview_${photo.imgid}`} className="previewImage card" onClick={() => this.setState({imageForCrop: photo})}>
             <img src={this.state.activeStyle.img} className="first"/>
-            <img src={photo.dataUrl} className="second" ></img>
+            <img src={photo.dataUrl} className={this.state.activeStyle.name === "Classic" || this.state.activeStyle.name === "Even" ?
+            "secondMount" : "second"} ></img>
         </div>
       </MenuProvider>
   )
@@ -155,8 +156,8 @@ MyAwesomeMenu = () => (
             </div>
           </div>
           <div className="scrollmenuPreview">
+          <h5 className="gray" >Pick Some Photos! </h5>
             <div className="previewContainer">
-              <h5 className="gray" >Pick Some Photos! </h5>
               {this.GetAvailablePreviews(this.state.uploadedPhotos)}
               {this.MyAwesomeMenu()}
               <div className="vcentre">

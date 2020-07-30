@@ -48,7 +48,7 @@ class OrderInformation extends React.Component {
                 </h7>
             </div>
             <div className="right">
-            €10
+                Free
             </div>
             </div>
         </Row>
@@ -60,7 +60,7 @@ class OrderInformation extends React.Component {
                 </h7>
             </div>
             <div className="right">
-            €{this.props.uploadedPhotos.length < 3 ? 39.99 : 39.99 + ((this.props.uploadedPhotos - 3) * 10)}
+            €{this.props.uploadedPhotos.length < 3 ? 39.99 : 39.99 + ((this.props.uploadedPhotos.length - 3) * 10)}
             </div>
             </div>
         </Row>

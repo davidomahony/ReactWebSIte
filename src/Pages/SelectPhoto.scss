@@ -1,8 +1,15 @@
+body > #root > div > div {
+  height: 100vh;
+}
+
 .pageCard{
   max-width: 1500px;
   margin: auto;
-  height: 100%;
   padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .vcentre {
@@ -14,15 +21,19 @@
   align-items: center!important;
   justify-content: center!important;
   text-align: center!important;
+  @media (min-width: 960px){
+    display: flex!important;
+    flex-wrap: wrap;
+  }
 }
 
 div.scrollmenu {
   background-color: #f8f9fa!important;
-  overflow: auto;
+  overflow-x: auto;
+  min-height: 100px;
   white-space: nowrap;
   text-align: center;
   padding-bottom: 2px;
-  max-height: 100px;
   overflow-y: hidden;
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
 }
@@ -39,7 +50,6 @@ div.scrollmenu div {
   align-items: center;
 }
 
-
 .scrollmenuPreview {
   background-color: transparent;
   overflow: auto;
@@ -50,6 +60,9 @@ div.scrollmenu div {
   background-image: url('./../Photos/gallery Wall-B&W.jpeg');
   padding-top: 40px;
   padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .scrollmenuPreview div {
@@ -76,6 +89,10 @@ div.scrollmenu div {
   background-color: transparent;
   color: transparent;
   border-color: transparent;
+  @media (min-width: 960px){
+    height: 33%;
+    width: 33%;
+  }
 }
 
 .first {
@@ -87,10 +104,20 @@ div.scrollmenu div {
 
 .second {
   position: absolute;
-  left: 25%;
-  top:25%;
+  left: 13.5%;
+  top:13.5%;
   display: block;
-  max-width: 50%;
+  max-width: 73%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.secondMount{
+  position: absolute;
+  left: 20%;
+  top:20%;
+  display: block;
+  max-width: 60%;
   margin-left: auto;
   margin-right: auto;
 }

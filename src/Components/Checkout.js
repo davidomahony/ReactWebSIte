@@ -64,7 +64,7 @@ class Checkout extends React.Component {
         uuid: this.props.uuid,
         names: {...this.state.images},
         charge: {
-          amount: this.props.uploadedPhotos.length*1000,
+          amount: this.props.uploadedPhotos.length < 3 ? 39990 : 39990 + (((this.props.uploadedPhotos.length - 3) * 10 ) *1000),
           currency: 'eur',
         },
         uploadedPhotos: this.props.uploadedPhotos.map(photo => photo.fileStackUrl),
