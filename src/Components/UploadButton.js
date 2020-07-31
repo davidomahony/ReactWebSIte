@@ -37,18 +37,23 @@ class UploadButton extends React.Component {
     }
 
     uploadFromInput = async (event) =>{      
-      if (event.target.files.length !== 0){
-        var file = event.target.files[0]
-        let uuid = uuidv4();
-        GenerateImgInformation(file).then(res => 
-          {
-            this.setState({dataUrl: res.crop, unCropped: res.main, cropResult: res.crop})
-            this.props.updateInfo(res.crop, this.state.imgid, res.main)
-          })
-        await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
-        this.props.photoAdded(this.state)
-        client.upload(file, { onProgress : (event) => this.props.UpdatePrecentage(uuid, event.totalPercent)}).then(res => this.props.hasRecievedUrl(this.state.imgid, res)).catch(res => console.log(res))
-        console.log("Img complete")
+      if (event.target.files !== null && event.target.files.length !== 0){
+        var files = event.target.files;
+        let count = 0;
+        for(count =0; count < files.length; count++){
+          var file = files[count]
+          let uuid = uuidv4();
+          GenerateImgInformation(file, uuid).then(res => 
+            {
+              console.log(res)
+              this.setState({dataUrl: res.crop, unCropped: res.main, cropResult: res.crop})
+              this.props.updateInfo(res.crop, res.id, res.main)
+            })
+          await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
+          this.props.photoAdded(this.state)
+          client.upload(file, { onProgress : (event) => this.props.UpdatePrecentage(uuid, event.totalPercent)}).then(res => this.props.hasRecievedUrl(this.state.imgid, res)).catch(res => console.log(res))
+          console.log("Img complete")
+        }
     }
   }
 
@@ -67,18 +72,46 @@ class UploadButton extends React.Component {
       fileStackUrl: fileStackUrl})
   }
     
-    fileUploaded = async (response) => {
-      console.log(response);
-      var uploaded = response.filesUploaded.length != 0;
-      if (uploaded !== undefined){
-        response.filesUploaded.ForEach(async(file) =>
-        {
-          let res = await GetCropFromSocial(file);
-          await this.setNewPhoto(file.filename, file.url, Date.now(), res, file.mimetpe, true, uuidv4(), '', true, file.url)
-          this.props.photoAdded(this.state)
-        })
+  fileUploaded = async (response) => {
+    // let count = 0;
+    // for(count =0; count < uploaded.length; count++){
+    //   let file = uploaded[count]
+    //   let res = await GetCropFromSocial(file);
+    //   await this.setNewPhoto(file.filename, file.url, Date.now(), res, file.mimetpe, true, uuidv4(), '', true, file.url)
+    //   this.props.photoAdded(this.state)
+    // }
+    console.log(response);
+    var uploaded = response.filesUploaded;
+    if (uploaded !== undefined && uploaded.length > 0){
+      let count = 0;
+      for(count =0; count < uploaded.length; count++){
+        let file = uploaded[count];
+        let uuid = uuidv4()
+        GetCropFromSocial(file, uuid).then(res => {
+          console.log(res)
+          this.setState({dataUrl: res.result, unCropped: res.main, cropResult: res.result})
+          this.props.updateInfo(res.result, res.id, res.main)
+        });
+        await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
+        this.props.photoAdded(this.state)
       }
-    } 
+      // uploaded.ForEach(async(file) =>
+      // {
+      //   let uuid = uuidv4()
+      //   GetCropFromSocial(file, uuid).then(async res => {
+      //     this.setState({dataUrl: res.result, unCropped: res.main, cropResult: res.result})
+      //     this.props.updateInfo(res.result, res.id, res.main)
+      //   });
+      //   await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
+      // })
+    }
+  }
+
+  sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
+
     
   removePhoto = () =>{
     this.props.removePhoto(this.props.imageForCrop)
@@ -105,7 +138,7 @@ class UploadButton extends React.Component {
           <h4 className="uploadFromPcText">
             Upload Photos
           </h4>
-          <input type="file" id="fileUpload" ref="fileUploader" onChange={this.uploadFromInput}/>
+          <input type="file" accept="image/*" multiple autoComplete="off" id="fileUpload" ref="fileUploader" onChange={this.uploadFromInput}/>
         </div>
           <ReactFilestack
             apikey={apikey}

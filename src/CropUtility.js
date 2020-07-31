@@ -1,7 +1,7 @@
 import React from 'react';
 import {ApiKey} from './Constants'
 
-
+// FUnction below can probably go
 export function cropUrlToSquare(height, width, url, api){
   const promise = new Promise((resolve, reject) => {
     try{
@@ -38,27 +38,21 @@ export function cropFileStackImage(x, y, width, url){
   return promise;
 }
 
-export function GetCropFromSocial (file){
+export function GetCropFromSocial (file, id){
     const promise = new Promise((resolve, reject) => {
         try{
-            let fileurl = file.url;
-            let fileType = file.type;
-            let fileName = file.name;
             var img = new Image();
             img.onload = () => {
-              var height = img.height;
-              var width = img.width;
-              let result = '';
-              if(height !== width){         
-                result = cropUrlToSquare(height, width, fileurl, "AwDUla4uRT3GfDinUA6t9z")
+              if(img.height !== img.width){         
+                cropUrlToSquare(img.height, img.width, file.url, ApiKey).then(res => {
+                  resolve({result :res, id: id, main: file.url})
+                })
               }
               else{
-                result = fileurl
+                resolve({result :file.url, id: id, main: file.url})
               }
-              console.log('resolving soon')
-              resolve(result)
             }
-            img.src = fileurl
+            img.src = file.url
         }
         catch (Err){
             reject(Err)
@@ -111,7 +105,7 @@ export function CropLocalImage (file, cropInfo){
 return promise;
 }
 
-export function GenerateImgInformation (file){
+export function GenerateImgInformation (file, id){
     const promise = new Promise((resolve, reject) => {
         try
         {
@@ -145,6 +139,7 @@ export function GenerateImgInformation (file){
                 {
                   resolve({
                       main: reader.result,
+                      id: id,
                       crop: URL.createObjectURL(blob)})
                 }, 'image/jpeg')
               }
@@ -160,48 +155,48 @@ export function GenerateImgInformation (file){
     return promise;
 }
 
-export function CropImage(file, sx, sy , sw, sh, width){
-    // Image which is loaded in the cropper may not be the size image as actual so may need to get image size relative
-    const promise = new Promise((resolve, reject) => {
-        try
-        {
-            const reader = new FileReader();
-            reader.onload = async () => {
-              var canvas = document.createElement('canvas');
-              var context = canvas.getContext('2d');
-              var imageObj = new Image();
-              imageObj.onload = () => {
-                // draw cropped image
-                var height = imageObj.height;
-                var width = imageObj.width;
-                let smallestSide = (height > width ? width : height) / 2
-                var squareSide = Math.ceil(smallestSide*2);
-                canvas.height = canvas.width = squareSide;
+// export function CropImage(file, sx, sy , sw, sh, width){
+//     // Image which is loaded in the cropper may not be the size image as actual so may need to get image size relative
+//     const promise = new Promise((resolve, reject) => {
+//         try
+//         {
+//             const reader = new FileReader();
+//             reader.onload = async () => {
+//               var canvas = document.createElement('canvas');
+//               var context = canvas.getContext('2d');
+//               var imageObj = new Image();
+//               imageObj.onload = () => {
+//                 // draw cropped image
+//                 var height = imageObj.height;
+//                 var width = imageObj.width;
+//                 let smallestSide = (height > width ? width : height) / 2
+//                 var squareSide = Math.ceil(smallestSide*2);
+//                 canvas.height = canvas.width = squareSide;
       
-                context.drawImage(
-                  imageObj,
-                  sx,
-                  sy,
-                  sw,
-                  sh,
-                  0,
-                  0,
-                  width,
-                  width)
+//                 context.drawImage(
+//                   imageObj,
+//                   sx,
+//                   sy,
+//                   sw,
+//                   sh,
+//                   0,
+//                   0,
+//                   width,
+//                   width)
       
-                canvas.toBlob((blob) => 
-                {
-                  resolve(URL.createObjectURL(blob))
-                }, 'image/jpeg')
-              }
-              imageObj.src = reader.result;  
-          }
-          reader.readAsDataURL(file);
-        }
-        catch (Err)
-        {
-            reject("Failed" + Err)
-        }
-    })
-    return promise;
-}
+//                 canvas.toBlob((blob) => 
+//                 {
+//                   resolve(URL.createObjectURL(blob))
+//                 }, 'image/jpeg')
+//               }
+//               imageObj.src = reader.result;  
+//           }
+//           reader.readAsDataURL(file);
+//         }
+//         catch (Err)
+//         {
+//             reject("Failed" + Err)
+//         }
+//     })
+//     return promise;
+// }
