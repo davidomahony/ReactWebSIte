@@ -1,6 +1,5 @@
 import React from 'react'
-import {Modal, Container, Row, Button, Toast} from 'react-bootstrap'
-
+import {Container, Row, Button} from 'react-bootstrap'
 import StripeCheckout from 'react-stripe-checkout';
 import SlidingPane from 'react-sliding-pane';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
@@ -100,9 +99,7 @@ class Checkout extends React.Component {
     }
 
   handleSubmitpayment = (token) =>{
-    console.log('Attempting To Charge Card')
     this.onToken(token)
-    console.log('Done Processing')
   }
 
   AddressSubmitted = (value) =>{

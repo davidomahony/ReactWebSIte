@@ -1,19 +1,14 @@
 import React from 'react';
-import HomePage from './HomePage'
-import SelectPhotoPage from './SelectPhoto'
-import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom'
+import HomePage from './HomePage.jsx'
+import SelectPhotoPage from './SelectPhoto.jsx'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading:true
         }
     }
-
-    componentDidMount() {
-        setTimeout(() => this.setState({loading: false}), 1000)
-      }
 
   render() {      
     return (

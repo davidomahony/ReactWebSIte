@@ -1,19 +1,17 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import ReactFilestack from 'filestack-react';
+import * as filestack from 'filestack-js';
 
-import {GenerateImgInformation, AutoCropImageFromSocial, GetCropFromSocial, cropFileStackImage, CropLocalImage } from './../CropUtility'
-import {PickerOptions} from './../Constants'
+import {PickerOptions, ApiKey} from './../Constants'
+
 import './UploadButton.scss'
 
 import logoMain from './../Photos/SticPicsLogo.gif'
 import ModifyUpload from './ModifyUpload'
+import {GenerateImgInformation, GetCropFromSocial, cropFileStackImage, CropLocalImage } from './../CropUtility'
 
-import ReactFilestack, {Client} from 'filestack-react';
-
-import * as filestack from 'filestack-js';
-
-const apikey = "AwDUla4uRT3GfDinUA6t9z";
-const client = filestack.init(apikey);
+const client = filestack.init(ApiKey);
 
 class UploadButton extends React.Component {
     constructor(props) {
@@ -56,30 +54,8 @@ class UploadButton extends React.Component {
         }
     }
   }
-
-  setNewPhoto = async (name, dataUrl, dateAndTime, cropResult, imageType, isStandardCrop, imgid, file, hasRecievedFileStackUrl, fileStackUrl) => {
-    await this.setState({
-      name: name,
-      dataUrl: dataUrl,
-      dateAndTime: dateAndTime,
-      cropResult: cropResult,
-      imageType: imageType,
-      isStandardCrop: isStandardCrop,
-      imgid: imgid,
-      file: file,
-      unCropped: hasRecievedFileStackUrl ? fileStackUrl : dataUrl,
-      hasRecievedFileStackUrl: hasRecievedFileStackUrl,
-      fileStackUrl: fileStackUrl})
-  }
     
   fileUploaded = async (response) => {
-    // let count = 0;
-    // for(count =0; count < uploaded.length; count++){
-    //   let file = uploaded[count]
-    //   let res = await GetCropFromSocial(file);
-    //   await this.setNewPhoto(file.filename, file.url, Date.now(), res, file.mimetpe, true, uuidv4(), '', true, file.url)
-    //   this.props.photoAdded(this.state)
-    // }
     console.log(response);
     var uploaded = response.filesUploaded;
     if (uploaded !== undefined && uploaded.length > 0){
@@ -88,30 +64,14 @@ class UploadButton extends React.Component {
         let file = uploaded[count];
         let uuid = uuidv4()
         GetCropFromSocial(file, uuid).then(res => {
-          console.log(res)
           this.setState({dataUrl: res.result, unCropped: res.main, cropResult: res.result})
           this.props.updateInfo(res.result, res.id, res.main)
         });
         await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
         this.props.photoAdded(this.state)
       }
-      // uploaded.ForEach(async(file) =>
-      // {
-      //   let uuid = uuidv4()
-      //   GetCropFromSocial(file, uuid).then(async res => {
-      //     this.setState({dataUrl: res.result, unCropped: res.main, cropResult: res.result})
-      //     this.props.updateInfo(res.result, res.id, res.main)
-      //   });
-      //   await this.setNewPhoto(file.name, logoMain, Date.now(), logoMain, file.type, true, uuid, file, false) 
-      // })
     }
   }
-
-  sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
-}
-
     
   removePhoto = () =>{
     this.props.removePhoto(this.props.imageForCrop)
@@ -130,6 +90,21 @@ class UploadButton extends React.Component {
     this.props.updateFromCrop(cropdetails, croppedUrl.crop)
   }
 
+  setNewPhoto = async (name, dataUrl, dateAndTime, cropResult, imageType, isStandardCrop, imgid, file, hasRecievedFileStackUrl, fileStackUrl) => {
+    await this.setState({
+      name: name,
+      dataUrl: dataUrl,
+      dateAndTime: dateAndTime,
+      cropResult: cropResult,
+      imageType: imageType,
+      isStandardCrop: isStandardCrop,
+      imgid: imgid,
+      file: file,
+      unCropped: hasRecievedFileStackUrl ? fileStackUrl : dataUrl,
+      hasRecievedFileStackUrl: hasRecievedFileStackUrl,
+      fileStackUrl: fileStackUrl})
+  }
+
   UploadButton(){
     return <div className="uploadButtonMouseOver">
       <div className="outer">
@@ -141,7 +116,7 @@ class UploadButton extends React.Component {
           <input type="file" accept="image/*" multiple autoComplete="off" id="fileUpload" ref="fileUploader" onChange={this.uploadFromInput}/>
         </div>
           <ReactFilestack
-            apikey={apikey}
+            apikey={ApiKey}
             on
             onSuccess={async (e) => this.fileUploaded(e)}
             actionOptions={PickerOptions}

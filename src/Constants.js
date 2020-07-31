@@ -7,8 +7,6 @@ import classic from "./Photos/classicIcon.svg";
 
 export const ApiKey = "AwDUla4uRT3GfDinUA6t9z"
 
-//export const Cookies = new Cookies();
-
 export const PickerOptions = {
         accept: 'image/*',
         maxFiles: 10,

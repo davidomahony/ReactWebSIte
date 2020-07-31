@@ -2,7 +2,7 @@ import React from 'react';
 import {ApiKey} from './Constants'
 
 // FUnction below can probably go
-export function cropUrlToSquare(height, width, url, api){
+export function cropUrlToSquare(height, width, url){
   const promise = new Promise((resolve, reject) => {
     try{
       let smallestSide = (height > width ? width : height) / 2
@@ -44,7 +44,7 @@ export function GetCropFromSocial (file, id){
             var img = new Image();
             img.onload = () => {
               if(img.height !== img.width){         
-                cropUrlToSquare(img.height, img.width, file.url, ApiKey).then(res => {
+                cropUrlToSquare(img.height, img.width, file.url).then(res => {
                   resolve({result :res, id: id, main: file.url})
                 })
               }
@@ -154,49 +154,3 @@ export function GenerateImgInformation (file, id){
     })
     return promise;
 }
-
-// export function CropImage(file, sx, sy , sw, sh, width){
-//     // Image which is loaded in the cropper may not be the size image as actual so may need to get image size relative
-//     const promise = new Promise((resolve, reject) => {
-//         try
-//         {
-//             const reader = new FileReader();
-//             reader.onload = async () => {
-//               var canvas = document.createElement('canvas');
-//               var context = canvas.getContext('2d');
-//               var imageObj = new Image();
-//               imageObj.onload = () => {
-//                 // draw cropped image
-//                 var height = imageObj.height;
-//                 var width = imageObj.width;
-//                 let smallestSide = (height > width ? width : height) / 2
-//                 var squareSide = Math.ceil(smallestSide*2);
-//                 canvas.height = canvas.width = squareSide;
-      
-//                 context.drawImage(
-//                   imageObj,
-//                   sx,
-//                   sy,
-//                   sw,
-//                   sh,
-//                   0,
-//                   0,
-//                   width,
-//                   width)
-      
-//                 canvas.toBlob((blob) => 
-//                 {
-//                   resolve(URL.createObjectURL(blob))
-//                 }, 'image/jpeg')
-//               }
-//               imageObj.src = reader.result;  
-//           }
-//           reader.readAsDataURL(file);
-//         }
-//         catch (Err)
-//         {
-//             reject("Failed" + Err)
-//         }
-//     })
-//     return promise;
-// }

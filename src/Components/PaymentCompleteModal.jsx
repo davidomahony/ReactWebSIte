@@ -19,10 +19,7 @@ class PaymentCompleteModal extends React.Component {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(info)})
-
-          let jsonFormat = await response.json();
-        
+          body: JSON.stringify(info)})        
         return true;
       }
     }

@@ -1,8 +1,10 @@
 import React from 'react'
-import {Card, Navbar, Modal, NavDropdown, Nav, DropdownButton, Dropdown, Button} from 'react-bootstrap'
+import { Navbar, Nav, DropdownButton, Dropdown, Button} from 'react-bootstrap'
 
 import './Header.scss'
 import logoMain from './../Photos/SticPicsLogo.gif'
+
+import ModalProvider from "./ModalProvider"
 
 class Header extends React.Component {
     constructor(props) {
@@ -18,56 +20,13 @@ class Header extends React.Component {
     modalToShow: option})
   }
 
-  displayActionFromDropDown(){
-    return(
-      <Modal show={this.state.showModal}>
-      <Modal.Header>
-      <Modal.Title>{this.state.modalToShow}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {this.state.modalToShow === 'FAQ' ? this.FaqContent() : this.state.modalToShow === 'ContactUs' ?this.ContactUsContent() : this.GeneralContent()}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => this.setState({showModal: false})}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-    )
-  }
-
-  FaqContent(){
-    return(
-      <div style={{ width: '100%' }}>
-       FAQ Content
-      </div>
-    )
-  }
-
-  ContactUsContent(){
-    return(
-      <div style={{ width: '100%' }}>
-        Contact us
-      </div>
-    )
-  }
-
-  GeneralContent(){
-    return(
-      <div style={{ width: '100%' }}>
-       General
-      </div>
-    )
-  }
-
   render() {
     return (
       <div>
         <Navbar bg="light">
-            <Button variant="light" href="home">
-              <i className="fa fa-angle-left fa-2x blue"></i>
-            </Button>
-          
+          <Button variant="light" href="home">
+            <i className="fa fa-angle-left fa-2x blue"></i>
+          </Button>
           <Nav className="container-fluid">
             <div className="imageContainer">
               <img className="mainLogo" src={logoMain}></img>
@@ -81,7 +40,10 @@ class Header extends React.Component {
             </Nav.Item>
           </Nav>
         </Navbar>
-        {this.displayActionFromDropDown()}
+        <ModalProvider 
+         modalToShow={this.state.modalToShow}
+         showModal={this.state.showModal}
+         closeModal={() => this.setState({showModal: false})}/>
       </div>
     )
   }

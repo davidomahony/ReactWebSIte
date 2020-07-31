@@ -1,6 +1,5 @@
 import React from 'react'
 import {Card, Modal, Button} from 'react-bootstrap'
-import Cookies from 'universal-cookie';
 
 import './HomePage.scss'
 
@@ -8,8 +7,10 @@ import ReviewImage from './../Photos/ReviewImages.jpg'
 import logoMain from './../Photos/SticPicsLogo.gif'
 import promoVideo from './../Photos/wallImage.jpg'
 
-import Footer from  './../Components/Footer'
+import Footer from  '../Components/Footer'
 import Slider from "react-slick";
+
+import { useHistory } from "react-router-dom";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class HomePage extends React.Component {
       return displayReviewSlides
   }
 
+  // Very messy dont really like the look of it
   render() {
     return (
       <div className="pageCard">
@@ -85,12 +87,10 @@ class HomePage extends React.Component {
             <div class="column"> Privacy Policy</div>
             <div class="column"> Contact Us </div>
           </div> 
-          <Footer WhatAction="GoToSelectPhoto" IsButtonEnabled={true}/>
+          <Footer link="SelectPhotos" label="Select Photos" IsButtonEnabled={true}/>
       </div>
     )
   }
 }
 
 export default HomePage
-
-const cookies = new Cookies();

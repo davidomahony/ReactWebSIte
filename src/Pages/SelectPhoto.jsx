@@ -1,18 +1,19 @@
 import React from 'react'
 // Libraries
 import { v4 as uuidv4 } from 'uuid';
-import { Menu, Item,IconFont, animation,MenuProvider} from 'react-contexify';
+import { animation, MenuProvider} from 'react-contexify';
 import cookie from 'react-cookies'
 
-import UploadButton from './../Components/UploadButton'
-import Header from './../Components/Header'
-import Footer from  './../Components/Footer'
+import UploadButton from '../Components/UploadButton'
+import Header from '../Components/Header'
+import Footer from  '../Components/Footer'
 import Checkout from '../Components/Checkout';
+import ContextMenu from '../Components/ContextMenu'
 
 import './SelectPhoto.scss'
 import 'react-contexify/dist/ReactContexify.min.css';
 
-import {AvailableOptions} from './../Constants'
+import {AvailableOptions} from '../Constants'
 
 class SelectPhoto extends React.Component {
   constructor(props) {
@@ -28,20 +29,6 @@ class SelectPhoto extends React.Component {
       showCheckout: false,
       haveCheckForCookies: false
     }
-}
-
-componentDidMount(){
-  if (!this.state.haveCheckForCookies){
-    var cookiesFound = cookie.loadAll()
-    Object.keys(cookiesFound).forEach(key => 
-    {
-      if(key.includes("image_")){
-        var url = cookiesFound[key]
-        this.photoAdded({name: key, type:"png", dateAndTime:Date.now(), dataUrl: url, fileStackUrl: url, hasRecievedFileStackUrl: true, 
-        isStandardCrop: true, cropDetails: "", imgid:key.split('_')[1], uploadPercent: 100})
-      }
-    })
-  }
 }
 
 photoAdded = (uploadInfo) => {
@@ -64,15 +51,13 @@ photoAdded = (uploadInfo) => {
   this.setState({uploadedPhotos: currentPhotos})
 }
 
-/////////////////////////// Refactor two methods below into one
+/////////////////////////// Refactor four methods below into one using key names
+
 updateCrop = async (details, url) => {
   const elementsIndex = this.state.uploadedPhotos.findIndex(img => img.imgid === this.state.imageForCrop.imgid)
   var newValues = [...this.state.uploadedPhotos]
   newValues[elementsIndex] = {...newValues[elementsIndex], dataUrl: url, cropDetails: details, isStandardCrop:false}
   this.setState({showCropperModal : false})
-  cookie.save(`image_${this.state.imageForCrop.imgid}`, url, {
-      maxAge: 3600 * 24 * 7, // One week
-    })
   this.setState({uploadedPhotos: newValues})
 }
 
@@ -132,20 +117,6 @@ GetAvailableStyles(){
     )
 }
 
-MyAwesomeMenu = () => (
-  <Menu id='menu_id'>
-    <Item onClick={this.removePhoto}>
-      <IconFont className="fa fa-trash red"/>Delete
-    </Item>
-    <Item onClick={() => this.setState({showCropperModal: true})}>
-      <IconFont className="fa fa-crop blue"/>Crop
-    </Item>
-    <Item>
-      <IconFont className="fa fa-times gray"/>Dismiss
-    </Item>
-  </Menu>
-)
-
   render() {
     return (
       <div className="pageCard">
@@ -159,7 +130,7 @@ MyAwesomeMenu = () => (
           <h5 className="gray" >Pick Some Photos! </h5>
             <div className="previewContainer">
               {this.GetAvailablePreviews(this.state.uploadedPhotos)}
-              {this.MyAwesomeMenu()}
+              <ContextMenu id="menu_id" removePhoto={() => this.removePhoto()} cropAction={() => this.setState({showCropperModal: true})}/>
               <div className="vcentre">
                 <UploadButton closeCropper={() => this.setState({showCropperModal: false})}
                   updateFromCrop={this.updateCrop}
@@ -175,7 +146,7 @@ MyAwesomeMenu = () => (
             activeStyle={this.state.activeStyle}
             uuid={this.state.uuid} 
             uploadedPhotos={this.state.uploadedPhotos} />
-          <Footer WhatAction="GoToCheckOut" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
+          <Footer WhatAction="GoToCheckOut" label="Checkout" Action={() => this.setState({showCheckout: true, uuid: uuidv4()})} IsButtonEnabled={true}/>
       </div>
     )
   }
