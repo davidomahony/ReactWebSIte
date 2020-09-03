@@ -1,1 +1,22 @@
-<svg width="140" height="140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="b" d="M30 0h110v110H30z"/><filter x="-20.5%" y="-20.5%" width="140.9%" height="140.9%" filterUnits="objectBoundingBox" id="a"><feOffset in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/></filter><filter x="-20.5%" y="-20.5%" width="140.9%" height="140.9%" filterUnits="objectBoundingBox" id="c"><feGaussianBlur stdDeviation="7.5" in="SourceAlpha" result="shadowBlurInner1"/><feOffset in="shadowBlurInner1" result="shadowOffsetInner1"/><feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" in="shadowInnerInner1"/></filter></defs><g transform="translate(-15 15)" fill="none" fill-rule="evenodd"><use fill="#000" filter="url(#a)" xlink:href="#b"/><use fill="#F2F2F2" xlink:href="#b"/><use fill="#000" filter="url(#c)" xlink:href="#b"/><path stroke="#333" stroke-width="6" stroke-linejoin="square" d="M33 3h104v104H33z"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="110px" height="110px" viewBox="15 15 110 110" enable-background="new 15 15 110 110" xml:space="preserve">
+<filter  width="140.9%" height="140.9%" id="c" filterUnits="objectBoundingBox" y="-20.5%" x="-20.5%">
+	<feGaussianBlur  stdDeviation="7.5" result="shadowBlurInner1" in="SourceAlpha"></feGaussianBlur>
+	<feOffset  result="shadowOffsetInner1" in="shadowBlurInner1"></feOffset>
+	<feComposite  k3="1" k2="-1" operator="arithmetic" in2="SourceAlpha" result="shadowInnerInner1" in="shadowOffsetInner1">
+		</feComposite>
+	<feColorMatrix  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" in="shadowInnerInner1"></feColorMatrix>
+</filter>
+<g transform="translate(-15 15)">
+	<g>
+		<path id="b_1_" fill="#F2F2F2" d="M30,0h110v110H30V0z"/>
+	</g>
+	<g filter="url(#c)">
+		<path id="b_3_" d="M30,0h110v110H30V0z"/>
+	</g>
+	<path fill="none" stroke="#333333" stroke-width="6" d="M33,3h104v104H33V3z"/>
+</g>
+</svg>

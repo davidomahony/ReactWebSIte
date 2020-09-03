@@ -21,24 +21,39 @@ body > #root > div > div {
 }
 
 .previewContainer{
+  display: flex;
   align-items: center!important;
   justify-content: center!important;
   text-align: center!important;
+<<<<<<< HEAD
   @media (min-width: 960px){
     display: flex!important;
     flex-wrap: wrap;
   }
+=======
+  flex-wrap: wrap;
+  height: 100%;
+  // @media (min-width: 960px){
+  //   display: flex!important;
+    
+  // }
+>>>>>>> develop
 }
 
 div.scrollmenu {
   background-color: #f8f9fa!important;
   overflow-x: auto;
+<<<<<<< HEAD
   min-height: 100px;
+=======
+  min-height: 120px;
+>>>>>>> develop
   white-space: nowrap;
   text-align: center;
   padding-bottom: 2px;
   overflow-y: hidden;
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
 }
 
 div.scrollmenu div {
@@ -53,6 +68,10 @@ div.scrollmenu div {
   align-items: center;
 }
 
+=======
+  padding: 10px 0;
+}
+>>>>>>> develop
 .scrollmenuPreview {
   background-color: transparent;
   overflow: auto;
@@ -61,6 +80,7 @@ div.scrollmenu div {
   background-color: lightsteelblue;
   text-align: center;
   background-image: url('./../Photos/gallery Wall-B&W.jpeg');
+<<<<<<< HEAD
   padding-top: 10px;
   padding-bottom: 60px;
   display: flex;
@@ -69,11 +89,54 @@ div.scrollmenu div {
 }
 
 .scrollmenuPreview div {
+=======
+  padding-top: 0;
+  padding-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  &.scrollPreviewAfter{
+    background-image:none !important; 
+    .scroll_prev_innr> h5{
+      display: none;
+    }
+  }
+  .scroll_prev_innr{
+    height: 100%;
+    overflow: auto;
+  }
+  &::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff9c;
+    z-index: -1;
+  }
+  h5{
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #000 !important;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.previewContainer>div {
+>>>>>>> develop
   display: inline-block;
   text-align: center;
   text-decoration: none;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 .centerHorizontal{
@@ -96,7 +159,11 @@ div.scrollmenu div {
     height: 33%;
     width: 33%;
   }
+<<<<<<< HEAD
   animation: appear 1s ease 0s 1 normal none running;
+=======
+  animation: appear 2s ease 0s 1 normal none running;
+>>>>>>> develop
 }
 
 .first {
@@ -108,20 +175,34 @@ div.scrollmenu div {
 
 .second {
   position: absolute;
+<<<<<<< HEAD
   left: 13.5%;
   top:13.5%;
   display: block;
   max-width: 73%;
+=======
+  left: 5.5%;
+  top: 5.5%;
+  display: block;
+  max-width: 89.5%;
+>>>>>>> develop
   margin-left: auto;
   margin-right: auto;
 }
 
 .secondMount{
   position: absolute;
+<<<<<<< HEAD
   left: 20%;
   top:20%;
   display: block;
   max-width: 60%;
+=======
+  left: 18%;
+  top: 18%;
+  display: block;
+  max-width: 64%;
+>>>>>>> develop
   margin-left: auto;
   margin-right: auto;
 }
@@ -135,6 +216,7 @@ div.scrollmenu div {
   text-align: center;
 }
 
+<<<<<<< HEAD
 div.styleHolder div:hover {
   background: lightskyblue;
 }
@@ -143,12 +225,39 @@ div.styleHolder div:hover {
   display: flex;
   overflow-y: auto;
   height: 110px;
+=======
+.styleHolder{
+  display: flex;
+>>>>>>> develop
   justify-content: center;
+  >div{
+    padding: 0 5px;
+    .card{
+      padding: 5px;
+      border: none;
+      text-align: center;
+      box-shadow: 2px 5px 7px -1px rgba(0, 0, 0, 0.2);
+      background: #f1f1f1;
+      text-align: center;
+      .imageText{
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 5px;
+        color: #717171;
+      }
+    }  
+  }
 }
 
 .imageStyle{
+<<<<<<< HEAD
   max-width: 70px;
   max-height: 70px;
+=======
+  max-width: 60px;
+  height: auto;
+>>>>>>> develop
 }
 
 .imageStyleDiv{
@@ -172,7 +281,7 @@ div.styleHolder div:hover {
 }
 
 .blue{
-  color: blue !important;
+  color: #27bdd8 !important;
 }
 
 .red{
@@ -182,3 +291,23 @@ div.styleHolder div:hover {
 .gray{
   color: gray !important;
 }
+<<<<<<< HEAD
+=======
+
+
+.previewImage{
+  animation-name: example;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+ 
+  animation-timing-function: ease-in-out;
+}
+.slide-pane__overlay{
+  z-index: 99;
+}
+@keyframes example {
+  0%   {left:-200px; top:0px;}
+ 
+  100% {left:0px; top:0px;}
+}
+>>>>>>> develop

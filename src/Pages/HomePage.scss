@@ -10,18 +10,62 @@
   max-width: 300px;
   max-height: 100px;
 }
+.slick-initialized .slick-slide:focus, .slick-initialized .slick-slide > div:focus {
+  outline: none;
+}
+div:focus{
+  outline: none !important;
+}
+.slick-slider .slick-dots li button:before {
+  font-size: 16px;
+}
+.slick-dots li.slick-active button:before {
+  opacity: .75;
+  color: #007bff;
+}
 
 .reviewSlide{
-    width: 250px !important;
-    height: 350px !important;
+    width: 100%;
     text-align: center;
     object-fit: cover;
     padding-right: 15px !important;
+    padding: 10px 0;
+    // .slick-slide {
+    //   padding: 10px 0;
+    // }
+    
+    .card{
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      -webkit-box-shadow: 0 0 12px -5px rgba(0,0,0,.75);
+      -moz-box-shadow: 0 0 12px -5px rgba(0,0,0,.75);
+      box-shadow: 0 0 12px -5px rgba(0,0,0,.75);
+      transition: all ease-in-out 300ms;
+      &:hover{
+        transform: scale(1.04);
+      }
+      .instragram_Icon{
+        width: 30px;
+        margin: 0 auto 10px;
+      }
+      .card-header{
+        font-size: 14px;
+        font-weight: 700;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #868686;
+      }
+      .card-footer{
+        border-top: none;
+      }
+    }
 }
 
 .reviewSlider{
-  padding: 15px;
+  padding-top: 40px;
   padding-bottom: 30px !important;
+  background: #f8f9fa!important;
 }
 
 .reviewImage{
@@ -50,25 +94,52 @@
   display: table;
   clear: both;
 }
-
+.slick-dots li button:before{
+  content: "•" !important;
+}
 .promoVideo{
   display: block;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
   text-align: center;
-  max-width: 300px;
+  max-width: 700px;
   width: auto;
+  position: relative;
+  .videoPlayBtn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 1;
+    img{
+      width: 100px;
+
+    }
+  }
+}
+.photoFrame_video{
+  video{
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 1px 6px 10px 0 #0c0c0c26;
+  }
 }
 
 .headerText{
-  padding-top: 15px;
+  padding-top: 25px;
   padding-right: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 25px;
   padding-left: 5px;
   font-size: larger;
   font-weight: bold;
   text-align: center;
+  font-size: 30px;
+  max-width: 700px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .headerText2{
@@ -83,17 +154,16 @@
 }
 
 .headerText3{
-  padding-top: 10px;
+  padding-top: 30px;
   padding-right: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   font-size: large;
   text-align: center;
-  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
 }
 .reviewStars{
+  padding-top: 30px;
   text-align: center;
-  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
 }
 .priceText{
   padding-top: 5px;
@@ -104,11 +174,15 @@
   color:#007bff;;
   text-align: center;
   font-weight: 600;
-  box-shadow: 0 2px 15px 0 rgba(0,0,0,.1)
 }
 
 .reviewStars{
   text-align: center;
+  p{
+    margin-top: 10px;
+    font-weight: 500;
+    
+  }
 }
 
 .loadingModal{

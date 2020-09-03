@@ -14,6 +14,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Checkout.scss'
 import cookie from 'react-cookies'
 
+<<<<<<< HEAD
+=======
+import addressIcon from './../Photos/addressIcon.svg';
+
+>>>>>>> develop
 class Checkout extends React.Component {
     constructor(props) {
         super(props);
@@ -121,12 +126,17 @@ class Checkout extends React.Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <div>
+=======
+      <div className="check_out_pannel"> 
+>>>>>>> develop
            <SlidingPane
                 isOpen={ this.props.showCheckout }
                 title='Checkout'
                 from='right'
                 width='400px'
+<<<<<<< HEAD
                 onRequestClose={() => this.props.closeCheckout()}>
                 <div>
                 <hr/>
@@ -162,6 +172,46 @@ class Checkout extends React.Component {
                     </div>
                   </Container>
                 </div>
+=======
+                onRequestClose={() => this.props.closeCheckout()}>                             
+                  <Container>
+                    <div className="address_with_icon highlighted" onClick={()=> this.setState({showAddressModal: true})}>                        
+                        <h4><img src={addressIcon} alt=""/>{this.state.address.fullName !== undefined && this.state.address.fullName !== "" && this.state.address.fullName !== null?
+                         `${this.state.address.fullName}, ${this.state.address.city}` : 'Add Address'} </h4>
+                    </div>
+                    {/* <div className="payment_with_icon highlighted">                        
+                        <h4><i class="fas fa-credit-card"></i> Add Payment Method</h4>
+                    </div> */}
+
+                    <AddressForm AddressSubmitted={this.AddressSubmitted} showModal={this.state.showAddressModal} closeModal={()=> this.setState({showAddressModal: false})}/>                
+                    <OrderInformation activeStyle={this.props.activeStyle} uploadedPhotos={this.props.uploadedPhotos}/>
+             
+                    <div className="placeOrderSection">
+                      {this.props.uploadedPhotos.length === 0 || !this.state.addressUpdated ? 
+                      <button className="palaceOrderBtn" onClick={() => toast.info(this.checkoutHelpInfo())}>
+                        Place Order
+                      </button> : this.props.uploadedPhotos.length < 3 ? 
+                      <button  className="palaceOrderBtn" onClick={() => toast.warn("Minimum order is 3 tiles")}>
+                        Place Order
+                      </button>:
+                      <StripeCheckout
+                          token={this.handleSubmitpayment}
+                          stripeKey="pk_test_cFsAVCGnWPQW75xZfBrhg3mf00NWliuU2M">
+                          <button className="palaceOrderBtn">
+                            Place Order
+                          </button>
+                      </StripeCheckout>}
+                    </div>
+                    {/* <div className="placeOrderSection">
+                      <button className="palaceOrderBtn">Place Order</button>
+                    </div> */}
+
+                    <div className="hiddenErrorField">
+                      **Minimum order of 3 tiles for €39.99. Each additional tile is €10 there after
+                    </div>
+                  </Container>
+                
+>>>>>>> develop
                 <ToastContainer
                   position="top-right"
                   autoClose={5000}

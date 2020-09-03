@@ -3,9 +3,20 @@ import {Card, Modal, Button} from 'react-bootstrap'
 
 import './HomePage.scss'
 
+<<<<<<< HEAD
 import ReviewImage from './../Photos/ReviewImages.jpg'
 import logoMain from './../Photos/SticPicsLogo.gif'
 import promoVideo from './../Photos/wallImage.jpg'
+=======
+import ReviewImage from './../Photos/ReviewImages.jpg'; 
+import instagram from './../Photos/instagram.svg';
+import logoMain from './../Photos/SticPicsLogo.gif';
+import promoVideo from './../Photos/wallImage.jpg';
+import frame from './../video/frame2.mp4';
+import play from './../Photos/play.svg';
+
+
+>>>>>>> develop
 
 import Footer from  '../Components/Footer'
 import Slider from "react-slick";
@@ -17,6 +28,7 @@ class HomePage extends React.Component {
     super(props);
 
     this.state = {
+<<<<<<< HEAD
         reviewSlides: ['Slide One', 'Slide Two', 'Slide Three', 'Slide Four'],
         promoImageLoaded: false,
         numberofSlides : Math.floor(window.innerWidth/250) < 1 ? 1 : window.innerWidth > 1000 ? 3 : Math.floor(window.innerWidth/250),
@@ -32,6 +44,45 @@ class HomePage extends React.Component {
               Yuppa
             </Card.Header>
             <img className="reviewImage" src={ReviewImage}></img>
+=======
+        reviewSlides: ['Slide One', 'Slide Two', 'Slide Three', 'Slide Four', 'Slide Four'],
+        promoImageLoaded: false,
+        infinite: true,
+        centerMode: true,
+        numberofSlides : Math.floor(window.innerWidth/250) < 1 ? 1 : window.innerWidth > 1000 ? 4 : Math.floor(window.innerWidth/250),
+        // slidesToShow: 4,
+        active: false,
+        hasAcceptedCookieModal: false
+    }
+
+  //   constructor(props) {
+  //     super(props);
+  //     this.addActiveClass= this.addActiveClass.bind(this);
+  //     this.state = {
+  //         active: false,
+  //     };
+  // }
+  // toggleClass() {
+  //     const currentState = this.state.active;
+  //     this.setState({ active: !currentState });
+  // };
+  }
+
+  toggleClass() {
+      const currentState = this.state.active;
+      this.setState({ active: !currentState });
+  };
+
+    GetReviewSlides(){
+      let displayReviewSlides = this.state.reviewSlides.map(slide => 
+        <div className="reviewSlide">
+          <Card>            
+            <img className="reviewImage" src={ReviewImage}></img>
+            <Card.Header>
+              <img className="instragram_Icon" src={instagram} alt=""/>
+              @ariCool.gut
+            </Card.Header>
+>>>>>>> develop
             <Card.Footer>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
             </Card.Footer>
@@ -39,6 +90,7 @@ class HomePage extends React.Component {
         </div>)
       return displayReviewSlides
   }
+<<<<<<< HEAD
 
   // Very messy dont really like the look of it
   render() {
@@ -54,6 +106,70 @@ class HomePage extends React.Component {
             <div className="promoVideo">
               <img className = "promoVideo"src={promoVideo}></img>
             </div>
+=======
+  // Very messy dont really like the look of it
+  render() {
+    //new added array for carousel settings 
+    var settings = {
+      dots: true,
+      infinite: true,
+      centerMode: true,
+      speed: 600,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      responsive: [        
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            initialSlide: 0,
+            centerMode: false,
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: false,
+          }
+        }
+      ]
+    };
+
+
+    return (
+      <div className="pageCard">
+        <header className="page_header">
+          <div className="centerHorizontal">
+            <img className="mainLogo" onLoad={() => this.setState({promoImageLoaded: true})} src={logoMain}></img>
+          </div>    
+        </header>
+        <div className="headerArea bg-light">
+          <div className="headerText">SticPics are beautiful real wood products that attach easily to walls.</div> 
+            <div className="promoVideo">
+                <div className="videoPlayBtn" onClick={() => {this.refs.video.play()}}>
+                  <img src={play} alt=""/>
+                </div>
+                <div className="photoFrame_video">
+                  <video muted="true" ref="video">
+                    <source src={frame} type="video/mp4"/>
+                  </video>
+                </div>
+            </div>
+            
+>>>>>>> develop
           </div>
         <div className="headerText3 bg-light">
           <div className="headerText2">Love Real Wood. Love Sustainability</div> 
@@ -76,7 +192,11 @@ class HomePage extends React.Component {
           3 for €39.99 - Only €10 per extra tile!</div>
 
           <div className="reviewSlider">
+<<<<<<< HEAD
           <Slider dots={true} centerPadding={30} centerMode={true} slidesToShow={this.state.numberofSlides} >
+=======
+          <Slider {...settings}>
+>>>>>>> develop
               {this.GetReviewSlides()}
           </Slider>
           </div>

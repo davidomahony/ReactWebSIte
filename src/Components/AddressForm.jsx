@@ -83,6 +83,7 @@ class AddressForm extends React.Component {
             <div className="mainContainer">
               <div className="formContainer">
                 <Form onSubmit={this.onSubmit}>
+<<<<<<< HEAD
                     <Input defaultValue={this.state.email} name="email" label="Email" validators={[required('Email is required'), email('This is not a valid email.')]}/>
                     <Input defaultValue={this.state.fullName} name="fullName" label="Full Name" validators={[required('Full name is required')]} />
                     <Input defaultValue={this.state.address} name="address" label="Address" validators={[required('Address is required')]} />
@@ -93,6 +94,38 @@ class AddressForm extends React.Component {
                     <Submit>
                         Submit
                     </Submit>
+=======
+                    <div className="row">                      
+                      <div className="col-md-6">
+                        <Input defaultValue={this.state.fullName} name="fullName" label="Full Name" validators={[required('Full name is required')]} />
+                      </div>
+                      <div className="col-md-6">
+                        <Input defaultValue={this.state.email} name="email" label="Email" validators={[required('Email is required'), email('This is not a valid email.')]}/>
+                      </div>
+                      <div className="col-md-12">
+                        <Input defaultValue={this.state.address} name="address" label="Address" validators={[required('Address is required')]} />
+                      </div>
+                      <div className="col-md-12">
+                        <Input defaultValue={this.state.address2} name="address2" label="Address 2"  />
+                      </div>
+                      <div className="col-md-4">
+                        <Input defaultValue={this.state.city} name="city"  label="City" validators={[required('City/County is required')]} />
+                      </div>
+                      <div className="col-md-4">
+                        <Input defaultValue={this.state.postCode} name="postCode" label="Post Code" validators={[required('Post code is required')]} />
+                      </div>
+                      <div className="col-md-4">
+                        <Input defaultValue={this.state.country} name="country" label="Country" validators={[required('Country is required')]} />
+                        
+                      </div>
+                      <div className="col-md-12 submit_btn">
+                        <Submit>
+                            Submit
+                        </Submit>
+                      </div> 
+                    </div>
+                    
+>>>>>>> develop
                 </Form>
               </div>
             </div>

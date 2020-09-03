@@ -8,6 +8,13 @@ import {PickerOptions, ApiKey} from './../Constants'
 import './UploadButton.scss'
 
 import logoMain from './../Photos/SticPicsLogo.gif'
+<<<<<<< HEAD
+=======
+import uploadIcon from './../Photos/upload-icon.svg'
+import gooleDrive from './../Photos/icons/googleDrive.svg'
+import instagram from './../Photos/icons/instagram.svg'
+import facebook from './../Photos/icons/facebook.svg'
+>>>>>>> develop
 import ModifyUpload from './ModifyUpload'
 import {GenerateImgInformation, GetCropFromSocial, cropFileStackImage, CropLocalImage } from './../CropUtility'
 
@@ -34,6 +41,46 @@ class UploadButton extends React.Component {
         }
     }
 
+<<<<<<< HEAD
+    UploadButton(){
+      return <div className="uploadButtonMouseOver">
+        <div className="outer">
+        <ReactFilestack
+              apikey={"AwDUla4uRT3GfDinUA6t9z"}
+              onSuccess={this.fileUploaded}
+              actionOptions={this.pickerOptions}
+              customRender={({ onPick }) => (
+                <div className="fromPC" onClick={onPick}>
+                  <i className="fa fa-plus blue fa-3x"></i>
+                  <h4 className="uploadFromPcText">
+                    Upload Photos
+                  </h4>
+                </div>
+              )}
+            />
+            <ReactFilestack
+              apikey={"AwDUla4uRT3GfDinUA6t9z"}
+              onSuccess={this.fileUploaded}
+              actionOptions={this.pickerOptionsSocial}
+              customRender={({ onPick }) => (
+                <div className="fromPC" onClick={onPick}>
+                  <i className="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
+                  <i className="fa fa-instagram fa-3x socialIcon purple" aria-hidden="true"></i>
+                  <i className="fa fa-google fa-3x socialIcon black" aria-hidden="true"></i>
+                </div>
+              )}
+            />
+        </div>
+      </div>
+      }
+
+    removePhoto = () =>{
+      this.props.removePhoto(this.props.imageForCrop)
+      this.closeCropper();
+    }
+
+=======
+>>>>>>> develop
     uploadFromInput = async (event) =>{      
       if (event.target.files !== null && event.target.files.length !== 0){
         var files = event.target.files;
@@ -106,10 +153,17 @@ class UploadButton extends React.Component {
   }
 
   UploadButton(){
+<<<<<<< HEAD
     return <div className="uploadButtonMouseOver">
       <div className="outer">
         <div htmlFor="fileUpload" onClick={()=> this.refs.fileUploader.click()} className="fromPC">
           <i className="fa fa-plus blue fa-3x"></i>
+=======
+    return <div className="uploadButtonMouseOver animatePulse">
+      <div className="outer">
+        <div htmlFor="fileUpload" onClick={()=> this.refs.fileUploader.click()} className="file_upload_top">
+          <span className="uploadIcon"><img src={uploadIcon} alt=""/></span>
+>>>>>>> develop
           <h4 className="uploadFromPcText">
             Upload Photos
           </h4>
@@ -121,14 +175,33 @@ class UploadButton extends React.Component {
             onSuccess={async (e) => this.fileUploaded(e)}
             actionOptions={PickerOptions}
             customRender={({ onPick }) => (
+<<<<<<< HEAD
               <div className="fromPC" onClick={onPick}>
                 <i className="fa fa-facebook-square blue fa-3x socialIcon" aria-hidden="true"></i>
                 <i className="fa fa-instagram fa-3x socialIcon purple" aria-hidden="true"></i>
                 <i className="fa fa-google fa-3x socialIcon black" aria-hidden="true"></i>
+=======
+              <div className="file_upload_buttom" onClick={onPick}> 
+                <div className="social_icons">
+                  <ul className="d-flex justify-content-center">
+                    <li><img src={facebook}/></li>
+                    <li><img src={instagram}/></li>                    
+                    <li><img src={gooleDrive}/></li>
+                  </ul>  
+                  <h4>Choose Photos form <br/> Internet</h4>       
+                </div>
+                         
+>>>>>>> develop
               </div>
             )}
           />
       </div>
+<<<<<<< HEAD
+=======
+      <div className="hover_plus_icon">
+        <span>+</span>
+      </div>
+>>>>>>> develop
     </div>
     }
 

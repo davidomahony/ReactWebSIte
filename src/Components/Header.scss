@@ -4,8 +4,12 @@
 }
 
 .mainLogo{
+<<<<<<< HEAD
     max-width: 50%;
     max-height: 50px;
+=======
+    max-width: 220px;    
+>>>>>>> develop
     border: 0;
   }
 
@@ -15,6 +19,15 @@
     text-align: center;
 }
 
+<<<<<<< HEAD
 .blue{
     color: blue;
+=======
+.page_header{
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 99;
+>>>>>>> develop
 }

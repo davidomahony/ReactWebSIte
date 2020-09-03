@@ -1,13 +1,101 @@
-h8{
-    color: red;
-}
 .infoRow{
     width: 80%;
     display: inline-block;
 }
 .right{
     float: right;
+    font-size: 14px;
 }
 .left{
     float: left;
+    font-size: 14px;
+}
+.address_with_icon h4, .payment_with_icon h4{
+    font-size: 16px;
+    margin-bottom: 0;
+    padding: 20px 0;
+    cursor: pointer;
+    i{
+        margin-right: 10px;
+        font-size: 18px;
+        vertical-align: middle;
+    }
+}
+.address_with_icon.highlighted h4, .payment_with_icon h4.highlighted{
+    color: #11c1ec;
+    img{
+        width: 25px;
+        margin-right: 14px;
+    }
+}
+.address_with_icon{
+    border-bottom: 1px solid #d4d4d4;
+    margin-bottom: 30px;
+    // padding-bottom: 14px;
+}
+.palaceOrderBtn{
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+}
+.hiddenErrorField{
+    display: none;
+}
+.paymentSummery{
+    // padding: 0 15px;
+    .row{
+        margin-bottom: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .row:last-child{
+        .infoRow{
+            font-weight: 700;
+        }
+    }
+}
+.placeOrderSection{
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.slide-pane__header{
+    background: transparent;
+    border-bottom: 0;
+    .slide-pane__title{
+        font-weight: 700;
+        font-size: 28px;
+    }
+}
+
+.slide-pane__content {
+    padding: 0 26px;
+}
+.paymentSummery h5{
+    font-size: 18px;
+    font-weight: 700;
+}
+.modal-title{
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+}
+.submit_btn{
+    text-align: center;
+    margin-top: 20px;
+    .submitButton {
+        background-color: #007bff;
+        color: #fff;
+        padding: 15px 40px;
+        border-radius: 25px;
+    }
+}
+.modal-dialog {
+    max-width: 620px;
 }

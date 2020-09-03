@@ -126,6 +126,7 @@ GetAvailableStyles(){
               {this.GetAvailableStyles()}
             </div>
           </div>
+<<<<<<< HEAD
           <div className="scrollmenuPreview">
           <h5 className="gray" >Pick Some Photos! </h5>
             <div className="previewContainer">
@@ -140,6 +141,24 @@ GetAvailableStyles(){
                   imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
               </div> 
             </div>          
+=======
+          <div className="scrollmenuPreview scrollPreviewAfter">
+          <div className="scroll_prev_innr">
+            <h5 className="gray" >Pick Some Photos! </h5>
+              <div className="previewContainer">
+                {this.GetAvailablePreviews(this.state.uploadedPhotos)}
+                <ContextMenu id="menu_id" removePhoto={() => this.removePhoto()} cropAction={() => this.setState({showCropperModal: true})}/>
+                <div className="vcentre">
+                  <UploadButton closeCropper={() => this.setState({showCropperModal: false})}
+                    updateFromCrop={this.updateCrop}
+                    updateInfo={this.updateInfo}
+                    UpdatePrecentage={this.updateUploadPercentage}
+                    showModal={this.state.showCropperModal} hasRecievedUrl={this.hasRecievedUrl}
+                    imageForCrop={this.state.imageForCrop} photoAdded={this.photoAdded}/>
+                </div> 
+              </div>   
+            </div>       
+>>>>>>> develop
           </div>
           <Checkout showCheckout={this.state.showCheckout} 
             closeCheckout={() => this.setState({showCheckout : false})}

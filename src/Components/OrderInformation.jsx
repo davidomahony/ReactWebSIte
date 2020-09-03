@@ -12,7 +12,11 @@ class OrderInformation extends React.Component {
 
   render() {
     return (
+<<<<<<< HEAD
     <div>
+=======
+    <div className="paymentSummery">
+>>>>>>> develop
         <Row>
             <h5> Summary </h5>
         </Row>
