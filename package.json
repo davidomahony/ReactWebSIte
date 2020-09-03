@@ -11,15 +11,15 @@
     "bootstrap": "^4.4.1",
     "filestack-js": "^3.15.0",
     "filestack-react": "^3.1.0",
-    "font-awesome": "^4.7.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-contexify": "^4.1.1",
     "react-cookie": "^4.0.3",
+    "react-cookies": "^0.1.1",
     "react-cropper": "^1.3.0",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.25.2",
     "react-sliding-pane": "^4.0.1",
@@ -27,7 +27,8 @@
     "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^6.0.5",
     "universal-cookie": "^4.0.3",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,8 +1,18 @@
+body > #root > div > div {
+  height: 100vh;
+}
+
 .pageCard{
-  max-width: 1500px;
+  width: 100%;
+  @media (max-width: 1500px){
+    max-width: 1500px;
+  }
   margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding-bottom: 100px;
 }
 
 .vcentre {
@@ -11,33 +21,29 @@
 }
 
 .previewContainer{
+  display: flex;
   align-items: center!important;
   justify-content: center!important;
   text-align: center!important;
+  flex-wrap: wrap;
+  height: 100%;
+  // @media (min-width: 960px){
+  //   display: flex!important;
+    
+  // }
 }
 
 div.scrollmenu {
-  background-color: transparent;
-  overflow-y: hidden;
+  background-color: #f8f9fa!important;
   overflow-x: auto;
+  min-height: 120px;
   white-space: nowrap;
   text-align: center;
-  max-height: 135px;
+  padding-bottom: 2px;
+  overflow-y: hidden;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
 }
-
-div.scrollmenu div {
-  display: inline-block;
-  text-align: center;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  text-decoration: none;
-  justify-content: center;
-  align-items: center;
-}
-
-
 .scrollmenuPreview {
   background-color: transparent;
   overflow: auto;
@@ -45,20 +51,54 @@ div.scrollmenu div {
   color:  lightsteelblue;
   background-color: lightsteelblue;
   text-align: center;
-  //background-image: url('./../Photos/redwood-forrest.jpg');
+  background-image: url('./../Photos/gallery Wall-B&W.jpeg');
+  padding-top: 0;
+  padding-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  &.scrollPreviewAfter{
+    background-image:none !important; 
+    .scroll_prev_innr> h5{
+      display: none;
+    }
+  }
+  .scroll_prev_innr{
+    height: 100%;
+    overflow: auto;
+  }
+  &::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff9c;
+    z-index: -1;
+  }
+  h5{
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #000 !important;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }
 
-.scrollmenuPreview div {
+.previewContainer>div {
   display: inline-block;
   text-align: center;
   text-decoration: none;
   justify-content: center;
   align-items: center;
-  animation-name: example;
-  animation-duration: 3s;
-  animation-delay: -2s;
+  padding: 10px;
 }
-
 
 .centerHorizontal{
   display: flex;
@@ -67,8 +107,8 @@ div.scrollmenu div {
 }
 
 .previewImage{
-  height: 280px !important;
-  width: 280px !important;
+  height: 253px !important;
+  width: 253px !important;
   justify-content: center;
   align-items: center;
   text-align:center;
@@ -76,22 +116,36 @@ div.scrollmenu div {
   background-color: transparent;
   color: transparent;
   border-color: transparent;
+  @media (min-width: 960px){
+    height: 33%;
+    width: 33%;
+  }
+  animation: appear 2s ease 0s 1 normal none running;
 }
 
 .first {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 272px;
+  max-height: 272px;
   width: 100%;
   height: 100%;
 }
 
 .second {
   position: absolute;
-  left: 25%;
-  top:25%;
+  left: 5.5%;
+  top: 5.5%;
   display: block;
-  max-width: 50%;
-  max-width: 50%;
+  max-width: 89.5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.secondMount{
+  position: absolute;
+  left: 18%;
+  top: 18%;
+  display: block;
+  max-width: 64%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -105,24 +159,32 @@ div.scrollmenu div {
   text-align: center;
 }
 
-.red{
-  color: red;
-}
-
-div.styleHolder div:hover {
-  background: lightskyblue;
-}
-
 .styleHolder{
   display: flex;
-  overflow-y: auto;
-  height: 170px;
   justify-content: center;
+  >div{
+    padding: 0 5px;
+    .card{
+      padding: 5px;
+      border: none;
+      text-align: center;
+      box-shadow: 2px 5px 7px -1px rgba(0, 0, 0, 0.2);
+      background: #f1f1f1;
+      text-align: center;
+      .imageText{
+        width: 100%;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 5px;
+        color: #717171;
+      }
+    }  
+  }
 }
 
 .imageStyle{
-  max-width: 85px;
-  max-height: 85px;
+  max-width: 60px;
+  height: auto;
 }
 
 .imageStyleDiv{
@@ -130,6 +192,13 @@ div.styleHolder div:hover {
   overflow: auto;
   white-space: nowrap;
   text-align: center;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.imagetext{
+  margin-top: 2px;
+  font-weight: 700;
 }
 
 .lightblue{
@@ -138,17 +207,8 @@ div.styleHolder div:hover {
   background: lightskyblue !important;
 }
 
-@keyframes example{
-  0%   { right:200px; top:0px;}
-  25%  { right:150px; top:0px;}
-  50%  { right:100px; top:0px;}
-  75%  { right:50px; top:0px;}
-  100% { right:0px; top:0px;}
-}
-
-
 .blue{
-  color: blue !important;
+  color: #27bdd8 !important;
 }
 
 .red{
@@ -157,4 +217,21 @@ div.styleHolder div:hover {
 
 .gray{
   color: gray !important;
+}
+
+
+.previewImage{
+  animation-name: example;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+ 
+  animation-timing-function: ease-in-out;
+}
+.slide-pane__overlay{
+  z-index: 99;
+}
+@keyframes example {
+  0%   {left:-200px; top:0px;}
+ 
+  100% {left:0px; top:0px;}
 }

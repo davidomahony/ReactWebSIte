@@ -12,7 +12,7 @@
     height: max-content;
 }
 
-div.formContainer div{
+div.formContainer > div{
     margin: 2px !important;
     padding-top: 5px !important;
     padding-bottom: 10px !important;
@@ -23,9 +23,21 @@ div.formContainer div{
 }
 
 .exitIcon{
-    color: red;
+    color: #333;
 }
 .exitButton{
     background: transparent;
     border: none;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    font-size: 9px;
+    background: #fff;   
+    &:hover{
+        outline: none;
+    }
 }
